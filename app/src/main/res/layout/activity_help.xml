@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.alan.washer.washeruser.HelpActivity"
+    android:background="#F2F2F2">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <include layout="@layout/history_row" />
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            android:text="Reportar problema con este servicio"
+            android:id="@+id/button11"
+            android:onClick="onClickHelp"
+            android:textColor="@android:color/darker_gray"
+            android:background="@drawable/button_image"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:textAlignment="viewStart"
+            android:paddingStart="15dp" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:text="REPORTAR UN PROBLEMA"
+        android:id="@+id/button6"
+        android:onClick="onClickHelp"
+        android:textColor="@android:color/darker_gray"
+        android:background="@drawable/button_image"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="15dp"
+        android:textAlignment="viewStart"
+        android:paddingStart="45dp" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:text="Servicios"
+        android:id="@+id/button7"
+        android:onClick="onClickHelp"
+        android:textColor="@android:color/darker_gray"
+        android:background="@drawable/button_image"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:drawableStart="@drawable/service_icon"
+        android:textAlignment="viewStart"
+        android:paddingStart="15dp"/>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:text="Cuenta"
+        android:id="@+id/button8"
+        android:onClick="onClickHelp"
+        android:textColor="@android:color/darker_gray"
+        android:background="@drawable/button_image"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:drawableStart="@drawable/account_icon"
+        android:textAlignment="viewStart"
+        android:paddingStart="15dp"/>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:text="Pago"
+        android:id="@+id/button9"
+        android:onClick="onClickHelp"
+        android:textColor="@android:color/darker_gray"
+        android:background="@drawable/button_image"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:drawableStart="@drawable/help_pay_icon"
+        android:textAlignment="viewStart"
+        android:paddingStart="15dp"/>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:text="Como usar Vashen"
+        android:id="@+id/button10"
+        android:onClick="onClickHelp"
+        android:textColor="@android:color/darker_gray"
+        android:background="@drawable/button_image"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:drawableStart="@drawable/how_to_use_icon"
+        android:textAlignment="viewStart"
+        android:paddingStart="15dp"/>
+
+        </LinearLayout>
+</ScrollView>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:background="@android:color/white">
+
+    <RelativeLayout
+        android:layout_width="20dp"
+        android:layout_height="15dp"
+        android:id="@+id/selectedIndicator"
+        android:background="#FF00A9A2"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/selectedIndicator"
+        android:layout_centerVertical="true"
+        android:background="@android:color/transparent">
+
+        <TextView
+            style="@style/regular_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/platesExample"
+            android:id="@+id/plates"
+            android:layout_gravity="center_vertical"
+            android:gravity="center|start"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@android:color/darker_gray"
+            android:background="@android:color/transparent"
+            android:layout_marginStart="25dp"/>
+
+        <TextView
+            style="@style/regular_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/init_string"
+            android:id="@+id/brand"
+            android:layout_gravity="center_vertical"
+            android:gravity="center|start"
+            android:textAlignment="center"
+            android:textColor="@android:color/darker_gray"
+            android:background="@android:color/transparent"
+            android:textSize="15sp"
+            android:layout_marginStart="25dp"/>
+    </LinearLayout>
+
+    <TextView
+        style="@style/regular_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/information"
+        android:id="@+id/carInformation"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="@android:color/darker_gray"
+        android:background="@android:color/transparent"
+        android:textSize="12sp"
+        android:layout_marginEnd="15dp"/>
+
+
+</RelativeLayout>

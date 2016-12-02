@@ -1,0 +1,277 @@
+<resources>
+    <string name="app_name">Washer</string>
+    <string name="app_name_display">WASHER</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDo0Q6H4n991pIl794d5q9zfxiUgi8sxcA</string>
+    <string name="title_activity_login">INICIAR SESIÓN</string>
+    <string name="init_string">-</string>
+
+    <string name="add_car">AGREGAR VEHÍCULO</string>
+    <string name="error_invalid_email">EL CORREO ELECTRONICO ES INVALIDO</string>
+    <string name="error_invalid_password">LA CONSTRASEÑA ES MUY CORTA</string>
+    <string name="error_incorrect_password">CONTRASEÑA INVALIDA</string>
+    <string name="error_field_required">TODOS LOS CAMPOS SON REQUERIDOS</string>
+
+    <!-- Strings related to Main -->
+    <string name="log_in_button">INICIAR SESIÓN</string>
+    <string name="register_button">REGÍSTRATE</string>
+    <string name="logo">LOGO</string>
+    <!-- Strings related to Login -->
+    <string name="log_in_title">INICIAR SESIÓN</string>
+    <string name="hint_email">ejemplo@mail.com</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="forgot_password">¿OLVIDASTE TU CONTRASEÑA?</string>
+    <string name="cancel">CANCELAR</string>
+    <string name="ok">LISTO</string>
+    <string name="save">GUARDAR</string>
+
+    <!-- Strings related to Forgot Password -->
+    <string name="forgot_password_description">Introduzca su correo electrónico y le enviaremos un enlace para restablecer su contraseña.</string>
+    <string name="recover_password_button">RESTABLECER CONTRASEÑA</string>
+    <string name="forgot_password_title">OLVIDASTE TU CONTRASEÑA</string>
+
+    <!-- Strings related to Create Account -->
+    <string name="create_account_title">CREAR CUENTA</string>
+    <string name="next">CONTINUAR</string>
+    <string name="title_activity_create_account">CREAR CUENTA</string>
+    <string name="hint_phone">+00 0 00 0000 0000</string>
+    <string name="hint_repeat_password">Confirmar contraseña</string>
+
+    <!-- Strings related to Create Account Personal -->
+    <string name="hint_name">NOMBRE</string>
+    <string name="hint_lastname">APELLIDO</string>
+    <string name="image_description">Imagen Usuario</string>
+
+    <!-- Strings related to Create Account Payment -->
+    <string name="hint_cardnumber">NUMERO DE TARJETA</string>
+    <string name="hint_cardCVV">CVV</string>
+
+    <!-- Strings related to Map -->
+    <string name="hint_location">UBICACION</string>
+    <string name="eco">Ecológico $$</string>
+    <string name="eco_description">Lavado de auto en seco, con nuestro producto de máxima calidad, que brinda un acabado brillante, sin rayar el auto, protegiendo la pintura, al mismo tiempo que deja una capa de cera protectora.</string>
+    <string name="traditional">Tradicional $$</string>
+    <string name="traditional_description">Lavado de auto con agua y shampoo, que deja una capa protectora de cera. Para este servicio, el usuario deberá proporcionar el agua al momento de la llegada de nuestros socios lavadores.</string>
+    <string name="outside">Lavado Exterior $$</string>
+    <string name="outside_description">Consiste en lavado de carrocería, cristales, rines, llantas y molduras (no se requiere estar en el lugar de servicio del vehículo).</string>
+    <string name="outside_and_inside">Lavado Interior $$</string>
+    <string name="outside_and_inside_description">Consiste en Lavado de carrocería, cristales, rines, llantas, molduras, aspirado y limpieza de habitáculo (se requiere estar presente al momento de iniciar y al terminar el servicio para permitir que el socio lavador pueda acceder al interior del vehículo).</string>
+    <string name="arriving_in">Llegando en: </string>
+    <string name="search">Buscar</string>
+    <!-- Strings related to the Service -->
+    <string name="looking">Buscando lavador</string>
+    <string name="accepted">Llegando en: 15 min</string>
+    <string name="on_the_way">De camino</string>
+    <string name="started">Terminando servicio en: </string>
+    <string name="finished">Terminado</string>
+    <string name="canceled">Cancelado</string>
+    <string name="notify_accepted">Tu servicio fue aceptado</string>
+    <string name="notify_started">Tu servicio ha comenzado</string>
+    <string name="notify_canceled">Tu servicio fue cancelado</string>
+    <string name="notify_finished">Tu servicio ha terminado</string>
+    <!-- Strings related to Menu -->
+    <string name="menu_button">Menu</string>
+    <string-array name="menu_options">
+        <item name="payment_title">PAGO</item>
+        <item name="billing_title">FACTURACIÓN</item>
+        <item name="history_title">HISTORIAL</item>
+        <item name="cars_title">VEHÍCULOS</item>
+        <item name="help_title">AYUDA</item>
+        <item name="be_part_of_team">SE PARTE DEL EQUIPO</item>
+        <item name="configuration_title">CONFIGURACIÓN</item>
+        <item name="about_title">Acerca de</item>
+    </string-array>
+
+    <string name="payment_title">PAGO</string>
+    <string name="billing_title">FACTURACIÓN</string>
+    <string name="history_title">HISTORIAL</string>
+    <string name="cars_title">VEHÍCULOS</string>
+    <string name="help_title">AYUDA</string>
+    <string name="be_part_of_team">SE PARTE DEL EQUIPO</string>
+    <string name="configuration_title">CONFIGURACIÓN</string>
+    <string name="about_title">ACERCA DE</string>
+    <!-- Strings related to Payment -->
+    <string name="add_card">Agregar</string>
+
+    <!-- Strings related to Billing -->
+    <string name="name">NOMBRE</string>
+    <string name="rfc">RFC</string>
+    <string name="address">DIRECCIÓN FISCAL</string>
+    <string name="change_data">EDITAR DATOS FACTURACIÓN</string>
+
+    <!-- Strings related to Help -->
+    <string name="report_problem">Reportar un problema</string>
+    <string name="services">Servicios</string>
+    <string name="account">Cuenta</string>
+    <string name="payment">Pagos</string>
+    <string name="how_to">Como usar Washer</string>
+
+    <!-- Strings related to Configuration -->
+    <string name="edit_account">EDITAR CUENTA</string>
+    <string name="log_out">DESCONECTAR</string>
+    <string name="change_image">Cambiar imagen</string>
+
+    <!-- Strings related to About -->
+    <string name="about">Washer para lavar tu auto</string>
+
+    <!-- Strings related to Summary -->
+    <string name="summary_title">Resumen</string>
+    <string name="summary_description">Resumen del servicio</string>
+    <string name="evaluation_description">Evalua tu servicio</string>
+    <string name="send">Enviar</string>
+    <string name="error_sending_review">Error al enviar la evaluacion</string>
+    <!-- Strings related to errors -->
+    <string name="invalid_email">Correo electronico invalido</string>
+    <string name="invalid_password">Contraseña invalida, debe ser al menos 6 caracteres de largo</string>
+    <string name="invalid_password_dont_march">Las contraseñas no coinciden</string>
+    <string name="error_registering_user">Error al registrar un usuario nuevo</string>
+    <string name="error_logging_in">Error al iniciar sesion</string>
+    <string name="error_reading_service">Error al leer servicio</string>
+    <string name="expiration_date_month">MM</string>
+    <string name="expiration_date_year">YY</string>
+    <string name="payment_unavailable">Pagos no disponibles</string>
+    <string name="error_credit_card">Error con la tarjeta de credito</string>
+    <string name="error_processing_payment">Error procesando tu pago</string>
+    <string name="edit_card">EDITAR TARJETA</string>
+    <string name="information">VER INFORMACIÓN</string>
+    <string name="space">&#032;</string>
+    <string name="status_changed">Cambio de estado</string>
+    <string name="delete_alert">Seguro que deseas eliminar?</string>
+    <string name="edit_car_title">EDITAR VEHÍCULO</string>
+    <string name="error_editing_car">Error editando vehículo</string>
+    <string name="billing_name">NOMBRE O RAZÓN SOCIAL</string>
+    <string name="RFC">RFC</string>
+    <string name="billing_address">DIRECCIÓN</string>
+    <string name="no_credit_card">Agrega una tarjeta de credito</string>
+    <string name="error_reading_user">Error al leer el usuario</string>
+    <string name="error_logging_out">Error cerrando sesion</string>
+    <string name="name_and_lastname_missing">Nombre y apellido son necesarios</string>
+    <string name="error_adding_car">Error agregando vehículo</string>
+    <string name="no_cleaners">No hay lavadores cercanos</string>
+    <string name="price">$%s</string>
+    <string name="user_name">%1$s %2$s</string>
+    <string name="add_later">AGREGAR LUEGO</string>
+    <string name="mising_values">Faltan valores</string>
+    <string name="no_location_service">Esta aplicacion no puede funcionar sin la ubicacion habilitada</string>
+    <string name="error_on_cancel">No se puede cancelar en este momento</string>
+    <string name="service_started">Tu servicio comenzo</string>
+    <string name="service_accepted">Tu servicio fue aceptado</string>
+    <string name="add_payment">AGREGAR</string>
+    <string name="error_firebase">Usuario fue creado. Experimentamos problemas con el servidor</string>
+    <string name="error_setting_favorite_car">Error al seleccionar vehículo favorito</string>
+    <string name="service_taking_long">Lavador esta tomando mucho tiempo</string>
+    <string name="service_taking_long_message">Deseas cancelar?</string>
+    <string name="wait">Esperar</string>
+    <string name="platesExample">0000 AAA</string>
+    <string name="init_date_string">00/00/00 00:00 AM</string>
+    <string name="phone">Telefono</string>
+    <string name="legal">Legal</string>
+    <string name="vashen_web">Washer.com</string>
+    <string name="copyright">Copyright</string>
+    <string name="terms_and_conditions">Terminos y Condiciones</string>
+    <string name="privacy">Politica de Privacidad</string>
+    <string name="software_license">Licencia de Software</string>
+    <string name="copyright_info">Loren ipsum</string>
+    <string name="terms_and_conditions_info">Loren ipsum</string>
+    <string name="privacy_info">Loren ipsum</string>
+    <string name="software_license_info">Loren ipsum</string>
+    <string name="error_deleting_car">Error borrando vehículo</string>
+    <string name="session_error">Error de sesion</string>
+    <string name="wish_cancel">Deseas cancelar?</string>
+    <string name="user_block">Usuario bloqueado por error en tarjeta</string>
+    <string name="cancel_with_charge">Cancelar en este momento incluye un costo, estas seguro que deseas cancelar?</string>
+    <string name="requesting">Pidiendo servicio...</string>
+    <string-array name="vehicles_types">
+        <item>Moto</item>
+        <item>Auto</item>
+        <item>Camioneta chica</item>
+        <item>Camioneta grande</item>
+    </string-array>
+    <string-array name="vehicles_colors">
+        <item>Azul</item>
+        <item>Rojo</item>
+        <item>Morado</item>
+        <item>Verde</item>
+        <item>Negro</item>
+        <item>Blanco</item>
+        <item>Rosa</item>
+        <item>Naranja</item>
+        <item>Amarillo</item>
+        <item>Gris</item>
+        <item>Plateado</item>
+        <item>Purpura</item>
+        <item>Cafe</item>
+        <item>Dorado</item>
+    </string-array>
+    <string-array name="vehicles_brands">
+        <item>Acura</item>
+        <item>Alfa Romeo</item>
+        <item>Aston Martin</item>
+        <item>Audi</item>
+        <item>BAIC</item>
+        <item>Bentley</item>
+        <item>BMW</item>
+        <item>Buick</item>
+        <item>Cadillac</item>
+        <item>Chevrolet</item>
+        <item>Chrysler</item>
+        <item>Dodge</item>
+        <item>Ferrari</item>
+        <item>Fiat</item>
+        <item>Ford</item>
+        <item>GMC</item>
+        <item>Honda</item>
+        <item>Hyundai</item>
+        <item>Infiniti</item>
+        <item>Jaguar</item>
+        <item>Jeep</item>
+        <item>Kia</item>
+        <item>Lamborghini</item>
+        <item>Land Rover</item>
+        <item>Lincoln</item>
+        <item>Maserati</item>
+        <item>Mazda</item>
+        <item>McLaren Automotive</item>
+        <item>Mercedes Benz</item>
+        <item>MINI</item>
+        <item>Mitsubishi</item>
+        <item>Nissan</item>
+        <item>Peugeot</item>
+        <item>Porsche</item>
+        <item>RAM</item>
+        <item>Renault</item>
+        <item>SEAT</item>
+        <item>Smart</item>
+        <item>Subaru</item>
+        <item>Suzuki</item>
+        <item>Tesla</item>
+        <item>Toyota</item>
+        <item>Volkswagen</item>
+        <item>Volvo</item>
+    </string-array>
+    <string-array name="context_menu_items">
+        <item>Editar</item>
+        <item>Borrar</item>
+    </string-array>
+    <string-array name="months">
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>09</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+    <string-array name="years">
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+    </string-array>
+</resources>

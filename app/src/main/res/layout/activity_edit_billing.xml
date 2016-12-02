@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.alan.washer.washeruser.EditBillingActivity"
+    android:orientation="vertical"
+    android:background="@drawable/background">
+
+    <TextView
+        style="@style/regular_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/billing_name"
+        android:id="@+id/textView16"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp" />
+
+    <EditText
+        style="@style/edit_text"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:id="@+id/billingNameEdit"
+        android:hint="@string/billing_name"
+        android:layout_gravity="center"
+        android:inputType="text"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="10dp" />
+
+    <TextView
+        style="@style/regular_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/RFC"
+        android:id="@+id/textView17"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp" />
+
+    <EditText
+        style="@style/edit_text"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:id="@+id/billingRFCEdit"
+        android:hint="@string/RFC"
+        android:layout_gravity="center"
+        android:inputType="text"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        style="@style/regular_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/billing_address"
+        android:id="@+id/textView18"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp" />
+
+    <EditText
+        style="@style/edit_text"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:id="@+id/billingAddressEdit"
+        android:hint="@string/billing_address"
+        android:layout_gravity="center"
+        android:inputType="text"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="10dp" />
+</LinearLayout>

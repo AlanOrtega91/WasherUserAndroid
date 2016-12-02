@@ -1,0 +1,102 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.alan.washer.washeruser">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/appicon"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:largeHeap="true">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity android:name="com.alan.washer.washeruser.InitActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.alan.washer.washeruser.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.alan.washer.washeruser.NewCar"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.alan.washer.washeruser.MainActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.alan.washer.washeruser.CreateAccount"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.alan.washer.washeruser.CreateAccountPersonal"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.alan.washer.washeruser.CreateAccountPayment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.alan.washer.washeruser.ForgotPassword"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.alan.washer.washeruser.NavigationDrawer"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.alan.washer.washeruser.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.alan.washer.washeruser.ConfigurationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.alan.washer.washeruser.EditAccountActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.alan.washer.washeruser.HelpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.alan.washer.washeruser.BillingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.alan.washer.washeruser.EditBillingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.alan.washer.washeruser.PaymentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.alan.washer.washeruser.HistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.alan.washer.washeruser.SummaryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.alan.washer.washeruser.CarsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.alan.washer.washeruser.EditCardActivity"
+            android:screenOrientation="portrait" />
+
+        <service android:name="com.alan.washer.washeruser.FirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name="com.alan.washer.washeruser.FirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name="com.alan.washer.washeruser.EditCarActivity" />
+        <activity android:name="com.alan.washer.washeruser.LoadingActivity" />
+        <activity android:name="com.alan.washer.washeruser.LegalOptions" />
+        <activity android:name="com.alan.washer.washeruser.LegalOptionsDisplay" />
+        <activity android:name="com.alan.washer.washeruser.InformationActivity" />
+    </application>
+
+</manifest>
