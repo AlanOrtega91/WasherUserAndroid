@@ -10,7 +10,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:largeHeap="true">
+        android:largeHeap="true"
+        android:fullBackupContent="false">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -80,6 +81,16 @@
         <activity
             android:name="com.alan.washer.washeruser.EditCardActivity"
             android:screenOrientation="portrait" />
+        <activity android:name="com.alan.washer.washeruser.EditCarActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.alan.washer.washeruser.LoadingActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.alan.washer.washeruser.LegalOptions"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.alan.washer.washeruser.LegalOptionsDisplay"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.alan.washer.washeruser.InformationActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name="com.alan.washer.washeruser.FirebaseMessagingService">
             <intent-filter>
@@ -91,12 +102,6 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
-        <activity android:name="com.alan.washer.washeruser.EditCarActivity" />
-        <activity android:name="com.alan.washer.washeruser.LoadingActivity" />
-        <activity android:name="com.alan.washer.washeruser.LegalOptions" />
-        <activity android:name="com.alan.washer.washeruser.LegalOptionsDisplay" />
-        <activity android:name="com.alan.washer.washeruser.InformationActivity" />
     </application>
 
 </manifest>

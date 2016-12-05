@@ -14,7 +14,6 @@ import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
 public class Service {
     private static String HTTP_LOCATION = "Service/";
-    private static String USER_TYPE = "1";
     public String status;
     public String cleanerName;
     public String car;
@@ -167,8 +166,5 @@ public class Service {
     }
 
     public static class userBlock extends Throwable {
-    }
-
-    public static class errorReadingServiceStatus extends Throwable {
     }
 }

@@ -4,16 +4,13 @@ package com.alan.washer.washeruser.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
-
 import com.alan.washer.washeruser.model.Database.DataBase;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import cz.msebera.android.httpclient.NameValuePair;
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
@@ -21,10 +18,10 @@ import cz.msebera.android.httpclient.message.BasicNameValuePair;
 public class ProfileReader {
 
     private static String HTTP_LOCATION = "User/";
-    User user = new User();
-    List<Car> cars = new ArrayList<>();
-    List<Service> services = new ArrayList<>();
-    List<UserCard> cards = new ArrayList<>();
+    private User user = new User();
+    private List<Car> cars = new ArrayList<>();
+    private List<Service> services = new ArrayList<>();
+    private List<UserCard> cards = new ArrayList<>();
 
     public static void run(Context context,String email, String password) throws errorReadingProfile {
         try {
@@ -164,7 +161,8 @@ public class ProfileReader {
                 service.latitud = jsonService.getDouble("latitud");
                 service.longitud = jsonService.getDouble("longitud");
                 service.cleanerId = jsonService.getString("idLavador");
-                DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                //DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
                 if (!jsonService.isNull("horaFinalEstimada"))
                     service.finalTime = format.parse(jsonService.getString("horaFinalEstimada"));
                 if (!jsonService.isNull("fechaAceptado"))
@@ -206,6 +204,6 @@ public class ProfileReader {
     public static class errorReadingProfile extends Exception {
     }
 
-    public class errorReadingData extends Exception {
+    private class errorReadingData extends Exception {
     }
 }

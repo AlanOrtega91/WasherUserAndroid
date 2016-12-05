@@ -12,10 +12,10 @@ import com.alan.washer.washeruser.model.Service;
 import com.alan.washer.washeruser.model.User;
 import com.alan.washer.washeruser.model.UserCard;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class DataBase extends SQLiteOpenHelper{
 
@@ -263,7 +263,7 @@ public class DataBase extends SQLiteOpenHelper{
             row.put(ServiceEntry.STATUS,service.status);
             row.put(ServiceEntry.RATING,service.rating);
             row.put(ServiceEntry.CLEANER_ID,service.cleanerId);
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
             if (service.finalTime != null) {
                 row.put(ServiceEntry.FINAL_TIME, format.format(service.finalTime));
             }
@@ -294,7 +294,8 @@ public class DataBase extends SQLiteOpenHelper{
                 service.longitud = cursor.getDouble(cursor.getColumnIndexOrThrow(ServiceEntry.LONGITUD));
                 service.status = cursor.getString(cursor.getColumnIndexOrThrow(ServiceEntry.STATUS));
                 service.rating = cursor.getInt(cursor.getColumnIndexOrThrow(ServiceEntry.RATING));
-                DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+                //DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 try {
                     service.finalTime = format.parse(cursor.getString(cursor.getColumnIndexOrThrow(ServiceEntry.FINAL_TIME)));
                 } catch (Exception e) {
@@ -343,7 +344,8 @@ public class DataBase extends SQLiteOpenHelper{
                 service.status = cursor.getString(cursor.getColumnIndexOrThrow(ServiceEntry.STATUS));
                 service.cleanerId = cursor.getString(cursor.getColumnIndexOrThrow(ServiceEntry.CLEANER_ID));
                 service.rating = cursor.getInt(cursor.getColumnIndexOrThrow(ServiceEntry.RATING));
-                DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+                //DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 try {
                     service.finalTime = format.parse(cursor.getString(cursor.getColumnIndexOrThrow(ServiceEntry.FINAL_TIME)));
                 } catch (Exception e) {
@@ -392,7 +394,8 @@ public class DataBase extends SQLiteOpenHelper{
                 service.status = cursor.getString(cursor.getColumnIndexOrThrow(ServiceEntry.STATUS));
                 service.rating = cursor.getInt(cursor.getColumnIndexOrThrow(ServiceEntry.RATING));
                 service.cleanerId = cursor.getString(cursor.getColumnIndexOrThrow(ServiceEntry.CLEANER_ID));
-                DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+                //DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 try {
                     service.finalTime = format.parse(cursor.getString(cursor.getColumnIndexOrThrow(ServiceEntry.FINAL_TIME)));
                 } catch (Exception e) {
