@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -113,7 +114,11 @@ public class EditAccountActivity extends AppCompatActivity implements View.OnCli
     }
 
     public void readUserImage() {
-        editImage.setImageBitmap(User.readImageBitmapFromFile(user.imagePath));
+        if (!user.imagePath.equals("") ) {
+            editImage.setImageBitmap(User.readImageBitmapFromFile(user.imagePath));
+        } else {
+            editImage.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.default_image));
+        }
     }
 
     private void fillUserTextFields() {

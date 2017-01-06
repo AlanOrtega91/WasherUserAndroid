@@ -151,9 +151,9 @@ public class User {
         }
     }
 
-    public static Bitmap getEncodedStringImageForUser(String id) {
+    static Bitmap getEncodedStringImageForUser(String id) {
         try {
-            URL url = new URL("http://192.168.0.7/Vashen/images/users/" + id + "/profile_image.jpg");
+            URL url = new URL("http://washer.mx/Vashen/images/users/" + id + "/profile_image.jpg");
             InputStream is = url.openStream();
             BufferedInputStream bis = new BufferedInputStream(is);
             Bitmap bm = BitmapFactory.decodeStream(bis);

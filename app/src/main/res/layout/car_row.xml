@@ -27,7 +27,7 @@
         android:background="@android:color/transparent">
 
         <TextView
-            style="@style/regular_text"
+            style="@style/button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/platesExample"
@@ -37,12 +37,10 @@
             android:textSize="20sp"
             android:textAlignment="center"
             android:textAllCaps="true"
-            android:textColor="@android:color/darker_gray"
-            android:background="@android:color/transparent"
             android:layout_marginStart="25dp"/>
 
         <TextView
-            style="@style/regular_text"
+            style="@style/button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/init_string"
@@ -50,22 +48,18 @@
             android:layout_gravity="center_vertical"
             android:gravity="center|start"
             android:textAlignment="center"
-            android:textColor="@android:color/darker_gray"
-            android:background="@android:color/transparent"
             android:textSize="15sp"
             android:layout_marginStart="25dp"/>
     </LinearLayout>
 
     <TextView
-        style="@style/regular_text"
+        style="@style/button_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/information"
         android:id="@+id/carInformation"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
-        android:textColor="@android:color/darker_gray"
-        android:background="@android:color/transparent"
         android:textSize="12sp"
         android:layout_marginEnd="15dp"/>
 

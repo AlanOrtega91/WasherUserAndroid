@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.alan.washer.washeruser.CreateAccountPersonal"
-    android:background="@drawable/background">
+    android:background="@drawable/background_main">
 
     <ImageView
         android:layout_width="130dp"
@@ -26,32 +26,24 @@
         android:layout_marginEnd="5dp">
 
         <EditText
-            style="@style/edit_text"
+            style="@style/input_text"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
             android:id="@+id/createName"
             android:inputType="text"
             android:hint="@string/hint_name"
-            android:textSize="15sp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"/>
+            android:layout_marginTop="5dp" />
 
         <EditText
-            style="@style/edit_text"
+            style="@style/input_text"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
             android:id="@+id/createLastName"
             android:inputType="text"
             android:hint="@string/hint_lastname"
-            android:textSize="15sp"
             android:layout_marginTop="30dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"/>
+            android:layout_marginRight="5dp" />
     </LinearLayout>
 
 </LinearLayout>

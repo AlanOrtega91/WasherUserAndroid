@@ -8,68 +8,54 @@
     android:background="@drawable/background">
 
     <TextView
-        style="@style/regular_text"
+        style="@style/text_style"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/billing_name"
         android:id="@+id/textView16"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp" />
 
     <EditText
-        style="@style/edit_text"
+        style="@style/input_text"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
         android:id="@+id/billingNameEdit"
         android:hint="@string/billing_name"
         android:layout_gravity="center"
         android:inputType="text"
-        android:textColor="@android:color/darker_gray"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="0dp"
         android:layout_marginRight="10dp" />
 
     <TextView
-        style="@style/regular_text"
+        style="@style/text_style"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/RFC"
         android:id="@+id/textView17"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp" />
 
     <EditText
-        style="@style/edit_text"
+        style="@style/input_text"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
         android:id="@+id/billingRFCEdit"
         android:hint="@string/RFC"
-        android:layout_gravity="center"
         android:inputType="text"
-        android:textColor="@android:color/darker_gray"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="0dp"
         android:layout_marginLeft="10dp" />
 
     <TextView
-        style="@style/regular_text"
+        style="@style/text_style"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/billing_address"
         android:id="@+id/textView18"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp" />
 
     <EditText
-        style="@style/edit_text"
+        style="@style/input_text"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
         android:id="@+id/billingAddressEdit"
         android:hint="@string/billing_address"
-        android:layout_gravity="center"
         android:inputType="text"
-        android:textColor="@android:color/darker_gray"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="0dp"
         android:layout_marginRight="10dp" />
 </LinearLayout>

@@ -26,9 +26,8 @@
                 android:src="@drawable/default_image" />
 
             <TextView
-                style="@style/edit_text"
+                style="@style/input_text"
                 android:layout_width="fill_parent"
-                android:layout_height="50dp"
                 android:text="@string/init_string"
                 android:id="@+id/userName"
                 android:layout_gravity="center_horizontal"
@@ -37,9 +36,8 @@
                 android:layout_marginRight="10dp" />
 
             <TextView
-                style="@style/edit_text"
+                style="@style/input_text"
                 android:layout_width="fill_parent"
-                android:layout_height="50dp"
                 android:text="@string/init_string"
                 android:id="@+id/userLastName"
                 android:layout_marginLeft="10dp"
@@ -47,9 +45,8 @@
                 android:layout_marginRight="10dp" />
 
             <TextView
-                style="@style/edit_text"
+                style="@style/input_text"
                 android:layout_width="fill_parent"
-                android:layout_height="50dp"
                 android:text="@string/init_string"
                 android:id="@+id/userEmail"
                 android:layout_marginLeft="10dp"
@@ -57,9 +54,8 @@
                 android:layout_marginRight="10dp" />
 
             <TextView
-                style="@style/edit_text"
+                style="@style/input_text"
                 android:layout_width="fill_parent"
-                android:layout_height="50dp"
                 android:text="@string/init_string"
                 android:id="@+id/userPhone"
                 android:layout_marginLeft="10dp"
@@ -67,13 +63,10 @@
                 android:layout_marginRight="10dp" />
 
             <TextView
-                style="@style/regular_text"
+                style="@style/aux_text_style"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="@string/edit_account"
                 android:id="@+id/textView10"
-                android:layout_gravity="center_horizontal"
-                android:textSize="15sp"
                 android:onClick="onClickEditAccount"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
@@ -82,19 +75,16 @@
         </LinearLayout>
     </ScrollView>
 
-    <TextView
-        style="@style/edit_text"
+    <Button
+        style="@style/button_style"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
         android:text="@string/log_out"
         android:id="@+id/textLogout"
-        android:gravity="center"
         android:layout_alignParentEnd="false"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="false"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
-        android:textSize="20sp"
         android:onClick="onClickLogOut"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="0dp"

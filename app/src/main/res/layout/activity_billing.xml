@@ -7,46 +7,37 @@
     tools:context="com.alan.washer.washeruser.BillingActivity" android:background="@drawable/background">
 
     <TextView
-        style="@style/edit_text"
+        style="@style/input_text"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
         android:text="@string/billing_name"
         android:id="@+id/billingName"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:textColor="@android:color/darker_gray"/>
+        android:layout_marginRight="10dp" />
 
     <TextView
-        style="@style/edit_text"
+        style="@style/input_text"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
         android:text="@string/rfc"
         android:id="@+id/billingRFC"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:textColor="@android:color/darker_gray"
         android:layout_marginTop="10dp" />
 
     <TextView
-        style="@style/edit_text"
+        style="@style/input_text"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
         android:text="@string/address"
         android:id="@+id/billingAddress"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        android:textColor="@android:color/darker_gray"
         android:layout_marginTop="10dp" />
 
     <TextView
+        style="@style/aux_text_style"
         android:layout_width="fill_parent"
-        android:layout_height="30dp"
         android:text="@string/change_data"
         android:id="@+id/textView9"
         android:layout_marginTop="20dp"
-        android:onClick="onClickChangeData"
-        android:textColor="@android:color/white"
-        android:layout_gravity="center"
-        android:gravity="center"/>
+        android:onClick="onClickChangeData" />
 </LinearLayout>

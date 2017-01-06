@@ -2,15 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
     style="@style/titlebar_menu"
-    tools:context="com.alan.washer.washeruser.NavigationDrawer"
-    android:background="@drawable/bar_up">
+    tools:context="com.alan.washer.washeruser.NavigationDrawer">
 
     <ImageView
         style="@style/titlebar_button"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:gravity="center"
         android:contentDescription="@string/image_description"
         android:id="@+id/menuImage"

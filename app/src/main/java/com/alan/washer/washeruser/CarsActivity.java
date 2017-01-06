@@ -94,7 +94,7 @@ public class CarsActivity extends AppCompatActivity implements AdapterView.OnIte
         TextView menuButton = (TextView)findViewById(R.id.menuButton);
         TextView menuTitle = (TextView)findViewById(R.id.menuTitle);
         menuTitle.setText(R.string.cars_title);
-        menuButton.setText(R.string.cancel);
+        menuButton.setText(R.string.menu);
         menuButton.setOnClickListener(this);
     }
 

@@ -20,13 +20,11 @@
         android:layout_marginRight="10dp" />
 
     <TextView
-        style="@style/regular_text"
+        style="@style/aux_text_style"
         android:layout_width="fill_parent"
-        android:layout_height="30dp"
         android:text="@string/add_car"
         android:id="@+id/textView4"
         android:layout_gravity="center"
         android:gravity="center"
-        android:onClick="onClickAddCar"
-        android:textColor="@android:color/white"/>
+        android:onClick="onClickAddCar" />
 </LinearLayout>

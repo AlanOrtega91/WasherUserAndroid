@@ -7,20 +7,23 @@
     tools:context="com.alan.washer.washeruser.PaymentActivity"
     android:background="@drawable/background">
 
-    <include layout="@layout/credit_card_row"
+    <TextView
+        style="@style/button_style"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/init_string"
+        android:id="@+id/cardNumberRow"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp" />
+
     <Button
+        style="@style/button_style"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
         android:text="@string/edit_card"
         android:id="@+id/button5"
-        android:textColor="@android:color/darker_gray"
-        android:background="@android:color/white"
         android:onClick="onClickEditCard"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp" />

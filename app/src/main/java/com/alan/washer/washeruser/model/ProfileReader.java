@@ -3,6 +3,7 @@ package com.alan.washer.washeruser.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.util.Log;
 import com.alan.washer.washeruser.model.Database.DataBase;
 import org.json.JSONArray;
@@ -79,7 +80,7 @@ public class ProfileReader {
             db.saveServices(profile.services);
             if (profile.cards.size() > 0) db.saveCard(profile.cards.get(0));
             endTime = System.nanoTime();
-            duration = (endTime - startTime)/1000000;
+            duration = (endTime - startTime)/(1000*1000);
             Log.i("TIME","Time for database: " + duration);
         } catch (errorReadingData e){
             Log.i("READING","Error reading in profile");
@@ -118,9 +119,14 @@ public class ProfileReader {
             if (!parameters.isNull("NombreFactura")) user.billingName = parameters.getString("NombreFactura");
             if (!parameters.isNull("RFC")) user.rfc = parameters.getString("RFC");
             if (!parameters.isNull("DireccionFactura")) user.billingAddress = parameters.getString("DireccionFactura");
-            if (!parameters.isNull("FotoURL")) user.imagePath = User.saveEncodedImageToFileAndGetPath(User.getEncodedStringImageForUser(user.id), context);
-
-            //TODO: read encoded image
+            if (!parameters.isNull("FotoURL")) {
+                Bitmap encodedImage = User.getEncodedStringImageForUser(user.id);
+                if (encodedImage != null) {
+                    user.imagePath = User.saveEncodedImageToFileAndGetPath(encodedImage, context);
+                } else {
+                    user.imagePath = "";
+                }
+            }
         } catch (Exception e){
             Log.i("READ","Error reading user");
         }

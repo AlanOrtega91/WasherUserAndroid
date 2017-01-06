@@ -150,6 +150,7 @@ public class SummaryActivity extends AppCompatActivity {
             }
             db.saveServices(services);
             AppData.notifyNewData(settings,true);
+            AppData.deleteMessage(settings);
             finish();
         } catch (Service.errorCancelingRequest errorCancelingRequest) {
             postAlert(getResources().getString(R.string.error_sending_review));

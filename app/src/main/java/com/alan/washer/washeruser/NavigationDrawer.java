@@ -20,13 +20,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.SystemClock;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
@@ -118,7 +118,6 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     private GoogleMap map;
     LatLng requestLocation = new LatLng(0, 0);
     EditText serviceLocationText;
-    TextView locationText;
     Marker centralMarker;
     Marker cleanerMarker;
     List<Cleaner> cleaners = new ArrayList<>();
@@ -506,7 +505,6 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         cleanerImageInfo = (ImageView) findViewById(R.id.cleanerImageInfo);
         serviceInfo = (TextView) findViewById(R.id.serviceInfo);
         serviceLocationText = (EditText) findViewById(R.id.serviceLocationText);
-        locationText = (TextView) findViewById(R.id.locationText);
         cancelButton = (Button) findViewById(R.id.cancelButton);
         serviceLocationText.setOnEditorActionListener(this);
         startLayout.setOnClickListener(this);
@@ -516,7 +514,11 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         TextView headerTitle = (TextView) findViewById(R.id.menuName);
         ImageView menuImage = (ImageView) findViewById(R.id.menuImage);
         headerTitle.setText(getString(R.string.user_name,user.name,user.lastName));
-        menuImage.setImageBitmap(User.readImageBitmapFromFile(user.imagePath));
+        if (!user.imagePath.equals("")) {
+            menuImage.setImageBitmap(User.readImageBitmapFromFile(user.imagePath));
+        } else {
+            menuImage.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.default_image));
+        }
     }
 
     private void configureServices() {
@@ -593,8 +595,8 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         reloadAddressTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                //TODO: Change to request when map changes
                 getGeoLocation();
-                getUserGeoLocaton();
             }
         }, 0, ONE_SECOND);
     }
@@ -683,6 +685,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     }
 
     private void reloadCleanerMarkers() {
+        //TODO: Separate in two functions
         try{
             if (activeService != null && !activeService.status.equals("Looking"))
                 cleaner = Cleaner.getCleanerLocation(activeService.cleanerId,token);
@@ -709,10 +712,11 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                     cleanerMarker.setVisible(false);
                     requestLocation = map.getCameraPosition().target;
                     centralMarker.setPosition(new LatLng(requestLocation.latitude, requestLocation.longitude));
-                    if (cleaners.size() >= markers.size())
+                    if (cleaners.size() >= markers.size()) {
                         addMarkersAndUpdate();
-                    else
+                    } else {
                         removeMarkersAndUpdate();
+                    }
                 }
             }
         });
@@ -720,15 +724,13 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
 
     private void removeMarkersAndUpdate() {
         List<Marker> aux = new ArrayList<>();
-
         for (int i = 0; i < cleaners.size();i++){
             aux.add(markers.get(i));
             Cleaner cleaner = cleaners.get(i);
             aux.get(i).setPosition(new LatLng(cleaner.latitud,cleaner.longitud));
         }
         for (int i = cleaners.size(); i < markers.size(); i++) {
-            Marker marker = markers.get(i);
-            marker.remove();
+            markers.get(i).remove();
         }
         markers = aux;
     }
@@ -736,14 +738,16 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     private void addMarkersAndUpdate() {
         List<Marker> aux = new ArrayList<>();
         LatLng auxLocation = new LatLng(0.0,0.0);
-        BitmapDescriptor cleanerImage = BitmapDescriptorFactory.fromResource(R.drawable.washer);
+        BitmapDrawable cleanerDrawable = (BitmapDrawable) ContextCompat.getDrawable(getBaseContext(),R.drawable.washer_bike);
+        Bitmap b = cleanerDrawable.getBitmap();
+        Bitmap bitmapResized = Bitmap.createScaledBitmap(b, 60, 60, false);
         for (int i = 0; i < cleaners.size();i++){
             if (i < markers.size())
                 aux.add(markers.get(i));
             else
                 aux.add(map.addMarker(new MarkerOptions()
                         .position(auxLocation)
-                        .icon(cleanerImage)));
+                        .icon(BitmapDescriptorFactory.fromBitmap(bitmapResized))));
             Cleaner cleaner = cleaners.get(i);
             aux.get(i).setPosition(new LatLng(cleaner.latitud,cleaner.longitud));
         }
@@ -764,37 +768,6 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                 public void run() {
                     if (serviceLocationText.didTouchFocusSelect())
                         serviceLocationText.setText(address);
-                }
-            });
-        } catch (Throwable e) {
-            Log.i("LOCATION","Error gettin geo location = " + e.getMessage());
-        }
-    }
-
-    private void getUserGeoLocaton() {
-        Geocoder geocoder;
-        List<Address> addresses;
-        geocoder = new Geocoder(this, Locale.getDefault());
-        try {
-            Criteria crit = new Criteria();
-            crit.setAccuracy(Criteria.ACCURACY_FINE);
-            String provider = locationManager.getBestProvider(crit,true);
-            Location lastLocation = locationManager.getLastKnownLocation(provider);
-            addresses = geocoder.getFromLocation(lastLocation.getLatitude(), lastLocation.getLongitude(), 1);
-            if (addresses.size() < 1)
-                return;
-            final String address = addresses.get(0).getAddressLine(0);
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                        locationText.setText(address);
-                }
-            });
-        } catch (SecurityException e) {
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    createAlert(getString(R.string.no_location_service));
                 }
             });
         } catch (Throwable e) {
@@ -848,7 +821,6 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         lowLayout.setVisibility(LinearLayout.GONE);
         startLayout.setVisibility(LinearLayout.GONE);
         serviceLocationText.setVisibility(View.VISIBLE);
-        locationText.setVisibility(View.VISIBLE);
     }
 
     private void configureVehicleSelectedState() {
@@ -856,14 +828,6 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         lowLayout.setVisibility(LinearLayout.VISIBLE);
         startLayout.setVisibility(LinearLayout.GONE);
         serviceLocationText.setVisibility(View.GONE);
-        locationText.setVisibility(View.GONE);
-        leftButton.setText(R.string.eco);
-        leftImage.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.ecologico));
-        leftDescription.setText(R.string.eco_description);
-        rightButton.setText(R.string.traditional);
-        rightImage.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.tradicional));
-        rightDescription.setText(R.string.traditional_description);
-        serviceLocationText.setEnabled(true);
     }
 
     private void configureServiceSelectedState() {
@@ -871,33 +835,73 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         lowLayout.setVisibility(LinearLayout.VISIBLE);
         startLayout.setVisibility(LinearLayout.GONE);
         serviceLocationText.setVisibility(View.GONE);
-        locationText.setVisibility(View.GONE);
-        if (vehicleType.equals(String.valueOf(Service.BIKE))) {
-            rightLayout.setVisibility(View.INVISIBLE);
-        } else {
-            rightLayout.setVisibility(View.VISIBLE);
+        rightLayout.setVisibility(View.VISIBLE);
+        String leftTitle = getString(R.string.outside);
+        String rightTitle = getString(R.string.outside_and_inside);
+        switch (Integer.parseInt(vehicleType)) {
+            case Service.BIKE:
+                leftTitle += " $1";
+                rightLayout.setVisibility(View.GONE);
+                break;
+            case Service.CAR:
+                leftTitle += " $2";
+                rightTitle += " $3";
+                break;
+            case Service.SMALL_VAN:
+                leftTitle += " $4";
+                rightTitle += " $5";
+                break;
+            case Service.BIG_VAN:
+                leftTitle += " $6";
+                rightTitle += " $7";
+                break;
+            default:
+                break;
         }
-        leftButton.setText(R.string.outside);
+        leftButton.setText(leftTitle);
         leftImage.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.exterior));
         leftDescription.setText(R.string.outside_description);
-        rightButton.setText(R.string.outside_and_inside);
+        rightButton.setText(rightTitle);
         rightImage.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.interior));
         rightDescription.setText(R.string.outside_and_inside_description);
         serviceLocationText.setEnabled(true);
     }
 
     private void configureServiceTypeState() {
-        createAlertRequesting();
-        Thread sendRequestServiceThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (serviceRequestedFlag)
-                    return;
-                serviceRequestedFlag = true;
-                sendRequestService();
-            }
-        });
-        sendRequestServiceThread.start();
+        if (serviceRequestedFlag)
+            return;
+        serviceRequestedFlag = true;
+        createAlertRequestConfirmation();
+
+    }
+
+    private void createAlertRequestConfirmation() {
+        new AlertDialog.Builder(this)
+                .setMessage("Confirmar pedido del servicio")
+                .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        createAlertRequesting();
+                        Thread sendRequestServiceThread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                sendRequestService();
+                            }
+                        });
+                        sendRequestServiceThread.start();
+                        dialog.cancel();
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        serviceRequestedFlag = false;
+                        viewState = OUTSIDE_OR_INSIDE_SELECTED;
+                        dialog.cancel();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     private void configureServiceStartState() {
@@ -905,7 +909,6 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         lowLayout.setVisibility(LinearLayout.GONE);
         startLayout.setVisibility(LinearLayout.VISIBLE);
         serviceLocationText.setVisibility(View.GONE);
-        locationText.setVisibility(View.GONE);
         cancelButton.setVisibility(View.VISIBLE);
         serviceInfo.setText(R.string.looking);
         serviceLocationText.setEnabled(false);
@@ -921,6 +924,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
             service = String.valueOf(Service.OUTSIDE);
             viewState = OUTSIDE_OR_INSIDE_SELECTED;
         }
+        serviceRequestedFlag = false;
         configureState();
     }
 
@@ -933,43 +937,72 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
             service = String.valueOf(Service.OUTSIDE_INSIDE);
             viewState = OUTSIDE_OR_INSIDE_SELECTED;
         }
+        serviceRequestedFlag = false;
         configureState();
+    }
+
+    public void clickedMyLocation(View view) {
+        try {
+            Location lastKnownLocation = getBestKnownLocation();
+            requestLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(requestLocation, 15);
+            map.moveCamera(cameraUpdate);
+        } catch (errorReadingLocation e) {
+            postAlert("No se tiene acceso a la ubicacion");
+        }
+    }
+
+    private Location getBestKnownLocation () throws errorReadingLocation{
+        Location location;
+        try {
+            if (( location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)) != null) {
+                long locationTime = (SystemClock.elapsedRealtimeNanos() - location.getElapsedRealtimeNanos()) * 1000 * 1000;
+                if (locationTime > 30 && locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) != null) {
+                    return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                } else {
+                    throw new errorReadingLocation();
+                }
+            } else if (( location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)) != null){
+                long locationTime = (SystemClock.elapsedRealtimeNanos() - location.getElapsedRealtimeNanos()) * 1000 * 1000;
+                if (locationTime > 30 && locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER) != null) {
+                    return locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+                } else {
+                    throw new errorReadingLocation();
+                }
+            } else {
+                throw new errorReadingLocation();
+            }
+        } catch (SecurityException e) {
+            throw new errorReadingLocation();
+        }
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         try {
-            BitmapDescriptor cleanerImage = BitmapDescriptorFactory.fromResource(R.drawable.washer);
+            BitmapDrawable cleanerDrawable = (BitmapDrawable) ContextCompat.getDrawable(getBaseContext(),R.drawable.washer_bike);
+            Bitmap b = cleanerDrawable.getBitmap();
+            Bitmap bitmapResized = Bitmap.createScaledBitmap(b, 60, 60, false);
             map = googleMap;
-            map.setMyLocationEnabled(true);
-            map.setPadding(0,0,0,0);
-            //map.setTrafficEnabled(true);
-            //map.getUiSettings().setZoomControlsEnabled(true);
-            map.getUiSettings().setZoomGesturesEnabled(true);
+            map.setTrafficEnabled(true);
+            //map.setMyLocationEnabled(true);
             cleanerMarker = map.addMarker(new MarkerOptions()
                     .position(new LatLng(0,0))
-                    .icon(cleanerImage));
+                    .icon(BitmapDescriptorFactory.fromBitmap(bitmapResized)));
             cleanerMarker.setVisible(false);
-            Location lastKnownLocation;
-            if ((lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)) == null)
-                if ((lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)) == null) {
-                    centralMarker = map.addMarker(new MarkerOptions()
-                            .position(new LatLng(0,0))
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-                    createAlert(getString(R.string.no_location_service));
-                    return;
-                }
+            centralMarker = map.addMarker(new MarkerOptions()
+                    .position(new LatLng(0,0))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+            Location lastKnownLocation = getBestKnownLocation();
             requestLocation = new LatLng(lastKnownLocation.getLatitude(),lastKnownLocation.getLongitude());
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(requestLocation,15);
             map.moveCamera(cameraUpdate);
-            locationManager.removeUpdates(this);
-            centralMarker = map.addMarker(new MarkerOptions()
-                    .position(requestLocation)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-        } catch (SecurityException e) {
-            postAlert("Error loading map");
+            centralMarker.setPosition(requestLocation);
+        } catch (errorReadingLocation e){
+            createAlert(getString(R.string.no_location_service));
         }
     }
+
 
     private void createAlert(String title) {
         new AlertDialog.Builder(this)
@@ -1015,9 +1048,9 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         String [] titles = getResources().getStringArray(R.array.menu_options);
         Collections.addAll(navigationItems, titles);
         listItems.add(Pair.create(titles[0], ContextCompat.getDrawable(getBaseContext(),R.drawable.pay_icon)));
-        listItems.add(Pair.create(titles[1], ContextCompat.getDrawable(getBaseContext(),R.drawable.bill_icon)));
-        listItems.add(Pair.create(titles[2], ContextCompat.getDrawable(getBaseContext(),R.drawable.hist_icon)));
-        listItems.add(Pair.create(titles[3], ContextCompat.getDrawable(getBaseContext(),R.drawable.car_icon)));
+        listItems.add(Pair.create(titles[1], ContextCompat.getDrawable(getBaseContext(),R.drawable.billing_icon)));
+        listItems.add(Pair.create(titles[2], ContextCompat.getDrawable(getBaseContext(),R.drawable.history_icon)));
+        listItems.add(Pair.create(titles[3], ContextCompat.getDrawable(getBaseContext(),R.drawable.vehicle_icon)));
         listItems.add(Pair.create(titles[4], ContextCompat.getDrawable(getBaseContext(),R.drawable.help_icon)));
         listItems.add(Pair.create(titles[5], ContextCompat.getDrawable(getBaseContext(),R.drawable.work_icon)));
         listItems.add(Pair.create(titles[6], ContextCompat.getDrawable(getBaseContext(),R.drawable.config_icon)));
@@ -1126,6 +1159,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
             addresses = geocoder.getFromLocationName(location,5);
             Criteria crit = new Criteria();
             crit.setAccuracy(Criteria.ACCURACY_FINE);
+            crit.setPowerRequirement(Criteria.POWER_HIGH);
             String provider = locationManager.getBestProvider(crit,true);
             Location lastLocation = locationManager.getLastKnownLocation(provider);
             if (addresses.size() < 1)
@@ -1234,4 +1268,6 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     public void onProviderEnabled(String provider) { }
     @Override
     public void onProviderDisabled(String provider) { }
+    static class errorReadingLocation extends Throwable {
+    }
 }

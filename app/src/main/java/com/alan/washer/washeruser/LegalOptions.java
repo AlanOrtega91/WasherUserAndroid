@@ -32,7 +32,7 @@ public class LegalOptions extends AppCompatActivity implements View.OnClickListe
         TextView invi = (TextView)findViewById(R.id.rightButtonOptionsTitlebar);
         TextView menuTitle = (TextView)findViewById(R.id.titleOptionsTitlebar);
         menuTitle.setText(R.string.about);
-        menuButton.setText(R.string.cancel);
+        menuButton.setText(R.string.back);
         invi.setVisibility(View.INVISIBLE);
         menuButton.setOnClickListener(this);
     }

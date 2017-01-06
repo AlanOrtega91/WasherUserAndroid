@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.alan.washer.washeruser.CreateAccount"
-    android:background="@drawable/background">
+    android:background="@drawable/background_main">
 
     <LinearLayout
         android:orientation="vertical"
@@ -12,56 +12,44 @@
         android:layout_height="wrap_content">
 
         <EditText
-            style="@style/edit_text"
+            style="@style/input_text"
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
             android:id="@+id/createEmail"
             android:inputType="textEmailAddress"
             android:hint="@string/hint_email"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="5dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"/>
+            android:layout_marginRight="5dp" />
 
         <EditText
-            style="@style/edit_text"
+            style="@style/input_text"
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
             android:id="@+id/createPhone"
             android:inputType="phone"
             android:hint="@string/hint_phone"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
-            android:maxLength="12"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"/>
+            android:maxLength="12" />
 
         <EditText
-            style="@style/edit_text"
+            style="@style/input_text"
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
             android:id="@+id/createPassword"
             android:inputType="textPassword"
             android:hint="@string/hint_password"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="5dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"/>
+            android:layout_marginRight="5dp" />
 
         <EditText
-            style="@style/edit_text"
+            style="@style/input_text"
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
             android:id="@+id/createPassword2"
             android:inputType="textPassword"
             android:hint="@string/hint_repeat_password"
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="5dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"/>
+            android:layout_marginLeft="5dp" />
     </LinearLayout>
 </ScrollView>

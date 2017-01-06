@@ -102,7 +102,7 @@ public class HelpActivity extends AppCompatActivity implements View.OnClickListe
         TextView menuButton = (TextView)findViewById(R.id.menuButton);
         TextView menuTitle = (TextView)findViewById(R.id.menuTitle);
         menuTitle.setText(R.string.help_title);
-        menuButton.setText(R.string.cancel);
+        menuButton.setText(R.string.menu);
         menuButton.setOnClickListener(this);
     }
 

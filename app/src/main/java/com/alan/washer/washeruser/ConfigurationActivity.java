@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -86,12 +87,16 @@ public class ConfigurationActivity extends AppCompatActivity implements View.OnC
         TextView menuButton = (TextView)findViewById(R.id.menuButton);
         TextView menuTitle = (TextView)findViewById(R.id.menuTitle);
         menuTitle.setText(R.string.configuration_title);
-        menuButton.setText(R.string.cancel);
+        menuButton.setText(R.string.menu);
         menuButton.setOnClickListener(this);
     }
 
     public void readUserImage() {
-        userImage.setImageBitmap(User.readImageBitmapFromFile(user.imagePath));
+        if (!user.imagePath.equals("") ) {
+            userImage.setImageBitmap(User.readImageBitmapFromFile(user.imagePath));
+        } else {
+            userImage.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.default_image));
+        }
     }
 
     private void fillUserTextFields() {

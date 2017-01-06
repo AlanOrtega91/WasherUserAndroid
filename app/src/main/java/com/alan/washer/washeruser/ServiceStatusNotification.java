@@ -6,9 +6,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
-
 
 public class ServiceStatusNotification {
 
@@ -16,13 +17,15 @@ public class ServiceStatusNotification {
 
     public static void notify(final Context context, final String info,Class activityClass) {
         final String title = "Washer";
+        Bitmap icon = BitmapFactory.decodeResource(context.getResources(),R.drawable.appicon);
 
         Intent intent = new Intent(context,activityClass);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setDefaults(Notification.DEFAULT_ALL)
-                .setSmallIcon(R.drawable.appicon)
+                .setSmallIcon(R.drawable.logo)
+                .setLargeIcon(icon)
                 .setContentTitle(title)
                 .setContentText(info)
                 .setContentIntent(pendingIntent)

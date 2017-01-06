@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.alan.washer.washeruser.LegalOptions">
+    tools:context="com.alan.washer.washeruser.LegalOptions"
+    android:background="#EBEBF1">
 
     <TextView
-        style="@style/edit_text"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        style="@style/input_text"
+        android:layout_width="fill_parent"
         android:text="@string/copyright"
         android:id="@+id/copyright"
         android:layout_marginTop="10dp"
@@ -18,9 +18,8 @@
         android:onClick="onClickChange"/>
 
     <TextView
-        style="@style/edit_text"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        style="@style/input_text"
+        android:layout_width="fill_parent"
         android:text="@string/terms_and_conditions"
         android:id="@+id/terms"
         android:layout_marginRight="10dp"
@@ -29,9 +28,8 @@
         android:onClick="onClickChange"/>
 
     <TextView
-        style="@style/edit_text"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        style="@style/input_text"
+        android:layout_width="fill_parent"
         android:text="@string/privacy"
         android:id="@+id/privacy"
         android:layout_marginLeft="10dp"
@@ -40,9 +38,8 @@
         android:onClick="onClickChange"/>
 
     <TextView
-        style="@style/edit_text"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        style="@style/input_text"
+        android:layout_width="fill_parent"
         android:text="@string/software_license"
         android:id="@+id/license"
         android:layout_marginRight="10dp"

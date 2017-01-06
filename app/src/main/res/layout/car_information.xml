@@ -17,45 +17,38 @@
             android:layout_marginTop="20dp">
 
             <EditText
-                style="@style/regular_text"
+                style="@style/input_text"
                 android:layout_width="150dp"
-                android:layout_height="50dp"
                 android:id="@+id/platesNew"
                 android:hint="@string/platesExample"
                 android:inputType="text"
-                android:background="@android:color/white"
                 android:layout_marginStart="5dp"
                 android:gravity="center"
-                android:textSize="25sp"
                 android:maxLength="10"
-                android:textAllCaps="true"
-                android:textColor="@android:color/darker_gray"/>
+                android:textAllCaps="true" />
         </LinearLayout>
 
         <Spinner
+            style="@style/input_text"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
             android:id="@+id/brandSpinner"
             android:spinnerMode="dropdown"
-            android:background="@android:color/white"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp" />
         <Spinner
+            style="@style/input_text"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
             android:id="@+id/typesSpinner"
             android:spinnerMode="dropdown"
-            android:background="@android:color/white"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp" />
         <Spinner
+            style="@style/input_text"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
             android:id="@+id/colorSpinner"
             android:spinnerMode="dropdown"
-            android:background="@android:color/white"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp" />

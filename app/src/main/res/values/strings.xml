@@ -51,9 +51,9 @@
     <string name="eco_description">Lavado de auto en seco, con nuestro producto de máxima calidad, que brinda un acabado brillante, sin rayar el auto, protegiendo la pintura, al mismo tiempo que deja una capa de cera protectora.</string>
     <string name="traditional">Tradicional $$</string>
     <string name="traditional_description">Lavado de auto con agua y shampoo, que deja una capa protectora de cera. Para este servicio, el usuario deberá proporcionar el agua al momento de la llegada de nuestros socios lavadores.</string>
-    <string name="outside">Lavado Exterior $$</string>
+    <string name="outside">Lavado Exterior</string>
     <string name="outside_description">Consiste en lavado de carrocería, cristales, rines, llantas y molduras (no se requiere estar en el lugar de servicio del vehículo).</string>
-    <string name="outside_and_inside">Lavado Interior $$</string>
+    <string name="outside_and_inside">Lavado Interior</string>
     <string name="outside_and_inside_description">Consiste en Lavado de carrocería, cristales, rines, llantas, molduras, aspirado y limpieza de habitáculo (se requiere estar presente al momento de iniciar y al terminar el servicio para permitir que el socio lavador pueda acceder al interior del vehículo).</string>
     <string name="arriving_in">Llegando en: </string>
     <string name="search">Buscar</string>
@@ -108,7 +108,7 @@
     <!-- Strings related to Configuration -->
     <string name="edit_account">EDITAR CUENTA</string>
     <string name="log_out">DESCONECTAR</string>
-    <string name="change_image">Cambiar imagen</string>
+    <string name="change_image">CAMBIAR FOTO</string>
 
     <!-- Strings related to About -->
     <string name="about">Washer para lavar tu auto</string>
@@ -180,11 +180,16 @@
     <string name="user_block">Usuario bloqueado por error en tarjeta</string>
     <string name="cancel_with_charge">Cancelar en este momento incluye un costo, estas seguro que deseas cancelar?</string>
     <string name="requesting">Pidiendo servicio...</string>
+    <string name="menu">MENÚ</string>
+    <string name="back">ATRAS</string>
+    <string name="confirm">CONFIRMAR</string>
+    <string name="x">X</string>
+    <string name="email">EMAIL</string>
     <string-array name="vehicles_types">
         <item>Moto</item>
         <item>Auto</item>
-        <item>Camioneta chica</item>
-        <item>Camioneta grande</item>
+        <item>Camioneta chica (5 personas)</item>
+        <item>Camioneta grande (más de 5 personas)</item>
     </string-array>
     <string-array name="vehicles_colors">
         <item>Azul</item>

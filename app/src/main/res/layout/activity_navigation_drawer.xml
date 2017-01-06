@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -90,7 +91,7 @@
                                     android:layout_height="20dp"
                                     android:contentDescription="@string/image_description"
                                     android:layout_gravity="center_vertical"
-                                    android:src="@drawable/ecologico"
+                                    android:src="@drawable/interior"
                                     android:id="@+id/leftButtonImage"
                                     android:layout_marginEnd="5dp"/>
 
@@ -144,7 +145,7 @@
                                     android:layout_height="20dp"
                                     android:contentDescription="@string/image_description"
                                     android:layout_gravity="center_vertical"
-                                    android:src="@drawable/tradicional"
+                                    android:src="@drawable/exterior"
                                     android:id="@+id/rightButtonImage"
                                     android:layout_marginEnd="5dp"/>
 
@@ -244,37 +245,29 @@
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="50dp"
+                    android:background="@android:color/white">
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/my_location"
+                            android:contentDescription="@string/image_description"
+                            app:srcCompat="@drawable/my_location"
+                            android:onClick="clickedMyLocation"/>
 
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginRight="40dp"
-                        android:layout_marginTop="50dp"
-                        android:background="@drawable/location_up"
-                        android:hint="@string/hint_location"
-                        android:textAlignment="center"
-                        android:gravity="center_vertical"
-                        android:id="@+id/locationText"
-                        android:textSize="15sp"
-                        android:textColor="@android:color/darker_gray" />
-
-                    <EditText
-                        android:layout_width="fill_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginRight="40dp"
-                        android:background="@drawable/location_down"
-                        android:hint="@string/hint_location"
-                        android:textAlignment="center"
-                        android:gravity="center_vertical"
-                        android:id="@+id/serviceLocationText"
-                        android:textSize="15sp"
-                        android:textColor="@android:color/darker_gray"
-                        android:inputType="text" />
+                        <EditText
+                            style="@style/input_text"
+                            android:layout_width="fill_parent"
+                            android:hint="@string/hint_location"
+                            android:textAlignment="center"
+                            android:gravity="center_vertical"
+                            android:id="@+id/serviceLocationText"
+                            android:inputType="text" />
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>

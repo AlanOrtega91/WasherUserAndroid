@@ -47,7 +47,7 @@ public class LegalOptionsDisplay extends AppCompatActivity implements View.OnCli
         TextView menuButton = (TextView)findViewById(R.id.menuButton);
         TextView menuTitle = (TextView)findViewById(R.id.menuTitle);
         menuTitle.setText(R.string.legal);
-        menuButton.setText(R.string.cancel);
+        menuButton.setText(R.string.back);
         menuButton.setOnClickListener(this);
     }
 

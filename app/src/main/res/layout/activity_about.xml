@@ -4,24 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.alan.washer.washeruser.AboutActivity">
+    tools:context="com.alan.washer.washeruser.AboutActivity"
+    android:background="#EBEBF1">
 
     <TextView
-        style="@style/edit_text"
+        style="@style/input_text"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
         android:text="@string/legal"
         android:id="@+id/textView5"
-        android:textColor="@android:color/darker_gray"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:onClick="openLegal"/>
 
     <TextView
-        style="@style/edit_text"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        style="@style/input_text"
+        android:layout_width="fill_parent"
         android:text="@string/vashen_web"
         android:id="@+id/textView19"
         android:layout_marginTop="10dp"

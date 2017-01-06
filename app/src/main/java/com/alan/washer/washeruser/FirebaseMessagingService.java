@@ -13,56 +13,68 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService{
 
     SharedPreferences settings;
+    int stateRecevied = 0;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         String message;
-        Class notificationClass = NavigationDrawer.class;
         settings = getSharedPreferences(AppData.FILE, 0);
         Boolean inBackground = settings.getBoolean(AppData.IN_BACKGROUND,false);
         String serviceJson;
         String state = remoteMessage.getData().get("state");
-        //TODO: check for double noti
         if (state == null)
             return;
         switch (state){
             case "2":
-                message = getString(R.string.service_accepted);
-                serviceJson = remoteMessage.getData().get("serviceInfo");
-                if (serviceJson == null)
-                    return;
-                saveNewServiceState(serviceJson);
-                if (!inBackground)
-                    sendPopUp(message);
-                break;
-            case "4":
-                message = getString(R.string.service_started);
-                serviceJson = remoteMessage.getData().get("serviceInfo");
-                if (serviceJson == null)
-                    return;
-                saveNewServiceState(serviceJson);
-                if (!inBackground)
-                    sendPopUp(message);
-                break;
-            case "5":
-                serviceJson = remoteMessage.getData().get("serviceInfo");
-                if (serviceJson == null)
-                    return;
-                saveNewServiceState(serviceJson);
-                break;
-            case "6":
-                if (new DataBase(getBaseContext()).getActiveService() != null) {
-                    message = getString(R.string.canceled);
-                    if (!inBackground)
-                        sendPopUp(message);
+                if (stateRecevied != 2) {
+                    stateRecevied = 2;
+                    message = getString(R.string.service_accepted);
                     serviceJson = remoteMessage.getData().get("serviceInfo");
                     if (serviceJson == null)
                         return;
-                    deleteService(serviceJson);
+                    saveNewServiceState(serviceJson);
+                    if (!inBackground)
+                        sendPopUp(message);
+                }
+                break;
+            case "4":
+                if (stateRecevied != 4) {
+                    stateRecevied = 4;
+                    message = getString(R.string.service_started);
+                    serviceJson = remoteMessage.getData().get("serviceInfo");
+                    if (serviceJson == null)
+                        return;
+                    saveNewServiceState(serviceJson);
+                    if (!inBackground)
+                        sendPopUp(message);
+                }
+                break;
+            case "5":
+                if (stateRecevied != 5) {
+                    stateRecevied = 5;
+                    serviceJson = remoteMessage.getData().get("serviceInfo");
+                    if (serviceJson == null)
+                        return;
+                    saveNewServiceState(serviceJson);
+                }
+                break;
+            case "6":
+                if (stateRecevied != 6) {
+                    stateRecevied = 6;
+                    if (new DataBase(getBaseContext()).getActiveService() != null) {
+                        message = getString(R.string.canceled);
+                        if (!inBackground)
+                            sendPopUp(message);
+                        serviceJson = remoteMessage.getData().get("serviceInfo");
+                        if (serviceJson == null)
+                            return;
+                        deleteService(serviceJson);
+                    }
                 }
                 break;
             default:
@@ -85,6 +97,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             services.get(i).cleanerId = jsonService.getString("idLavador");
             services.get(i).status = jsonService.getString("status");
             services.get(i).startedTime = jsonService.getString("fechaEmpezado");
+            //Todo: Check for change
+            //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd KK:mm:ss");
             if (!jsonService.isNull("horaFinalEstimada"))
                 services.get(i).finalTime = format.parse(jsonService.getString("horaFinalEstimada"));
