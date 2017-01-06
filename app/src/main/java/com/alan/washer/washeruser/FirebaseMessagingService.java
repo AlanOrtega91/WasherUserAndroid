@@ -38,7 +38,9 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                     if (serviceJson == null)
                         return;
                     saveNewServiceState(serviceJson);
-                    if (!inBackground)
+                    if (inBackground)
+                        ServiceStatusNotification.notify(getBaseContext(), message, NavigationDrawer.class);
+                    else
                         sendPopUp(message);
                 }
                 break;
@@ -50,7 +52,9 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                     if (serviceJson == null)
                         return;
                     saveNewServiceState(serviceJson);
-                    if (!inBackground)
+                    if (inBackground)
+                        ServiceStatusNotification.notify(getBaseContext(), message, NavigationDrawer.class);
+                    else
                         sendPopUp(message);
                 }
                 break;
@@ -61,6 +65,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                     if (serviceJson == null)
                         return;
                     saveNewServiceState(serviceJson);
+                    if (inBackground)
+                        ServiceStatusNotification.notify(getBaseContext(), getString(R.string.finished), NavigationDrawer.class);
                 }
                 break;
             case "6":
@@ -68,7 +74,9 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                     stateRecevied = 6;
                     if (new DataBase(getBaseContext()).getActiveService() != null) {
                         message = getString(R.string.canceled);
-                        if (!inBackground)
+                        if (inBackground)
+                            ServiceStatusNotification.notify(getBaseContext(), message, NavigationDrawer.class);
+                        else
                             sendPopUp(message);
                         serviceJson = remoteMessage.getData().get("serviceInfo");
                         if (serviceJson == null)

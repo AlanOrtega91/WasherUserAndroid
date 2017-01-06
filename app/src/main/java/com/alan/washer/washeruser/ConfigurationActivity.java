@@ -118,6 +118,8 @@ public class ConfigurationActivity extends AppCompatActivity implements View.OnC
     private void sendLogOut() {
         try {
             ProfileReader.delete(getBaseContext());
+            Intent firebaseIntent = new Intent(getBaseContext(),FirebaseMessagingService.class);
+            stopService(firebaseIntent);
             user.sendLogout();
             changeActivity(MainActivity.class);
             NavigationDrawer.instance.finish();

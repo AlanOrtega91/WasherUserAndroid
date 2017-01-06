@@ -156,14 +156,11 @@
             </LinearLayout>
 
             <Button
+                style="@style/button_style"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="@string/send"
                 android:id="@+id/button4"
                 android:onClick="trySendReview"
-                android:textColor="@android:color/darker_gray"
-                android:layout_gravity="center"
-                android:background="@android:color/white"
                 android:layout_marginTop="15dp" />
         </LinearLayout>
 

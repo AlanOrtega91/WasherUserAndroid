@@ -251,7 +251,7 @@
                     android:layout_marginRight="40dp"
                     android:layout_height="40dp"
                     android:layout_marginTop="50dp"
-                    android:background="@android:color/white">
+                    android:background="@android:color/transparent">
                         <ImageView
                             android:layout_width="40dp"
                             android:layout_height="40dp"
@@ -267,6 +267,7 @@
                             android:textAlignment="center"
                             android:gravity="center_vertical"
                             android:id="@+id/serviceLocationText"
+                            android:textSize="15sp"
                             android:inputType="text" />
                 </LinearLayout>
             </RelativeLayout>

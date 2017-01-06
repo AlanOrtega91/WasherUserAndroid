@@ -96,6 +96,7 @@
         <service android:name="com.alan.washer.washeruser.FirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.alan.washer.washercleaner.LONGRUNSERVICE" />
             </intent-filter>
         </service>
         <service android:name="com.alan.washer.washeruser.FirebaseInstanceIDService">

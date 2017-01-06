@@ -148,11 +148,14 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     int cancelCode = 0;
     Boolean showCancelAlert = false;
     AlertDialog requestingAlert;
+    AlertDialog alertBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
+        Intent firebaseIntent = new Intent(getBaseContext(),FirebaseMessagingService.class);
+        startService(firebaseIntent);
         initView();
         initLocation();
         instance = this;
@@ -341,6 +344,9 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                 cleanerInfo.setText(getString(R.string.init_string));
                 cleanerImageInfo.setImageDrawable(null);
                 serviceInfo.setText(getString(R.string.looking));
+                if (alertBox != null) {
+                    alertBox.dismiss();
+                }
             }
         });
     }
@@ -356,6 +362,9 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                 cleanerImageInfo.setImageDrawable(null);
                 serviceInfo.setText(getString(R.string.init_string));
                 onResume();
+                if (alertBox != null) {
+                    alertBox.dismiss();
+                }
             }
         });
     }
@@ -841,7 +850,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         switch (Integer.parseInt(vehicleType)) {
             case Service.BIKE:
                 leftTitle += " $1";
-                rightLayout.setVisibility(View.GONE);
+                rightLayout.setVisibility(View.INVISIBLE);
                 break;
             case Service.CAR:
                 leftTitle += " $2";
@@ -1005,7 +1014,11 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
 
 
     private void createAlert(String title) {
-        new AlertDialog.Builder(this)
+        //TODO: ake global and delete
+        if (alertBox != null) {
+            alertBox.dismiss();
+        }
+        alertBox = new AlertDialog.Builder(this)
                 .setMessage(title)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
@@ -1037,7 +1050,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         }
         TextView menuTitle = (TextView)findViewById(R.id.menuMapTitle);
         menuTitle.setText(R.string.app_name_display);
-        menuTitle.setTextColor(Color.rgb(6,140,135));
+        menuTitle.setTextColor(Color.rgb(7,96,53));
     }
 
     private void configureMenu() {

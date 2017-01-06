@@ -23,15 +23,18 @@
     <style name="titlebar_menu">
         <item name="android:background">@android:color/white</item>
         <item name="android:layout_height">45dp</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
     <style name="titlebar_title">
         <item name="android:textColor">@android:color/darker_gray</item>
         <item name="android:textSize">50sp</item>
         <item name="android:background">@android:color/transparent</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
     <style name="titlebar_button">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 
     <style name="input_text">
@@ -40,12 +43,14 @@
         <item name="android:padding">10dp</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:layout_gravity">start</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
     <style name="button_style">
         <item name="android:background">@android:color/white</item>
         <item name="android:textColor">@android:color/darker_gray</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:layout_gravity">center</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
     <style name="text_style">
         <item name="android:textColor">@android:color/white</item>
@@ -53,6 +58,7 @@
         <item name="android:layout_height">40dp</item>
         <item name="android:layout_gravity">start|bottom</item>
         <item name="android:gravity">start|bottom</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
     <style name="aux_text_style">
         <item name="android:textColor">@android:color/white</item>
@@ -60,5 +66,7 @@
         <item name="android:layout_height">20dp</item>
         <item name="android:textAlignment">center</item>
         <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 </resources>

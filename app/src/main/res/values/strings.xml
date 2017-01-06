@@ -63,7 +63,7 @@
     <string name="on_the_way">De camino</string>
     <string name="started">Terminando servicio en: </string>
     <string name="finished">Terminado</string>
-    <string name="canceled">Cancelado</string>
+    <string name="canceled">Tu servicio fue cancelado</string>
     <string name="notify_accepted">Tu servicio fue aceptado</string>
     <string name="notify_started">Tu servicio ha comenzado</string>
     <string name="notify_canceled">Tu servicio fue cancelado</string>

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,7 +31,6 @@ public class SummaryActivity extends AppCompatActivity {
 
     TextView date;
     TextView price;
-    ImageView service;
     ImageView cleaner;
     ImageView location;
     int rating = 0;
@@ -122,7 +122,7 @@ public class SummaryActivity extends AppCompatActivity {
                         }
                     });
                 }catch (Exception e){
-                    return;
+                    Log.i("Error","Setting image");
                 }
             }
         });

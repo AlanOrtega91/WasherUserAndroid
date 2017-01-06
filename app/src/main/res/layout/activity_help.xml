@@ -73,7 +73,7 @@
     <Button
         style="@style/button_style"
         android:layout_width="fill_parent"
-        android:text="Como usar Vashen"
+        android:text="Como usar Washer"
         android:id="@+id/button10"
         android:onClick="onClickHelp"
         android:layout_marginLeft="5dp"
