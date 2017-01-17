@@ -260,7 +260,6 @@ public class CarsActivity extends AppCompatActivity implements AdapterView.OnIte
                 Car car = cars.get(position);
                 TextView plates = (TextView)itemView.findViewById(R.id.plates);
                 TextView brand = (TextView)itemView.findViewById(R.id.brand);
-                //TODO: Implement click info
                 plates.setText(car.plates);
                 brand.setText(car.brand);
                 RelativeLayout selectedIndicator = (RelativeLayout)itemView.findViewById(R.id.selectedIndicator);

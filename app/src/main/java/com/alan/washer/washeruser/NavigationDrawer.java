@@ -595,7 +595,6 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         reloadAddressTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                //TODO: Change to request when map changes
                 getGeoLocation();
             }
         }, 0, ONE_SECOND);
@@ -977,7 +976,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         } catch (errorReadingLocation e){
             createAlert(getString(R.string.no_location_service));
         } catch (SecurityException e) {
-
+            Log.i("Security","Location");
         }
     }
 

@@ -1,23 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.alan.washer.washeruser">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="false"
         android:icon="@drawable/appicon"
         android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme"
         android:largeHeap="true"
-        android:fullBackupContent="false">
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name="com.alan.washer.washeruser.InitActivity">
+        <activity android:name=".InitActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,85 +26,111 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.alan.washer.washeruser.LoginActivity"
+            android:name=".LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.alan.washer.washeruser.NewCar"
+            android:name=".NewCar"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.alan.washer.washeruser.MainActivity"
+            android:name=".MainActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.alan.washer.washeruser.CreateAccount"
+            android:name=".CreateAccount"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.alan.washer.washeruser.CreateAccountPersonal"
+            android:name=".CreateAccountPersonal"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.alan.washer.washeruser.CreateAccountPayment"
+            android:name=".CreateAccountPayment"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.alan.washer.washeruser.ForgotPassword"
+            android:name=".ForgotPassword"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.alan.washer.washeruser.NavigationDrawer"
+            android:name=".NavigationDrawer"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.alan.washer.washeruser.AboutActivity"
+            android:name=".AboutActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.alan.washer.washeruser.ConfigurationActivity"
+            android:name=".ConfigurationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.alan.washer.washeruser.EditAccountActivity"
+            android:name=".EditAccountActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.alan.washer.washeruser.HelpActivity"
+            android:name=".HelpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.alan.washer.washeruser.BillingActivity"
+            android:name=".BillingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.alan.washer.washeruser.EditBillingActivity"
+            android:name=".EditBillingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.alan.washer.washeruser.PaymentActivity"
+            android:name=".PaymentActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.alan.washer.washeruser.HistoryActivity"
+            android:name=".HistoryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.alan.washer.washeruser.SummaryActivity"
+            android:name=".SummaryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.alan.washer.washeruser.CarsActivity"
+            android:name=".CarsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.alan.washer.washeruser.EditCardActivity"
+            android:name=".EditCardActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.alan.washer.washeruser.EditCarActivity"
+        <activity
+            android:name=".EditCarActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.alan.washer.washeruser.LoadingActivity"
+        <activity
+            android:name=".LoadingActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.alan.washer.washeruser.LegalOptions"
+        <activity
+            android:name=".LegalOptions"
             android:screenOrientation="portrait" />
-        <activity android:name="com.alan.washer.washeruser.LegalOptionsDisplay"
+        <activity
+            android:name=".LegalOptionsDisplay"
             android:screenOrientation="portrait" />
-        <activity android:name="com.alan.washer.washeruser.InformationActivity"
+        <activity
+            android:name=".InformationActivity"
             android:screenOrientation="portrait" />
 
-        <service android:name="com.alan.washer.washeruser.FirebaseMessagingService">
+        <service
+            android:name=".FirebaseMessagingService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
                 <action android:name="com.alan.washer.washercleaner.LONGRUNSERVICE" />
             </intent-filter>
         </service>
-        <service android:name="com.alan.washer.washeruser.FirebaseInstanceIDService">
+        <service
+            android:name=".FirebaseInstanceIDService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+
+        <activity android:name=".DeepLinking">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
+                <data android:scheme="http"
+                    android:host="www.washer.mx"
+                    android:pathPrefix="/service" />
+                <!-- note that the leading "/" is required for pathPrefix-->
+                <!-- Accepts URIs that begin with "example://gizmos” -->
+                <data android:scheme="washer"
+                    android:host="washer" />
+
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

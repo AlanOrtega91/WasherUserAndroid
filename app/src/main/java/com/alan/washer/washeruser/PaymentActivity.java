@@ -14,14 +14,11 @@ import com.alan.washer.washeruser.model.AppData;
 import com.alan.washer.washeruser.model.Database.DataBase;
 import com.alan.washer.washeruser.model.UserCard;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class PaymentActivity extends AppCompatActivity implements View.OnClickListener  {
 
     Handler handler;
     SharedPreferences settings;
-    List<UserCard> cards = new ArrayList<>();
     TextView creditNumber;
     UserCard card;
 

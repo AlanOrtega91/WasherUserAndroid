@@ -16,7 +16,7 @@
         <Button
             style="@style/button_style"
             android:layout_width="fill_parent"
-            android:text="Reportar problema con este servicio"
+            android:text="@string/report_problem"
             android:id="@+id/button11"
             android:onClick="onClickHelp"
             android:layout_marginStart="5dp"
@@ -26,7 +26,7 @@
     <Button
         style="@style/button_style"
         android:layout_width="fill_parent"
-        android:text="REPORTAR UN PROBLEMA"
+        android:text="@string/report_problem"
         android:id="@+id/button6"
         android:onClick="onClickHelp"
         android:layout_marginStart="5dp"
@@ -37,7 +37,7 @@
         <Button
             style="@style/button_style"
             android:layout_width="fill_parent"
-            android:text="Pago"
+            android:text="@string/payment"
             android:id="@+id/button9"
             android:onClick="onClickHelp"
             android:layout_marginLeft="5dp"
@@ -49,7 +49,7 @@
     <Button
         style="@style/button_style"
         android:layout_width="fill_parent"
-        android:text="Servicios"
+        android:text="@string/services"
         android:id="@+id/button7"
         android:onClick="onClickHelp"
         android:layout_marginRight="5dp"
@@ -61,7 +61,7 @@
     <Button
         style="@style/button_style"
         android:layout_width="fill_parent"
-        android:text="Cuenta"
+        android:text="@string/account"
         android:id="@+id/button8"
         android:onClick="onClickHelp"
         android:layout_marginLeft="5dp"
@@ -73,7 +73,7 @@
     <Button
         style="@style/button_style"
         android:layout_width="fill_parent"
-        android:text="Como usar Washer"
+        android:text="@string/how_to"
         android:id="@+id/button10"
         android:onClick="onClickHelp"
         android:layout_marginLeft="5dp"

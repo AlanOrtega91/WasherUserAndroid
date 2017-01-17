@@ -104,7 +104,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             services.get(i).cleanerId = jsonService.getString("idLavador");
             services.get(i).status = jsonService.getString("status");
             services.get(i).startedTime = jsonService.getString("fechaEmpezado");
-            //Todo: Check for change
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
             if (!jsonService.isNull("horaFinalEstimada"))
                 services.get(i).finalTime = format.parse(jsonService.getString("horaFinalEstimada"));
