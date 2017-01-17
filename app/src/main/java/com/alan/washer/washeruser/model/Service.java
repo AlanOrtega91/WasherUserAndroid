@@ -20,7 +20,6 @@ public class Service {
     public String service;
     public String price;
     public String description;
-    public String estimatedTime;
     public Date finalTime;
     public Date acceptedTime;
     public Double latitud;
@@ -30,14 +29,12 @@ public class Service {
     public int rating;
     public String id;
 
-    public static final int ECO = 2;
-    public static final int TRADITIONAL = 1;
     public static final int OUTSIDE = 1;
     public static final int OUTSIDE_INSIDE = 2;
     public static final int BIKE = 1;
     public static final int CAR = 2;
-    public static final int SMALL_VAN = 3;
-    public static final int BIG_VAN = 4;
+    public static final int SUV = 3;
+    public static final int VAN = 4;
 
 
     public static long getDifferenceTimeInMillis(Date finalTime) {
@@ -45,14 +42,13 @@ public class Service {
     }
 
     public static Service requestService(String direccion, String latitud, String longitud,
-                                         String idServicio, String idTipoServicio, String token, String idCoche, String idCocheFavorito) throws errorRequestingService, noSessionFound, userBlock {
+                                         String idServicio, String token, String idCoche, String idCocheFavorito) throws errorRequestingService, noSessionFound, userBlock {
         String url = HttpServerConnection.buildURL(HTTP_LOCATION + "RequestService");
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("direccion",direccion));
         params.add(new BasicNameValuePair("latitud",String.valueOf(latitud)));
         params.add(new BasicNameValuePair("longitud",String.valueOf(longitud)));
         params.add(new BasicNameValuePair("idServicio",idServicio));
-        params.add(new BasicNameValuePair("idTipoServicio",idTipoServicio));
         params.add(new BasicNameValuePair("token",token));
         params.add(new BasicNameValuePair("idCoche",idCoche));
         params.add(new BasicNameValuePair("idCocheFavorito",idCocheFavorito));
@@ -74,7 +70,6 @@ public class Service {
             service.service = parameters.getString("servicio");
             service.price = parameters.getString("precio");
             service.description = parameters.getString("descripcion");
-            service.estimatedTime = parameters.getString("tiempoEstimado");
             service.latitud = parameters.getDouble("latitud");
             service.longitud = parameters.getDouble("longitud");
             service.rating = -1;

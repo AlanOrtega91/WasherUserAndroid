@@ -107,8 +107,8 @@ public class EditCardActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void fillCardsListView() {
-        if (card.cardNumber != null) cardNumber.setText(card.cardNumber);
-        if (card.expirationMonth != null) {
+        if (card != null) {
+            cardNumber.setText(card.cardNumber);
             String month = card.expirationMonth;
             for (int i = 0; i < getResources().getStringArray(R.array.months).length; i++) {
                 if (month.equals(cardExpirationMonth.getItemAtPosition(i).toString())) {
@@ -124,8 +124,8 @@ public class EditCardActivity extends AppCompatActivity implements View.OnClickL
                     break;
                 }
             }
+            cvv.setText(card.cvv);
         }
-        if (card.cvv != null) cvv.setText(card.cvv);
     }
 
 

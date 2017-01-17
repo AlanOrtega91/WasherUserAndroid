@@ -46,9 +46,15 @@ public class BillingActivity extends AppCompatActivity implements View.OnClickLi
 
     private void initView() {
         configureActionBar();
-        if (user.billingName != null) ((TextView)findViewById(R.id.billingName)).setText(user.billingName);
-        if (user.billingName != null) ((TextView)findViewById(R.id.billingRFC)).setText(user.rfc);
-        if (user.billingName != null) ((TextView)findViewById(R.id.billingAddress)).setText(user.billingAddress);
+        if (user.billingName != null && !user.billingName.equals("")){
+            ((TextView)findViewById(R.id.billingName)).setText(user.billingName);
+        }
+        if (user.rfc != null && !user.rfc.equals("")){
+            ((TextView)findViewById(R.id.billingRFC)).setText(user.rfc);
+        }
+        if (user.billingAddress != null && !user.billingAddress.equals("")){
+            ((TextView)findViewById(R.id.billingAddress)).setText(user.billingAddress);
+        }
     }
 
     private void configureActionBar() {

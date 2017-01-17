@@ -47,7 +47,6 @@ public class DataBase extends SQLiteOpenHelper{
                     CarEntry.PLATES + TEXT_TYPE + COMMA_SEP +
                     CarEntry.MODEL + TEXT_TYPE + COMMA_SEP +
                     CarEntry.BRAND + TEXT_TYPE + COMMA_SEP +
-                    CarEntry.MULTIPLIER + TEXT_TYPE + COMMA_SEP +
                     CarEntry.FAVORITE + INTEGER_TYPE +
                     " )";
     private static final String SQL_CREATE_ENTRIES_FOR_SERVICE =
@@ -189,7 +188,6 @@ public class DataBase extends SQLiteOpenHelper{
                 car.color = cursor.getString(cursor.getColumnIndexOrThrow(CarEntry.COLOR));
                 car.plates = cursor.getString(cursor.getColumnIndexOrThrow(CarEntry.PLATES));
                 car.brand = cursor.getString(cursor.getColumnIndexOrThrow(CarEntry.BRAND));
-                car.multiplier = cursor.getInt(cursor.getColumnIndexOrThrow(CarEntry.MULTIPLIER));
                 car.favorite = cursor.getInt(cursor.getColumnIndexOrThrow(CarEntry.FAVORITE));
                 cars.add(car);
             } while (cursor.moveToNext());
@@ -219,7 +217,6 @@ public class DataBase extends SQLiteOpenHelper{
                     car.color = cursor.getString(cursor.getColumnIndexOrThrow(CarEntry.COLOR));
                     car.plates = cursor.getString(cursor.getColumnIndexOrThrow(CarEntry.PLATES));
                     car.brand = cursor.getString(cursor.getColumnIndexOrThrow(CarEntry.BRAND));
-                    car.multiplier = cursor.getInt(cursor.getColumnIndexOrThrow(CarEntry.MULTIPLIER));
                     car.favorite = cursor.getInt(cursor.getColumnIndexOrThrow(CarEntry.FAVORITE));
                     break;
                 }
@@ -437,8 +434,9 @@ public class DataBase extends SQLiteOpenHelper{
     public UserCard readCard(){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = configureQuery(db, CardEntry.TABLE_NAME, null, null, null);
-        UserCard card = new UserCard();
+        UserCard card = null;
         if (cursor.moveToFirst()) {
+            card = new UserCard();
             card.cardNumber = cursor.getString(cursor.getColumnIndexOrThrow(CardEntry.CARD_NUMBER));
             card.expirationMonth = cursor.getString(cursor.getColumnIndexOrThrow(CardEntry.EXPIRATION_MONTH));
             card.expirationYear = cursor.getString(cursor.getColumnIndexOrThrow(CardEntry.EXPIRATION_YEAR));
@@ -483,7 +481,6 @@ public class DataBase extends SQLiteOpenHelper{
         static final String PLATES = "plates";
         static final String MODEL = "model";
         static final String BRAND = "brand";
-        static final String MULTIPLIER = "multiplier";
         static final String FAVORITE = "favorite";
     }
 

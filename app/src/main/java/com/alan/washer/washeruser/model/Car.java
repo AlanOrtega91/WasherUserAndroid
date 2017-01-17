@@ -20,7 +20,6 @@ public class Car {
     public String color;
     public int favorite;
     public String brand;
-    public int multiplier;
 
 
 

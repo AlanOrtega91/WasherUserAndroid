@@ -58,9 +58,15 @@ public class EditBillingActivity extends AppCompatActivity implements View.OnCli
         name = (EditText) findViewById(R.id.billingNameEdit);
         rfc = (EditText) findViewById(R.id.billingRFCEdit);
         address = (EditText) findViewById(R.id.billingAddressEdit);
-        if (user.billingName != null) name.setText(user.billingName);
-        if (user.rfc != null) rfc.setText(user.rfc);
-        if (user.billingAddress != null) address.setText(user.billingAddress);
+        if (user.billingName != null && !user.billingName.equals("")){
+            name.setText(user.billingName);
+        }
+        if (user.rfc != null && !user.rfc.equals("")){
+            rfc.setText(user.rfc);
+        }
+        if (user.billingAddress != null && !user.billingAddress.equals("")){
+            address.setText(user.billingAddress);
+        }
         configureActionBar();
     }
 

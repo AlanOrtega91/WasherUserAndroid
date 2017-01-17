@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -41,9 +42,9 @@ public class InitActivity extends AppCompatActivity {
         setContentView(R.layout.activity_init);
         FirebaseMessaging.getInstance().subscribeToTopic("test");
         FirebaseInstanceId.getInstance().getToken();
-        reviewPermissions();
         initValues();
         initView();
+        reviewPermissions();
     }
 
     private void initValues() {
@@ -62,11 +63,18 @@ public class InitActivity extends AppCompatActivity {
             googleApiAvailability.getErrorDialog(this,status,2404).show();
         } else{
             allPermissionsOk = true;
+            Thread sendDecideNextView = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    decideNextView();
+                }
+            });
+            sendDecideNextView.start();
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,@NonNull int[] grantResults) {
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             if (!allPermissionsOk)
                 reviewPermissions();
@@ -91,17 +99,9 @@ public class InitActivity extends AppCompatActivity {
     private void initView() {
         ActionBar optionsTitleBar = getSupportActionBar();
         if (optionsTitleBar != null) optionsTitleBar.hide();
-        Thread sendDecideNextView = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                decideNextView();
-            }
-        });
-        sendDecideNextView.start();
     }
 
     private void decideNextView() {
-        while (!allPermissionsOk) ;
         if (token == null)
             changeActivity(MainActivity.class);
         else {
@@ -110,11 +110,10 @@ public class InitActivity extends AppCompatActivity {
     }
 
     private void tryReadUser(final String token) {
-        User user;
         try {
             ProfileReader.run(getBaseContext());
             DataBase db = new DataBase(getBaseContext());
-            user = db.readUser();
+            User user = db.readUser();
             if (user == null) {
                 postAlert(getString(R.string.error_reading_user));
                 changeActivity(MainActivity.class);

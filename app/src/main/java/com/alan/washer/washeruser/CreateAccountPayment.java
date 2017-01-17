@@ -18,7 +18,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.alan.washer.washeruser.model.AppData;
@@ -136,16 +135,6 @@ public class CreateAccountPayment extends AppCompatActivity implements View.OnCl
         Card conektaCard = new Card("Josue Camara", cardNumber.getText().toString(), cvv.getText().toString(),
                 cardExpirationMonth.getSelectedItem().toString(), cardExpirationYear.getSelectedItem().toString());
         changeActivityForResult(conektaCard);
-    }
-
-
-    private void postAlert(final String message) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override

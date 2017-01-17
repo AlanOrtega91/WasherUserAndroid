@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -98,13 +100,14 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private class HistoryAdapter extends ArrayAdapter<Service> {
-        public HistoryAdapter()
+        HistoryAdapter()
         {
             super(HistoryActivity.this,R.layout.history_row,services);
         }
 
+        @NonNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView,@NonNull ViewGroup parent) {
             View itemView = convertView;
             if (itemView == null) {
                 itemView = getLayoutInflater().inflate(R.layout.history_row, parent, false);
@@ -157,7 +160,12 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                         });
                     }
                     catch (Exception e) {
-                        Log.i("Error","");
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                map.setImageBitmap(null);
+                            }
+                        });
                     }
                 }
             });
@@ -169,7 +177,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                 @Override
                 public void run() {
                     try {
-                        URL url = new URL("http://imanio.zone/Vashen/images/cleaners/" + id + "/profile_image.jpg");
+                        URL url = new URL("http://washer.mx/Washer/images/cleaners/" + id + "/profile_image.jpg");
                         InputStream is = url.openStream();
                         BufferedInputStream bis = new BufferedInputStream(is);
                         final Bitmap bm = BitmapFactory.decodeStream(bis);
@@ -185,7 +193,12 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                             }
                         });
                     }catch (Exception e){
-                        Log.i("Error","");
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                cleanerImage.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.default_image));
+                            }
+                        });
                     }
                 }
             });

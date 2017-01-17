@@ -12,7 +12,9 @@
         android:layout_height="match_parent"
         tools:context="com.alan.washer.washeruser.NavigationDrawer"
         android:id="@+id/drawer_layout"
-        android:textAlignment="center">
+        android:textAlignment="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,16 +93,16 @@
                                     android:layout_height="20dp"
                                     android:contentDescription="@string/image_description"
                                     android:layout_gravity="center_vertical"
-                                    android:src="@drawable/interior"
+                                    android:src="@drawable/exterior"
                                     android:id="@+id/leftButtonImage"
                                     android:layout_marginEnd="5dp"/>
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="40dp"
-                                    android:text="@string/eco"
+                                    android:text="@string/outside"
                                     android:id="@+id/leftButton"
-                                    android:textSize="10sp"
+                                    android:textSize="12sp"
                                     android:layout_gravity="center_horizontal"
                                     android:onClick="leftClick"
                                     android:textColor="@android:color/darker_gray"
@@ -108,20 +110,49 @@
                                     android:gravity="center" />
                             </LinearLayout>
 
-                            <TextView
+                            <LinearLayout
                                 android:layout_width="fill_parent"
                                 android:layout_height="90dp"
-                                android:text="@string/eco_description"
-                                android:id="@+id/leftDescription"
-                                android:layout_gravity="center_horizontal"
-                                android:textColor="@android:color/darker_gray"
-                                android:textAlignment="center"
-                                android:gravity="center|top"
+                                android:orientation="vertical"
                                 android:background="@drawable/options_down"
-                                android:textSize="8sp"
-                                android:paddingTop="10dp"
-                                android:paddingStart="5dp"
-                                android:paddingEnd="5dp"/>
+                                android:gravity="center">
+                                <LinearLayout
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:padding="5dp">
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="@string/outside_description_left"
+                                        android:id="@+id/leftDescription_left"
+                                        android:layout_gravity="start"
+                                        android:textColor="@android:color/darker_gray"
+                                        android:gravity="top|start"
+                                        android:textSize="10sp" />
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="@string/outside_description_right"
+                                        android:id="@+id/leftDescription_right"
+                                        android:layout_gravity="end"
+                                        android:textColor="@android:color/darker_gray"
+                                        android:gravity="top|start"
+                                        android:textSize="10sp" />
+                                </LinearLayout>
+
+                                <TextView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/outside_description_bottom"
+                                    android:id="@+id/leftDescription_buttom"
+                                    android:layout_gravity="center_horizontal"
+                                    android:textColor="@android:color/darker_gray"
+                                    android:gravity="center"
+                                    android:textSize="11sp" />
+                            </LinearLayout>
                         </LinearLayout>
 
                         <LinearLayout
@@ -145,16 +176,16 @@
                                     android:layout_height="20dp"
                                     android:contentDescription="@string/image_description"
                                     android:layout_gravity="center_vertical"
-                                    android:src="@drawable/exterior"
+                                    android:src="@drawable/interior"
                                     android:id="@+id/rightButtonImage"
                                     android:layout_marginEnd="5dp"/>
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="40dp"
-                                    android:text="@string/traditional"
+                                    android:text="@string/outside_and_inside"
                                     android:id="@+id/rightButton"
-                                    android:textSize="10sp"
+                                    android:textSize="12sp"
                                     android:layout_gravity="center_horizontal"
                                     android:onClick="rightClick"
                                     android:textColor="@android:color/darker_gray"
@@ -163,20 +194,48 @@
 
                             </LinearLayout>
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="fill_parent"
                                 android:layout_height="90dp"
-                                android:text="@string/traditional_description"
-                                android:id="@+id/rightDescription"
-                                android:textSize="8sp"
-                                android:layout_gravity="center_horizontal"
-                                android:textColor="@android:color/darker_gray"
-                                android:textAlignment="center"
-                                android:gravity="center|top"
+                                android:orientation="vertical"
                                 android:background="@drawable/options_down"
-                                android:paddingTop="10dp"
-                                android:paddingStart="5dp"
-                                android:paddingEnd="5dp"/>
+                                android:gravity="center">
+                                <LinearLayout
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="@string/outside_and_inside_description_left"
+                                        android:id="@+id/rightDescription_left"
+                                        android:layout_gravity="start"
+                                        android:textColor="@android:color/darker_gray"
+                                        android:gravity="top|start"
+                                        android:textSize="10sp"
+                                        android:paddingStart="5dp"/>
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="@string/outside_and_inside_description_right"
+                                        android:id="@+id/rightDescription_right"
+                                        android:layout_gravity="end"
+                                        android:textColor="@android:color/darker_gray"
+                                        android:gravity="top|start"
+                                        android:textSize="10sp" />
+                                </LinearLayout>
+                                <TextView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/outside_and_inside_description_bottom"
+                                    android:id="@+id/rightDescription_buttom"
+                                    android:layout_gravity="center_horizontal"
+                                    android:textColor="@android:color/darker_gray"
+                                    android:textAlignment="center"
+                                    android:textSize="11sp" />
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
 

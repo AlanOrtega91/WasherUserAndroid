@@ -47,14 +47,16 @@
 
     <!-- Strings related to Map -->
     <string name="hint_location">UBICACION</string>
-    <string name="eco">Ecológico $$</string>
-    <string name="eco_description">Lavado de auto en seco, con nuestro producto de máxima calidad, que brinda un acabado brillante, sin rayar el auto, protegiendo la pintura, al mismo tiempo que deja una capa de cera protectora.</string>
-    <string name="traditional">Tradicional $$</string>
-    <string name="traditional_description">Lavado de auto con agua y shampoo, que deja una capa protectora de cera. Para este servicio, el usuario deberá proporcionar el agua al momento de la llegada de nuestros socios lavadores.</string>
     <string name="outside">Lavado Exterior</string>
-    <string name="outside_description">Consiste en lavado de carrocería, cristales, rines, llantas y molduras (no se requiere estar en el lugar de servicio del vehículo).</string>
+    <string name="outside_description_left"> -Carrocería\n -Rines</string>
+    <string name="outside_description_right"> -Llantas\n -Cristales</string>
+    <string name="outside_description_bottom">No se requiere estar presente durante el servicio.</string>
+    <string name="outside_description_bike_left"> -Carrocería\n -Rines\n -Asiento</string>
     <string name="outside_and_inside">Lavado Interior</string>
-    <string name="outside_and_inside_description">Consiste en Lavado de carrocería, cristales, rines, llantas, molduras, aspirado y limpieza de habitáculo (se requiere estar presente al momento de iniciar y al terminar el servicio para permitir que el socio lavador pueda acceder al interior del vehículo).</string>
+    <string name="outside_and_inside_description_left"> -Carrocería\n -Rines\n -Cristales</string>
+    <string name="outside_and_inside_description_right"> -Llantas\n -Aspirado\n -Limpieza de habitáculo</string>
+    <string name="outside_and_inside_description_bottom">Se requiere abrir el vehículo al inicio y cerrar al término del servicio.</string>
+
     <string name="arriving_in">Llegando en: </string>
     <string name="search">Buscar</string>
     <!-- Strings related to the Service -->
@@ -96,7 +98,7 @@
     <string name="name">NOMBRE</string>
     <string name="rfc">RFC</string>
     <string name="address">DIRECCIÓN FISCAL</string>
-    <string name="change_data">EDITAR DATOS FACTURACIÓN</string>
+    <string name="change_data">EDITAR DATOS</string>
 
     <!-- Strings related to Help -->
     <string name="report_problem">Reportar un problema</string>

@@ -34,7 +34,9 @@ public class ProfileReader {
             AppData.saveData(settings,profile.user);
             db.saveCars(profile.cars);
             db.saveServices(profile.services);
-            if (profile.cards.size() > 0) db.saveCard(profile.cards.get(0));
+            if (profile.cards.size() > 0){
+                db.saveCard(profile.cards.get(0));
+            }
         } catch (errorReadingData e){
             Log.i("READING","Error reading in profile");
             throw new errorReadingProfile();
@@ -56,7 +58,9 @@ public class ProfileReader {
             readUser(response.getJSONObject("User Info"), context);
             readCars(response.getJSONArray("carsList"));
             readHistory(response.getJSONArray("History"));
-            if (!response.isNull("cards")) readCard(response.getJSONObject("cards"));
+            if (!response.isNull("cards")){
+                readCard(response.getJSONObject("cards"));
+            }
         } catch (Exception e) {
             throw new errorReadingData();
         }
@@ -78,7 +82,9 @@ public class ProfileReader {
             AppData.saveData(settings,profile.user);
             db.saveCars(profile.cars);
             db.saveServices(profile.services);
-            if (profile.cards.size() > 0) db.saveCard(profile.cards.get(0));
+            if (profile.cards.size() > 0){
+                db.saveCard(profile.cards.get(0));
+            }
             endTime = System.nanoTime();
             duration = (endTime - startTime)/(1000*1000);
             Log.i("TIME","Time for database: " + duration);
@@ -102,7 +108,9 @@ public class ProfileReader {
             readUser(response.getJSONObject("User Info"), context);
             readCars(response.getJSONArray("carsList"));
             readHistory(response.getJSONArray("History"));
-            if (!response.isNull("cards")) readCard(response.getJSONObject("cards"));
+            if (!response.isNull("cards")) {
+                readCard(response.getJSONObject("cards"));
+            }
         } catch (Exception e) {
             throw new errorReadingData();
         }
@@ -142,7 +150,7 @@ public class ProfileReader {
                 car.color = jsonCar.getString("Color");
                 car.plates = jsonCar.getString("Placas");
                 car.brand = jsonCar.getString("Marca");
-                car.multiplier = jsonCar.getInt("Multiplicador");
+                //TODO:Agregar precios
                 car.favorite = jsonCar.getInt("Favorito");
                 cars.add(car);
             }

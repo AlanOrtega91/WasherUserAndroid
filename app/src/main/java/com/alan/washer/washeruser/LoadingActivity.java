@@ -155,8 +155,7 @@ public class LoadingActivity extends AppCompatActivity {
                     returnResult(RESULT_CANCELED);
                 } catch (Car.noSessionFound e) {
                     if (!MainActivity.onScreen) postAlert(getString(R.string.session_error));
-                    NavigationDrawer.instance.finish();
-                    changeActivity(MainActivity.class);
+                    changeActivity(MainActivity.class, true);
                     finish();
                     returnResult(RESULT_CANCELED);
                 }
@@ -195,7 +194,7 @@ public class LoadingActivity extends AppCompatActivity {
                     returnResult(RESULT_CANCELED);
                 } catch (Car.noSessionFound e) {
                     if (!MainActivity.onScreen) postAlert(getString(R.string.session_error));
-                    changeActivity(MainActivity.class);
+                    changeActivity(MainActivity.class, true);
                     returnResult(RESULT_CANCELED);
                     finish();
                 }
@@ -230,8 +229,7 @@ public class LoadingActivity extends AppCompatActivity {
                     returnResult(RESULT_CANCELED);
                 } catch (User.noSessionFound e){
                     if (!MainActivity.onScreen) postAlert(getString(R.string.session_error));
-                    NavigationDrawer.instance.finish();
-                    changeActivity(MainActivity.class);
+                    changeActivity(MainActivity.class, true);
                     returnResult(RESULT_CANCELED);
                 }
             }
@@ -269,7 +267,11 @@ public class LoadingActivity extends AppCompatActivity {
                     user.lastName = lastName;
                     user.email = email;
                     user.phone = phone;
-                    user.imagePath = imagePath;
+                    if (imagePath != null) {
+                        user.imagePath = imagePath;
+                    } else {
+                        user.imagePath = "";
+                    }
                     user = User.sendNewUser(user,password);
 
                     DataBase db = new DataBase(getBaseContext());
@@ -287,7 +289,6 @@ public class LoadingActivity extends AppCompatActivity {
                     returnResult(RESULT_CANCELED);
                 } catch (User.noSessionFound e){
                     if (!MainActivity.onScreen) postAlert(getString(R.string.session_error));
-                    NavigationDrawer.instance.finish();
                     returnResult(RESULT_CANCELED);
                 }
             }
@@ -302,7 +303,6 @@ public class LoadingActivity extends AppCompatActivity {
                 try {
                     SharedPreferences settings = getSharedPreferences(AppData.FILE, 0);
                     ProfileReader.run(getBaseContext(),email,password);
-                    User user = new DataBase(getBaseContext()).readUser();
                     token = settings.getString(AppData.TOKEN,null);
                     String fireBaseToken = settings.getString(AppData.FB_TOKEN, "");
                     User.saveFirebaseToken(token, fireBaseToken);
@@ -340,8 +340,11 @@ public class LoadingActivity extends AppCompatActivity {
         finish();
     }
 
-    private void changeActivity(Class activity) {
+    private void changeActivity(Class activity, Boolean clear) {
         Intent intent = new Intent(getBaseContext(), activity);
+        if (clear) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
         startActivity(intent);
     }
 }

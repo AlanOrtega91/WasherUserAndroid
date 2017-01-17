@@ -107,7 +107,7 @@ public class SummaryActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://imanio.zone/Vashen/images/cleaners/" + activeService.cleanerId + "/profile_image.jpg");
+                    URL url = new URL("http://washer.mx/Washer/images/cleaners/" + activeService.cleanerId + "/profile_image.jpg");
                     InputStream is = url.openStream();
                     BufferedInputStream bis = new BufferedInputStream(is);
                     final Bitmap bm = BitmapFactory.decodeStream(bis);

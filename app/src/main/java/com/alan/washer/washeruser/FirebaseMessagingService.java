@@ -10,7 +10,6 @@ import com.alan.washer.washeruser.model.Service;
 
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
@@ -106,8 +105,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             services.get(i).status = jsonService.getString("status");
             services.get(i).startedTime = jsonService.getString("fechaEmpezado");
             //Todo: Check for change
-            //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-            DateFormat format = new SimpleDateFormat("yyyy-MM-dd KK:mm:ss");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
             if (!jsonService.isNull("horaFinalEstimada"))
                 services.get(i).finalTime = format.parse(jsonService.getString("horaFinalEstimada"));
             if (!jsonService.isNull("fechaAceptado"))

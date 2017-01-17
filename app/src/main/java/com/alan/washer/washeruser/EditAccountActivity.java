@@ -3,10 +3,6 @@ package com.alan.washer.washeruser;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,7 +11,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,7 +22,6 @@ import com.alan.washer.washeruser.model.AppData;
 import com.alan.washer.washeruser.model.Database.DataBase;
 import com.alan.washer.washeruser.model.User;
 
-import java.io.ByteArrayOutputStream;
 
 public class EditAccountActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -42,7 +36,6 @@ public class EditAccountActivity extends AppCompatActivity implements View.OnCli
     SharedPreferences settings;
     User user;
     String token;
-    private String encodedString;
     private Bitmap bitmap;
 
     @Override

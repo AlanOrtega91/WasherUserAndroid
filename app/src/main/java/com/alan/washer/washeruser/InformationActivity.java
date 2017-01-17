@@ -73,16 +73,21 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
                     final Bitmap bm = BitmapFactory.decodeStream(bis);
                     bis.close();
                     is.close();
-                    if (bm == null)
-                        return;
+                    if (bm != null) {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                cleanerImage.setImageBitmap(bm);
+                            }
+                        });
+                    }
+                }catch (Exception e){
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            cleanerImage.setImageBitmap(bm);
+                            cleanerImage.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.default_image));
                         }
                     });
-                }catch (Exception e){
-                    return;
                 }
             }
         });
@@ -124,7 +129,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
                         }
                     });
                 } catch (Throwable e) {
-
+                    ratingImage.setImageDrawable(ContextCompat.getDrawable(getBaseContext(), R.drawable.rating_white0));
                 }
             }
         });

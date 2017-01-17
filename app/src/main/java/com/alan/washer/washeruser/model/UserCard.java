@@ -18,10 +18,9 @@ public class UserCard {
     public String cardNumber;
     public String cvv;
     public String token;
-    private static String HTTP_LOCATION = "User/Card/";
 
     public static void saveNewCardToken(String token, String cardToken) throws errorSavingCardToken {
-        String url = HttpServerConnection.buildURL(HTTP_LOCATION + "SaveNewCard");
+        String url = HttpServerConnection.buildURL("User/Card/SaveNewCard");
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("token", token));
         params.add(new BasicNameValuePair("cardToken", cardToken));
@@ -39,6 +38,6 @@ public class UserCard {
         }
     }
 
-    public static class errorSavingCardToken extends Exception {
+    private static class errorSavingCardToken extends Exception {
     }
 }

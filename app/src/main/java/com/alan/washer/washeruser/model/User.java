@@ -44,22 +44,24 @@ public class User {
     public static User sendNewUser(User user,String password) throws errorWithNewUser {
         String url = HttpServerConnection.buildURL(HTTP_LOCATION + "NewUser");
         List<NameValuePair> params = new ArrayList<>();
-        params.add(new BasicNameValuePair("name",user.name));
-        params.add(new BasicNameValuePair("lastName",user.lastName));
-        params.add(new BasicNameValuePair("email",user.email));
-        params.add(new BasicNameValuePair("password",password));
-        params.add(new BasicNameValuePair("phone",user.phone));
-        params.add(new BasicNameValuePair("device","android"));
-        if ( (user.imagePath != null) && !user.imagePath.equals("")) {
-            Bitmap bm = User.readImageBitmapFromFile(user.imagePath);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bm.compress(Bitmap.CompressFormat.JPEG,100,stream);
-            byte[] array = stream.toByteArray();
-            String encodedImage = Base64.encodeToString(array,0);
-            params.add(new BasicNameValuePair("encoded_string", encodedImage));
-        }
+        params.add(new BasicNameValuePair("name", user.name));
+        params.add(new BasicNameValuePair("lastName", user.lastName));
+        params.add(new BasicNameValuePair("email", user.email));
+        params.add(new BasicNameValuePair("password", password));
+        params.add(new BasicNameValuePair("phone", user.phone));
+        params.add(new BasicNameValuePair("device", "android"));
         try {
-            String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
+            if ((user.imagePath != null) && !user.imagePath.equals("")) {
+                Bitmap bm = User.readImageBitmapFromFile(user.imagePath);
+                if (bm != null) {
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bm.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                    byte[] array = stream.toByteArray();
+                    String encodedImage = Base64.encodeToString(array, 0);
+                    params.add(new BasicNameValuePair("encoded_string", encodedImage));
+                }
+            }
+            String jsonResponse = HttpServerConnection.sendHttpRequestPost(url, params);
             JSONObject response = new JSONObject(jsonResponse);
             if (!(response.getString("Status").compareTo("OK") == 0))
                 if (!response.getString("Status").equals("CREATE PAYMENT ACCOUNT ERROR"))
@@ -90,11 +92,13 @@ public class User {
         params.add(new BasicNameValuePair("newBillingAddress",billingAddress));
         if ( (imagePath != null) && !imagePath.equals("")) {
             Bitmap bm = User.readImageBitmapFromFile(imagePath);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bm.compress(Bitmap.CompressFormat.PNG,100,stream);
-            byte[] array = stream.toByteArray();
-            String encodedImage = Base64.encodeToString(array,0);
-            params.add(new BasicNameValuePair("encoded_string", encodedImage));
+            if (bm != null) {
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] array = stream.toByteArray();
+                String encodedImage = Base64.encodeToString(array, 0);
+                params.add(new BasicNameValuePair("encoded_string", encodedImage));
+            }
         }
         try {
             String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
@@ -153,7 +157,7 @@ public class User {
 
     static Bitmap getEncodedStringImageForUser(String id) {
         try {
-            URL url = new URL("http://washer.mx/Vashen/images/users/" + id + "/profile_image.jpg");
+            URL url = new URL("http://washer.mx/Washer/images/users/" + id + "/profile_image.jpg");
             InputStream is = url.openStream();
             BufferedInputStream bis = new BufferedInputStream(is);
             Bitmap bm = BitmapFactory.decodeStream(bis);
@@ -182,10 +186,12 @@ public class User {
             e.printStackTrace();
             return null;
         } finally {
-            try {
-                fos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return mypath.getAbsolutePath();

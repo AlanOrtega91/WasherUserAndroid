@@ -2,10 +2,6 @@ package com.alan.washer.washeruser;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -13,7 +9,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -121,12 +116,10 @@ public class ConfigurationActivity extends AppCompatActivity implements View.OnC
             Intent firebaseIntent = new Intent(getBaseContext(),FirebaseMessagingService.class);
             stopService(firebaseIntent);
             user.sendLogout();
-            changeActivity(MainActivity.class);
-            NavigationDrawer.instance.finish();
-            finish();
         } catch (User.errorWithLogOut e) {
             postAlert(getString(R.string.error_logging_out));
-            changeActivity(MainActivity.class);
+        } finally {
+            changeActivity(MainActivity.class, true);
             finish();
         }
     }
@@ -140,10 +133,14 @@ public class ConfigurationActivity extends AppCompatActivity implements View.OnC
         });
     }
 
-    private void changeActivity(Class activity) {
+    private void changeActivity(Class activity, Boolean clear) {
         Intent intent = new Intent(getBaseContext(), activity);
+        if (clear) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
         startActivity(intent);
     }
+
     @Override
     public void onClick(View v) {
         finish();
@@ -154,6 +151,6 @@ public class ConfigurationActivity extends AppCompatActivity implements View.OnC
         finish();
     }
     public void onClickEditAccount(View view) {
-        changeActivity(EditAccountActivity.class);
+        changeActivity(EditAccountActivity.class, false);
     }
 }

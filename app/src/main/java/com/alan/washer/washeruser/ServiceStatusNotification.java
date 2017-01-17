@@ -11,11 +11,11 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
-public class ServiceStatusNotification {
+class ServiceStatusNotification {
 
     private static final String NOTIFICATION_TAG = "ServiceStatus";
 
-    public static void notify(final Context context, final String info,Class activityClass) {
+    static void notify(final Context context, final String info,Class activityClass) {
         final String title = "Washer";
         Bitmap icon = BitmapFactory.decodeResource(context.getResources(),R.drawable.appicon);
 

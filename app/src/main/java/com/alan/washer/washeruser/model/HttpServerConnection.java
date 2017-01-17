@@ -17,7 +17,7 @@ import cz.msebera.android.httpclient.impl.client.HttpClientBuilder;
 class HttpServerConnection
 {
     static String buildURL(String location) {
-        return "http://washer.mx/Vashen/API/" + location + "/";
+        return "http://washer.mx/Washer/API/" + location + "/";
     }
 
     static String sendHttpRequestPost(String urlPath, List<NameValuePair> params) throws connectionException {

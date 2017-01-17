@@ -23,6 +23,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     SharedPreferences settings;
     List<UserCard> cards = new ArrayList<>();
     TextView creditNumber;
+    UserCard card;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +48,13 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     private void initValues() {
         settings = getSharedPreferences(AppData.FILE, 0);
         DataBase db = new DataBase(this);
-        cards = new ArrayList<>();
-        cards.add(db.readCard());
+        card = db.readCard();
     }
 
     private void fillCardsListView() {
-        if (cards.size() > 0) creditNumber.setText(cards.get(0).cardNumber);
+        if (card != null){
+            creditNumber.setText(card.cardNumber);
+        }
     }
 
 

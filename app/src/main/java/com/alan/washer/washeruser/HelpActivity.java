@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -140,7 +141,12 @@ public class HelpActivity extends AppCompatActivity implements View.OnClickListe
                     });
                 }
                 catch (Exception e) {
-                    e.printStackTrace();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            map.setImageBitmap(null);
+                        }
+                    });
                 }
             }
         });
@@ -152,22 +158,27 @@ public class HelpActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://imanio.zone/Vashen/images/cleaners/" + activeService.cleanerId + "/profile_image.jpg");
+                    URL url = new URL("http://washer.mx/Washer/images/cleaners/" + activeService.cleanerId + "/profile_image.jpg");
                     InputStream is = url.openStream();
                     BufferedInputStream bis = new BufferedInputStream(is);
                     final Bitmap bm = BitmapFactory.decodeStream(bis);
                     bis.close();
                     is.close();
-                    if (bm == null)
-                        return;
+                    if (bm != null) {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                cleanerImage.setImageBitmap(bm);
+                            }
+                        });
+                    }
+                }catch (Exception e){
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            cleanerImage.setImageBitmap(bm);
+                            cleanerImage.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.default_image));
                         }
                     });
-                }catch (Exception e){
-                    return;
                 }
             }
         });

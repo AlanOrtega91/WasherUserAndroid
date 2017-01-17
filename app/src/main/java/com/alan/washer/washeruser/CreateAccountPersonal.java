@@ -3,7 +3,6 @@ package com.alan.washer.washeruser;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -11,7 +10,6 @@ import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,7 +19,6 @@ import android.widget.Toast;
 import com.alan.washer.washeruser.model.AppData;
 import com.alan.washer.washeruser.model.User;
 
-import java.io.ByteArrayOutputStream;
 
 public class CreateAccountPersonal extends AppCompatActivity implements View.OnClickListener{
 

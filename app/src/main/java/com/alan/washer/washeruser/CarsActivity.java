@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -131,8 +132,7 @@ public class CarsActivity extends AppCompatActivity implements AdapterView.OnIte
             postAlert(getString(R.string.error_setting_favorite_car));
         } catch (Car.noSessionFound e){
             if (!MainActivity.onScreen) postAlert(getString(R.string.session_error));
-            NavigationDrawer.instance.finish();
-            changeActivity(MainActivity.class);
+            changeActivity(MainActivity.class, true);
             finish();
         }
     }
@@ -217,8 +217,7 @@ public class CarsActivity extends AppCompatActivity implements AdapterView.OnIte
                     onResume();
                 } catch (Car.noSessionFound e){
                     if (!MainActivity.onScreen) postAlert(getString(R.string.session_error));
-                    NavigationDrawer.instance.finish();
-                    changeActivity(MainActivity.class);
+                    changeActivity(MainActivity.class, true);
                     finish();
                 }
             }
@@ -227,11 +226,14 @@ public class CarsActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void onClickAddCar(View view) {
-        changeActivity(NewCar.class);
+        changeActivity(NewCar.class, false);
     }
 
-    private void changeActivity(Class activity) {
+    private void changeActivity(Class activity, Boolean clear) {
         Intent intent = new Intent(getBaseContext(), activity);
+        if (clear) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
         startActivity(intent);
     }
 
@@ -242,13 +244,14 @@ public class CarsActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private class CarsAdapter extends ArrayAdapter<Car> {
-        public CarsAdapter()
+        CarsAdapter()
         {
             super(CarsActivity.this,R.layout.car_row,cars);
         }
 
+        @NonNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView,@NonNull ViewGroup parent) {
             View itemView = convertView;
             if (itemView == null) {
                 itemView = getLayoutInflater().inflate(R.layout.car_row, parent, false);
@@ -258,8 +261,6 @@ public class CarsActivity extends AppCompatActivity implements AdapterView.OnIte
                 TextView plates = (TextView)itemView.findViewById(R.id.plates);
                 TextView brand = (TextView)itemView.findViewById(R.id.brand);
                 //TODO: Implement click info
-                TextView carInformation = (TextView)itemView.findViewById(R.id.carInformation);
-
                 plates.setText(car.plates);
                 brand.setText(car.brand);
                 RelativeLayout selectedIndicator = (RelativeLayout)itemView.findViewById(R.id.selectedIndicator);

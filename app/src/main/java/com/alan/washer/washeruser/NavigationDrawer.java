@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -48,7 +49,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -89,25 +89,20 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     private int viewState;
     private static final int STANDBY = 0;
     private static final int VEHICLE_SELECTED = 1;
-    private static final int ECO_OR_TRADITIONAL_SELECTED = 2;
-    private static final int OUTSIDE_OR_INSIDE_SELECTED = 3;
-    private static final int SERVICE_START = 4;
+    private static final int OUTSIDE_OR_INSIDE_SELECTED = 2;
+    private static final int SERVICE_START = 3;
     LinearLayout upLayout;
     LinearLayout lowLayout;
     LinearLayout startLayout;
     LinearLayout rightLayout;
     LinearLayout leftLayout;
     TextView leftButton;
-    ImageView leftImage;
-    TextView leftDescription;
+    TextView leftDescription_left;
     TextView rightButton;
-    ImageView rightImage;
-    TextView rightDescription;
     TextView cleanerInfo;
     ImageView cleanerImageInfo;
     TextView serviceInfo;
     String service;
-    String serviceType;
     String vehicleType;
     Cleaner cleaner;
     Boolean serviceRequestedFlag = false;
@@ -144,11 +139,11 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     Thread activeServiceCycleThread;
     String token;
     Boolean cancelSent = false;
-    public static AppCompatActivity instance;
     int cancelCode = 0;
     Boolean showCancelAlert = false;
     AlertDialog requestingAlert;
     AlertDialog alertBox;
+    Boolean noSessionFound = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,7 +153,6 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         startService(firebaseIntent);
         initView();
         initLocation();
-        instance = this;
     }
 
     @Override
@@ -334,7 +328,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     private void configureActiveServiceForFinished() {
         if (clock != null) clock.cancel();
         if (activeService.rating == -1)
-            changeActivity(SummaryActivity.class);
+            changeActivity(SummaryActivity.class,false);
         serviceRequestedFlag = false;
         handler.post(new Runnable() {
             @Override
@@ -446,7 +440,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
 
     public void setImageDrawableForActiveService() {
         try {
-            URL url = new URL("http://imanio.zone/Vashen/images/cleaners/" + activeService.cleanerId + "/profile_image.jpg");
+            URL url = new URL("http://washer.mx/Washer/images/cleaners/" + activeService.cleanerId + "/profile_image.jpg");
             InputStream is = url.openStream();
             BufferedInputStream bis = new BufferedInputStream(is);
             Bitmap bm = BitmapFactory.decodeStream(bis);
@@ -482,7 +476,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
             viewState = STANDBY;
             configureState();
         } else if (activeService.status.equals("Finished")) {
-            changeActivity(SummaryActivity.class);
+            changeActivity(SummaryActivity.class, false);
             viewState = SERVICE_START;
             configureState();
         }
@@ -505,11 +499,8 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         rightLayout = (LinearLayout) findViewById(R.id.rightLayout);
         leftLayout = (LinearLayout) findViewById(R.id.leftLayout);
         leftButton = (TextView) findViewById(R.id.leftButton);
-        leftImage = (ImageView) findViewById(R.id.leftButtonImage);
-        leftDescription = (TextView) findViewById(R.id.leftDescription);
+        leftDescription_left = (TextView) findViewById(R.id.leftDescription_left);
         rightButton = (TextView) findViewById(R.id.rightButton);
-        rightImage = (ImageView) findViewById(R.id.rightButtonImage);
-        rightDescription = (TextView) findViewById(R.id.rightDescription);
         cleanerInfo = (TextView) findViewById(R.id.cleanerInfo);
         cleanerImageInfo = (ImageView) findViewById(R.id.cleanerImageInfo);
         serviceInfo = (TextView) findViewById(R.id.serviceInfo);
@@ -549,12 +540,12 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                 vehiclesButton.setClickable(true);
                 vehiclesButton.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.car_active));
                 break;
-            case Service.SMALL_VAN:
+            case Service.SUV:
                 vehiclesButton.setAlpha(1.0f);
                 vehiclesButton.setClickable(true);
                 vehiclesButton.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.small_van_active));
                 break;
-            case Service.BIG_VAN:
+            case Service.VAN:
                 vehiclesButton.setAlpha(1.0f);
                 vehiclesButton.setClickable(true);
                 vehiclesButton.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.big_van_active));
@@ -582,12 +573,11 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                     try {
                         getNearbyCleaners();
                     } catch (Cleaner.noSessionFound e) {
-                        if (!MainActivity.onScreen && settings.getString(AppData.TOKEN,null) != null) {
+                        if (!noSessionFound) {
+                            noSessionFound = true;
                             postAlert(getString(R.string.session_error));
-                            changeActivity(MainActivity.class);
+                            changeActivity(MainActivity.class, true);
                         }
-                        cancel();
-                        cancelTimers();
                         finish();
                     }
                 }
@@ -597,6 +587,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         reloadMapTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                readCleanerLocation();
                 reloadCleanerMarkers();
             }
         }, 0, ONE_SECOND / 50);
@@ -627,7 +618,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         try {
             Car favCar = new DataBase(getBaseContext()).getFavoriteCar();
             Service serviceRequested = Service.requestService("", String.valueOf(requestLocation.latitude),
-                    String.valueOf(requestLocation.longitude), service, serviceType, token, vehicleType, favCar.id);
+                    String.valueOf(requestLocation.longitude), service, token, vehicleType, favCar.id);
             DataBase db = new DataBase(getBaseContext());
             List<Service> services = db.readServices();
             services.add(serviceRequested);
@@ -660,11 +651,11 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                 }
             });
         } catch (Service.noSessionFound e){
-            if (!MainActivity.onScreen && settings.getString(AppData.TOKEN,null) != null)  {
+            if (!noSessionFound) {
+                noSessionFound = true;
                 postAlert(getString(R.string.session_error));
-                changeActivity(MainActivity.class);
+                changeActivity(MainActivity.class, true);
             }
-            cancelTimers();
             finish();
         } catch (Service.userBlock e){
             handler.post(new Runnable() {
@@ -693,21 +684,23 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private void reloadCleanerMarkers() {
-        //TODO: Separate in two functions
+    private void readCleanerLocation(){
         try{
             if (activeService != null && !activeService.status.equals("Looking"))
                 cleaner = Cleaner.getCleanerLocation(activeService.cleanerId,token);
         } catch (Cleaner.errorGettingCleaners e){
             Log.i("ERROR","Reading cleaner location");
         }  catch (Cleaner.noSessionFound e){
-            if (!MainActivity.onScreen && settings.getString(AppData.TOKEN,null) != null) {
+            if (!noSessionFound) {
+                noSessionFound = true;
                 postAlert(getString(R.string.session_error));
-                changeActivity(MainActivity.class);
+                changeActivity(MainActivity.class, true);
             }
-            cancelTimers();
             finish();
         }
+    }
+
+    private void reloadCleanerMarkers() {
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -787,7 +780,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     public void vehicleClicked(View view) {
         if (viewState != STANDBY)
             return;
-        if (creditCard.cardNumber == null) {
+        if (creditCard == null) {
             postAlert(getString(R.string.no_credit_card));
             return;
         }
@@ -795,10 +788,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
             postAlert(getString(R.string.no_cleaners));
             return;
         }
-        //Always eco
-        //viewState = VEHICLE_SELECTED;
-        serviceType = String.valueOf(Service.ECO);
-        viewState = ECO_OR_TRADITIONAL_SELECTED;
+        viewState = VEHICLE_SELECTED;
         vehicleType = new DataBase(getBaseContext()).getFavoriteCar().type;
         configureState();
     }
@@ -810,9 +800,6 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                 break;
             case VEHICLE_SELECTED:
                 configureVehicleSelectedState();
-                break;
-            case ECO_OR_TRADITIONAL_SELECTED:
-                configureServiceSelectedState();
                 break;
             case OUTSIDE_OR_INSIDE_SELECTED:
                 configureServiceTypeState();
@@ -837,44 +824,36 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         lowLayout.setVisibility(LinearLayout.VISIBLE);
         startLayout.setVisibility(LinearLayout.GONE);
         serviceLocationText.setVisibility(View.GONE);
-    }
-
-    private void configureServiceSelectedState() {
-        upLayout.setVisibility(LinearLayout.VISIBLE);
-        lowLayout.setVisibility(LinearLayout.VISIBLE);
-        startLayout.setVisibility(LinearLayout.GONE);
-        serviceLocationText.setVisibility(View.GONE);
         rightLayout.setVisibility(View.VISIBLE);
         String leftTitle = getString(R.string.outside);
         String rightTitle = getString(R.string.outside_and_inside);
+        leftDescription_left.setText(R.string.outside_description_left);
         switch (Integer.parseInt(vehicleType)) {
             case Service.BIKE:
-                leftTitle += " $1";
+                leftTitle += " $35";
                 rightLayout.setVisibility(View.INVISIBLE);
+                leftDescription_left.setText(R.string.outside_description_bike_left);
                 break;
             case Service.CAR:
-                leftTitle += " $2";
-                rightTitle += " $3";
+                leftTitle += " $55";
+                rightTitle += " $65";
                 break;
-            case Service.SMALL_VAN:
-                leftTitle += " $4";
-                rightTitle += " $5";
+            case Service.SUV:
+                leftTitle += " $65";
+                rightTitle += " $75";
                 break;
-            case Service.BIG_VAN:
-                leftTitle += " $6";
-                rightTitle += " $7";
+            case Service.VAN:
+                leftTitle += " $80";
+                rightTitle += " $90";
                 break;
             default:
                 break;
         }
         leftButton.setText(leftTitle);
-        leftImage.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.exterior));
-        leftDescription.setText(R.string.outside_description);
         rightButton.setText(rightTitle);
-        rightImage.setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.interior));
-        rightDescription.setText(R.string.outside_and_inside_description);
         serviceLocationText.setEnabled(true);
     }
+
 
     private void configureServiceTypeState() {
         if (serviceRequestedFlag)
@@ -925,27 +904,15 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     }
 
     public void leftClick(View view) {
-        if (viewState == VEHICLE_SELECTED) {
-            serviceType = String.valueOf(Service.ECO);
-            viewState = ECO_OR_TRADITIONAL_SELECTED;
-        }
-        else {
-            service = String.valueOf(Service.OUTSIDE);
-            viewState = OUTSIDE_OR_INSIDE_SELECTED;
-        }
+        service = String.valueOf(Service.OUTSIDE);
+        viewState = OUTSIDE_OR_INSIDE_SELECTED;
         serviceRequestedFlag = false;
         configureState();
     }
 
     public void rightClick(View view) {
-        if (viewState == VEHICLE_SELECTED) {
-            serviceType = String.valueOf(Service.TRADITIONAL);
-            viewState = ECO_OR_TRADITIONAL_SELECTED;
-        }
-        else {
-            service = String.valueOf(Service.OUTSIDE_INSIDE);
-            viewState = OUTSIDE_OR_INSIDE_SELECTED;
-        }
+        service = String.valueOf(Service.OUTSIDE_INSIDE);
+        viewState = OUTSIDE_OR_INSIDE_SELECTED;
         serviceRequestedFlag = false;
         configureState();
     }
@@ -994,7 +961,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
             Bitmap bitmapResized = Bitmap.createScaledBitmap(b, 60, 60, false);
             map = googleMap;
             map.setTrafficEnabled(true);
-            //map.setMyLocationEnabled(true);
+            map.setMyLocationEnabled(true);
             cleanerMarker = map.addMarker(new MarkerOptions()
                     .position(new LatLng(0,0))
                     .icon(BitmapDescriptorFactory.fromBitmap(bitmapResized)));
@@ -1009,12 +976,13 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
             centralMarker.setPosition(requestLocation);
         } catch (errorReadingLocation e){
             createAlert(getString(R.string.no_location_service));
+        } catch (SecurityException e) {
+
         }
     }
 
 
     private void createAlert(String title) {
-        //TODO: ake global and delete
         if (alertBox != null) {
             alertBox.dismiss();
         }
@@ -1081,29 +1049,29 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     private void decideFragment(int position) {
         switch (position){
             case PAYMENT:
-                changeActivity(PaymentActivity.class);
+                changeActivity(PaymentActivity.class, false);
                 return;
             case BILLING:
-                changeActivity(BillingActivity.class);
+                changeActivity(BillingActivity.class, false);
                 return;
             case HISTORY:
-                changeActivity(HistoryActivity.class);
+                changeActivity(HistoryActivity.class, false);
                 return;
             case CARS:
-                changeActivity(CarsActivity.class);
+                changeActivity(CarsActivity.class, false);
                 return;
             case HELP:
-                changeActivity(HelpActivity.class);
+                changeActivity(HelpActivity.class, false);
                 return;
             case BE_PART_OF_TEAM:
                 Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.washer.mx"));
                 startActivity(myIntent);
                 break;
             case CONFIGURATION:
-                changeActivity(ConfigurationActivity.class);
+                changeActivity(ConfigurationActivity.class, false);
                 return;
             case ABOUT:
-                changeActivity(AboutActivity.class);
+                changeActivity(AboutActivity.class, false);
                 return;
             default:
                 break;
@@ -1113,7 +1081,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.startLayout) {
-            changeActivity(InformationActivity.class);
+            changeActivity(InformationActivity.class, false);
         }
     }
 
@@ -1124,8 +1092,11 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
             drawerLayout.openDrawer(GravityCompat.START);
     }
 
-    private void changeActivity(Class activity) {
+    private void changeActivity(Class activity, Boolean clear) {
         Intent intent = new Intent(getBaseContext(), activity);
+        if (clear) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
         startActivity(intent);
     }
 
@@ -1243,13 +1214,11 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     }
 
     private class MenuAdapter extends ArrayAdapter<Pair<String,Drawable>> {
-        MenuAdapter()
-        {
-            super(NavigationDrawer.this,R.layout.menu_item,R.id.listItemName,listItems);
-        }
+        MenuAdapter() { super(NavigationDrawer.this,R.layout.menu_item,R.id.listItemName,listItems); }
 
+        @NonNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView,@NonNull ViewGroup parent) {
             View itemView = convertView;
             if (itemView == null) {
                 itemView = getLayoutInflater().inflate(R.layout.menu_item, parent, false);

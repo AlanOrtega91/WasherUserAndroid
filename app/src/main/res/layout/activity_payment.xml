@@ -12,7 +12,7 @@
         android:layout_width="fill_parent"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="@string/init_string"
+        android:text="@string/no_credit_card"
         android:id="@+id/cardNumberRow"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"

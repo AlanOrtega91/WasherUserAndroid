@@ -100,7 +100,6 @@ public class NewCar extends AppCompatActivity implements View.OnClickListener, V
 
     public void sendAddNewCar() {
         String plates = mPlates.getText().toString();
-        String model = "Car";
         String brand = brands.getSelectedItem().toString();
         String color = colors.getSelectedItem().toString();
         Car car = new Car();
