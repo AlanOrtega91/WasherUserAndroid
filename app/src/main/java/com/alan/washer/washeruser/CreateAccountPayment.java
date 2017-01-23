@@ -42,11 +42,6 @@ public class CreateAccountPayment extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account_payment);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         initValues();
         initView();
     }

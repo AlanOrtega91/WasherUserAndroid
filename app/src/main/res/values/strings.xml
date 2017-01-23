@@ -132,7 +132,7 @@
     <string name="expiration_date_year">YY</string>
     <string name="payment_unavailable">Pagos no disponibles</string>
     <string name="error_credit_card">Error con la tarjeta de credito</string>
-    <string name="error_processing_payment">Error procesando tu pago</string>
+    <string name="error_processing_payment">Error agregando la tarjeta</string>
     <string name="edit_card">EDITAR TARJETA</string>
     <string name="information">VER INFORMACIÓN</string>
     <string name="space">&#032;</string>
@@ -215,45 +215,76 @@
         <item>Aston Martin</item>
         <item>Audi</item>
         <item>BAIC</item>
+        <item>BAJAJ</item>
+        <item>Benelli</item>
         <item>Bentley</item>
+        <item>Beta</item>
+        <item>Bimota</item>
         <item>BMW</item>
         <item>Buick</item>
         <item>Cadillac</item>
+        <item>Can-am</item>
+        <item>Carabela</item>
         <item>Chevrolet</item>
         <item>Chrysler</item>
+        <item>Dinamo</item>
         <item>Dodge</item>
+        <item>Ducati</item>
         <item>Ferrari</item>
         <item>Fiat</item>
         <item>Ford</item>
+        <item>Gasgas</item>
         <item>GMC</item>
+        <item>Harley-Davidson</item>
         <item>Honda</item>
+        <item>Husqvarna</item>
         <item>Hyundai</item>
         <item>Infiniti</item>
+        <item>Islo</item>
+        <item>Italika</item>
+        <item>Izuka</item>
         <item>Jaguar</item>
         <item>Jeep</item>
+        <item>Kawasaki</item>
+        <item>Keeway</item>
         <item>Kia</item>
+        <item>KTM</item>
+        <item>Kurazai</item>
+        <item>KYMCO</item>
         <item>Lamborghini</item>
         <item>Land Rover</item>
         <item>Lincoln</item>
+        <item>LML</item>
         <item>Maserati</item>
         <item>Mazda</item>
         <item>McLaren Automotive</item>
+        <item>Mecatecno</item>
         <item>Mercedes Benz</item>
+        <item>MV Agusta</item>
         <item>MINI</item>
         <item>Mitsubishi</item>
         <item>Nissan</item>
         <item>Peugeot</item>
+        <item>Polaris</item>
         <item>Porsche</item>
+        <item>Quadro</item>
         <item>RAM</item>
         <item>Renault</item>
+        <item>Sachs</item>
         <item>SEAT</item>
+        <item>Sherco</item>
         <item>Smart</item>
         <item>Subaru</item>
         <item>Suzuki</item>
         <item>Tesla</item>
         <item>Toyota</item>
+        <item>Triumph</item>
+        <item>TVS</item>
         <item>Volkswagen</item>
         <item>Volvo</item>
+        <item>Vyrus</item>
+        <item>XPA</item>
+        <item>Yamaha</item>
     </string-array>
     <string-array name="context_menu_items">
         <item>Editar</item>
