@@ -213,7 +213,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
             case "Accepted":
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(activeService.acceptedTime);
-                cal.add(Calendar.MINUTE, 2);
+                cal.add(Calendar.MINUTE, 5);
                 long diffInMillis = Service.getDifferenceTimeInMillis(cal.getTime());
                 if (diffInMillis < 0) {
                     diffInMillis = 0;

@@ -66,5 +66,6 @@ public class ForgotPassword extends AppCompatActivity implements View.OnClickLis
     }
 
     private void sendRecoverPassword() {
+        finish();
     }
 }

@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void reviewCredentials(String email,String password) throws invalidCredentialsEmail, invalidCredentialsPassword {
-        if (email == null || !email.contains("@") || !email.contains(" ") || !email.substring(email.indexOf("@")).contains("."))
+        if (email == null || !email.contains("@") || email.contains(" ") || !email.substring(email.indexOf("@")).contains("."))
             throw new invalidCredentialsEmail();
         if (password == null || password.length() < 6) {
             throw new invalidCredentialsPassword();
@@ -98,14 +98,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == LoadingActivity.LOGIN){
             if (resultCode == RESULT_OK){
-                changeActivity(NavigationDrawer.class);
+                changeActivity(NavigationDrawer.class,true);
                 finish();
             }
         }
     }
 
-    private void changeActivity(Class activity) {
+    private void changeActivity(Class activity, Boolean clear) {
         Intent intent = new Intent(getBaseContext(), activity);
+        if (clear) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
         startActivity(intent);
     }
 
@@ -123,13 +126,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     public void onClickForgotPassword(View view) {
-        changeActivity(ForgotPassword.class);
+        changeActivity(ForgotPassword.class,false);
     }
 
     @Override
     public void onBackPressed() {
         finish();
-        changeActivity(MainActivity.class);
     }
 
     private class invalidCredentialsEmail extends Throwable {

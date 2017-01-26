@@ -94,8 +94,11 @@ public class CreateAccountPayment extends AppCompatActivity implements View.OnCl
     }
 
 
-    private void changeActivity(Class activity) {
+    private void changeActivity(Class activity, Boolean clear) {
         Intent intent = new Intent(getBaseContext(), activity);
+        if (clear) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
         startActivity(intent);
     }
 
@@ -108,20 +111,23 @@ public class CreateAccountPayment extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onBackPressed() {
-        changeActivity(NavigationDrawer.class);
+        changeActivity(NavigationDrawer.class,true);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.leftButtonOptionsTitlebar:
-                changeActivity(NavigationDrawer.class);
+                changeActivity(NavigationDrawer.class,true);
+                finish();
                 break;
             case R.id.rightButtonOptionsTitlebar:
                 if (cardNumber.getText().toString().length() > 0)
                     addPayment();
-                else
-                    changeActivity(NavigationDrawer.class);
+                else {
+                    changeActivity(NavigationDrawer.class, true);
+                    finish();
+                }
                 break;
         }
     }
@@ -136,7 +142,7 @@ public class CreateAccountPayment extends AppCompatActivity implements View.OnCl
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == LoadingActivity.NEW_CARD){
             if (resultCode == RESULT_OK){
-                changeActivity(NavigationDrawer.class);
+                changeActivity(NavigationDrawer.class,true);
             }
         }
     }

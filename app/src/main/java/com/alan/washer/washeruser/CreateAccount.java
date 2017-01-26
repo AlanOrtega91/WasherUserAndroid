@@ -109,7 +109,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
     }
 
     private void reviewCredentials(String email,String password) throws invalidCredentialsEmail,invalidCredentialsPassword {
-        if (email == null || !email.contains("@") || !email.contains(" ") || !email.substring(email.indexOf("@")).contains("."))
+        if (email == null || !email.contains("@") || email.contains(" ") || !email.substring(email.indexOf("@")).contains("."))
             throw new invalidCredentialsEmail();
         if (password == null || password.length() < 6)
             throw new invalidCredentialsPassword();
