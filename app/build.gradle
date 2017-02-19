@@ -4,11 +4,11 @@ android {
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
     defaultConfig {
-        applicationId "com.alan.washer.washeruser"
+        applicationId "com.washermx.washeruser"
         minSdkVersion 19
         targetSdkVersion 24
-        versionCode 1
-        versionName "1.0.0"
+        versionCode 2
+        versionName "1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -35,8 +35,5 @@ dependencies {
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.1'
     testCompile 'junit:junit:4.12'
 }
-
-
-
 
 apply plugin: 'com.google.gms.google-services'

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     style="@style/titlebar_menu"
-    tools:context="com.alan.washer.washeruser.NavigationDrawer">
+    tools:context=".NavigationDrawer">
 
     <ImageView
         style="@style/titlebar_button"

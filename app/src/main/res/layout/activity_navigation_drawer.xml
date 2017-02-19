@@ -5,12 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.alan.washer.washeruser.NavigationDrawer">
+    tools:context=".NavigationDrawer">
 
     <android.support.v4.widget.DrawerLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.alan.washer.washeruser.NavigationDrawer"
+        tools:context="com.alan.washermx.washeruser.NavigationDrawer"
         android:id="@+id/drawer_layout"
         android:textAlignment="center"
         android:layout_alignParentTop="true"

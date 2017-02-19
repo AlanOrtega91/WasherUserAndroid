@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.alan.washer.washeruser.BillingActivity" android:background="@drawable/background">
+    tools:context=".BillingActivity" android:background="@drawable/background">
 
     <TextView
         style="@style/input_text"

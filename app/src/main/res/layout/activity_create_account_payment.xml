@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.alan.washer.washeruser.CreateAccountPayment"
+    tools:context=".CreateAccountPayment"
     android:background="@drawable/background_main">
 
     <include layout="@layout/edit_card_layout"/>
