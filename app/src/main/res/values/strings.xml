@@ -2,6 +2,7 @@
     <string name="app_name">Washer</string>
     <string name="app_name_display">WASHER</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBRop6_RztxsuXASY-CftdFtMwAuFbG2Q4</string>
+    <string name="conekta_key" templateMergeStrategy="preserve" translatable="false">key_DuTsL7pzRTggtK8gwzfr8Vw</string>
     <string name="title_activity_login">INICIAR SESIÓN</string>
     <string name="init_string">-</string>
 
@@ -326,6 +327,8 @@ Para mayor información acerca del contenido del presente AVISO DE PRIVACIDAD IN
 usted puede acudir al Departamento de Recursos Humanos de Comunicación I &amp; M S de RL de
 CV., en el domicilio ubicado en Bosque de Granados 75-6, Bosques de las Lomas, CDMX, 11700,
 México. al teléfono número 55 2905 9388. o al correo electrónico info@ideaymedia.tv</string>
+
+    <string name="terms_alert">Al utilizar esta aplicacion aceptas los terminos y condiciones de uso en la pagina http://www.washer.mx</string>
     <string name="privacy_info">Loren ipsum</string>
     <string name="software_license_info">Loren ipsum</string>
     <string name="error_deleting_car">Error borrando vehículo</string>

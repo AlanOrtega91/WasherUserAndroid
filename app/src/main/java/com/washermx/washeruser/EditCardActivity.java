@@ -130,6 +130,7 @@ public class EditCardActivity extends AppCompatActivity implements View.OnClickL
 
 
     public void addPayment() {
+        //TODO: Check for missing fields
         Card conektaCard = new Card(getString(R.string.user_name,user.name,user.lastName), cardNumber.getText().toString(), cvv.getText().toString(),
                 cardExpirationMonth.getSelectedItem().toString(), cardExpirationYear.getSelectedItem().toString());
         changeActivityForResult(conektaCard);

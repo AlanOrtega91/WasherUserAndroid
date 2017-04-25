@@ -134,7 +134,7 @@ public class LoadingActivity extends AppCompatActivity {
         String jsonObject;
         jsonObject = bundle.getString(CreateAccountPayment.CARD);
         conektaCard = new Gson().fromJson(jsonObject,Card.class);
-        Conekta.setPublicKey("key_LqvrHkEMcS3rda65s4W4wRg");
+        Conekta.setPublicKey(getString(R.string.conekta_key));
         Conekta.collectDevice(this);
         tokenConekta = new Token(this);
     }
