@@ -90,12 +90,6 @@
             android:name="com.washermx.washeruser.LoadingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.LegalOptions"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.washermx.washeruser.LegalOptionsDisplay"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="com.washermx.washeruser.InformationActivity"
             android:screenOrientation="portrait" />
 

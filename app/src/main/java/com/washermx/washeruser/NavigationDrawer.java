@@ -57,6 +57,7 @@ import com.washermx.washeruser.model.AppData;
 import com.washermx.washeruser.model.Car;
 import com.washermx.washeruser.model.Cleaner;
 import com.washermx.washeruser.model.Database.DataBase;
+import com.washermx.washeruser.model.Reportes;
 import com.washermx.washeruser.model.Service;
 import com.washermx.washeruser.model.User;
 import com.washermx.washeruser.model.UserCard;
@@ -785,6 +786,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         }
         if (cleaners.size() < 1) {
             postAlert(getString(R.string.no_cleaners));
+            Reportes.sendReport("Demanda", requestLocation.latitude, requestLocation.longitude);
             return;
         }
         viewState = VEHICLE_SELECTED;
@@ -1063,7 +1065,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                 changeActivity(HelpActivity.class, false);
                 return;
             case BE_PART_OF_TEAM:
-                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.washer.mx"));
+                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.washer.mx/team"));
                 startActivity(myIntent);
                 break;
             case CONFIGURATION:

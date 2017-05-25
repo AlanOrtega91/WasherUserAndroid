@@ -34,7 +34,7 @@
     <string name="create_account_title">CREAR CUENTA</string>
     <string name="next">CONTINUAR</string>
     <string name="title_activity_create_account">CREAR CUENTA</string>
-    <string name="hint_phone">+00 0 00 0000 0000</string>
+    <string name="hint_phone">Telefono</string>
     <string name="hint_repeat_password">Confirmar contraseña</string>
 
     <!-- Strings related to Create Account Personal -->
@@ -102,7 +102,7 @@
     <string name="change_data">EDITAR DATOS</string>
 
     <!-- Strings related to Help -->
-    <string name="report_problem">Reportar un problema</string>
+    <string name="report_problem">Reportar un problema con el último servicio</string>
     <string name="services">Servicios</string>
     <string name="account">Cuenta</string>
     <string name="payment">Pagos</string>
@@ -168,7 +168,7 @@
     <string name="init_date_string">00/00/00 00:00 AM</string>
     <string name="phone">Telefono</string>
     <string name="legal">Legal</string>
-    <string name="vashen_web">Washer.com</string>
+    <string name="vashen_web">washer.mx</string>
     <string name="copyright">Copyright</string>
     <string name="terms_and_conditions">Terminos y Condiciones</string>
     <string name="privacy">Politica de Privacidad</string>

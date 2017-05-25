@@ -63,8 +63,13 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
         finish();
     }
 
-    public void openLegal(View view) {
-        Intent myIntent = new Intent(this,LegalOptions.class);
+    public void openTerms(View view) {
+        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.wixstatic.com/ugd/3b7cab_b86be706129e4d23b9f51e90d1095c34.pdf"));
+        startActivity(myIntent);
+    }
+
+    public void openPrivacy(View view) {
+        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.wixstatic.com/ugd/3b7cab_639435d1b717435bbe95bc4639ccc092.pdf"));
         startActivity(myIntent);
     }
 

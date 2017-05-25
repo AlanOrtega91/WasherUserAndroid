@@ -10,12 +10,22 @@
     <TextView
         style="@style/input_text"
         android:layout_width="fill_parent"
-        android:text="@string/legal"
+        android:text="@string/terms_and_conditions"
         android:id="@+id/textView5"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:onClick="openLegal"/>
+        android:onClick="openTerms"/>
+
+    <TextView
+        style="@style/input_text"
+        android:layout_width="fill_parent"
+        android:text="@string/privacy"
+        android:id="@+id/textView6"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:onClick="openPrivacy"/>
 
     <TextView
         style="@style/input_text"
