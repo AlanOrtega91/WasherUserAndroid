@@ -18,7 +18,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name="com.washermx.washeruser.InitActivity">
+        <activity android:name=".InitActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,75 +26,75 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.washermx.washeruser.LoginActivity"
+            android:name=".LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.NewCar"
+            android:name=".NewCar"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.MainActivity"
+            android:name=".MainActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.CreateAccount"
+            android:name=".CreateAccount"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.CreateAccountPersonal"
+            android:name=".CreateAccountPersonal"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.CreateAccountPayment"
+            android:name=".CreateAccountPayment"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.ForgotPassword"
+            android:name=".ForgotPassword"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.NavigationDrawer"
+            android:name=".NavigationDrawer"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.AboutActivity"
+            android:name=".AboutActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.ConfigurationActivity"
+            android:name=".ConfigurationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.EditAccountActivity"
+            android:name=".EditAccountActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.HelpActivity"
+            android:name=".HelpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.BillingActivity"
+            android:name=".BillingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.EditBillingActivity"
+            android:name=".EditBillingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.PaymentActivity"
+            android:name=".PaymentActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.HistoryActivity"
+            android:name=".HistoryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.SummaryActivity"
+            android:name=".SummaryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.CarsActivity"
+            android:name=".CarsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.EditCardActivity"
+            android:name=".EditCardActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.EditCarActivity"
+            android:name=".EditCarActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.LoadingActivity"
+            android:name=".LoadingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.washermx.washeruser.InformationActivity"
+            android:name=".InformationActivity"
             android:screenOrientation="portrait" />
 
         <service
-            android:name="com.washermx.washeruser.FirebaseMessagingService"
+            android:name=".FirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -102,29 +102,32 @@
             </intent-filter>
         </service>
         <service
-            android:name="com.washermx.washeruser.FirebaseInstanceIDService"
+            android:name=".FirebaseInstanceIDService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <activity android:name="com.washermx.washeruser.DeepLinking">
+        <activity android:name=".DeepLinking">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-                <data android:scheme="http"
+                <data
                     android:host="www.washer.mx"
-                    android:pathPrefix="/service" />
-                <!-- note that the leading "/" is required for pathPrefix-->
+                    android:pathPrefix="/service"
+                    android:scheme="http" />
+                <!-- note that the leading "/" is required for pathPrefix -->
                 <!-- Accepts URIs that begin with "example://gizmos” -->
-                <data android:scheme="washer"
-                    android:host="washer" />
-
+                <data
+                    android:host="washer"
+                    android:scheme="washer" />
             </intent-filter>
         </activity>
+        <activity android:name=".RestriccionesInfo"></activity>
     </application>
 
 </manifest>

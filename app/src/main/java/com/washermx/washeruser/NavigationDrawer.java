@@ -641,7 +641,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
             startActiveServiceCycle();
             cancelSent = false;
         } catch (Service.errorRequestingService e) {
-            postAlert("Error requesting service");
+            postAlert("Error pidiendo el servicio, revisa que no tengas adeudos.");
             serviceRequestedFlag = false;
             handler.post(new Runnable() {
                 @Override

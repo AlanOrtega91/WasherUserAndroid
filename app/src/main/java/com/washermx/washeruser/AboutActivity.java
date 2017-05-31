@@ -15,6 +15,7 @@ import com.washermx.washeruser.model.AppData;
 public class AboutActivity extends AppCompatActivity implements View.OnClickListener {
 
     SharedPreferences settings;
+    public static final String TEXTO_INFO = "com.example.gilton.CarsActivity.SELECTED_CAR_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,18 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     public void openPrivacy(View view) {
         Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.wixstatic.com/ugd/3b7cab_639435d1b717435bbe95bc4639ccc092.pdf"));
         startActivity(myIntent);
+    }
+
+    public void abrirInfoRestricciones(View view) {
+        Intent intent = new Intent(getBaseContext(), RestriccionesInfo.class);
+        intent.putExtra(TEXTO_INFO,getString(R.string.restricciones_info));
+        startActivity(intent);
+    }
+
+    public void abrirInfoUbicaciones(View view) {
+        Intent intent = new Intent(getBaseContext(), RestriccionesInfo.class);
+        intent.putExtra(TEXTO_INFO,getString(R.string.ubicaciones_info));
+        startActivity(intent);
     }
 
     public void openWeb(View view) {

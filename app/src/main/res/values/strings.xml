@@ -2,7 +2,7 @@
     <string name="app_name">Washer</string>
     <string name="app_name_display">WASHER</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBRop6_RztxsuXASY-CftdFtMwAuFbG2Q4</string>
-    <string name="conekta_key" templateMergeStrategy="preserve" translatable="false">key_DuTsL7pzRTggtK8gwzfr8Vw</string>
+    <string name="conekta_key" templateMergeStrategy="preserve" translatable="false">key_SwHV7ybQx64daTopMTQhZrw</string>
     <string name="title_activity_login">INICIAR SESIÓN</string>
     <string name="init_string">-</string>
 
@@ -343,11 +343,15 @@ México. al teléfono número 55 2905 9388. o al correo electrónico info@ideaym
     <string name="x">X</string>
     <string name="email">EMAIL</string>
     <string name="accept">Aceptar</string>
+    <string name="restricciones">Restricciones</string>
+    <string name="restricciones_info">No se puede dar servicio en centros comerciales. \nSe requiere autorizar la entrada al lavador en zonas residenciales. \nSi el vehículo está demasiado sucio no se puede dar servicio.</string>
+    <string name="ubicaciones_info"> Arboledas\n Club de golf Hacienda\n  Valle Dorado\n Satélite\n  Santa Mónica\n Cuautitlán Izcalli\n Col. Roma\n Col. Condesa</string>
+    <string name="ubicaciones">Ubicaciones de Servicio</string>
     <string-array name="vehicles_types">
         <item>Moto</item>
         <item>Auto</item>
-        <item>Camioneta chica (5 personas)</item>
-        <item>Camioneta grande (más de 5 personas)</item>
+        <item>SUV</item>
+        <item>Camioneta</item>
     </string-array>
     <string-array name="vehicles_colors">
         <item>Azul</item>
