@@ -27,8 +27,10 @@ public class UserCard {
         try {
             String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
             JSONObject response = new JSONObject(jsonResponse);
-            if (!(response.getString("Status").compareTo("OK") == 0))
+            if (response.getString("estado").compareTo("ok") != 0)
+            {
                 throw new errorSavingCardToken();
+            }
 
         } catch (JSONException e) {
             Log.i("ERROR","JSON ERROR");

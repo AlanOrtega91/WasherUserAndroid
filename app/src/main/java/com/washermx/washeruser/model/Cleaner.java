@@ -33,12 +33,16 @@ public class Cleaner {
         try {
             String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
             JSONObject response = new JSONObject(jsonResponse);
-            if ((response.getString("Status").compareTo("SESSION ERROR") == 0))
-                throw new noSessionFound();
-            if (!(response.getString("Status").compareTo("OK") == 0))
-                throw new errorGettingCleaners();
+            if (response.getString("estado").compareTo("ok") != 0)
+            {
+                if (response.getString("clave").compareTo("sesion") == 0) {
+                    throw new noSessionFound();
+                } else {
+                    throw new errorGettingCleaners();
+                }
+            }
 
-            JSONArray cleanersResponse = response.getJSONArray("cleaners");
+            JSONArray cleanersResponse = response.getJSONArray("lavadores");
             for (int i=0;i < cleanersResponse.length(); i++) {
                 JSONObject jsonCleaner = cleanersResponse.getJSONObject(i);
                 Cleaner cleaner = new Cleaner();
@@ -66,12 +70,16 @@ public class Cleaner {
         try {
             String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
             JSONObject response = new JSONObject(jsonResponse);
-            if ((response.getString("Status").compareTo("SESSION ERROR") == 0))
-                throw new noSessionFound();
-            if (!(response.getString("Status").compareTo("OK") == 0))
-                throw new errorGettingCleaners();
+            if (response.getString("estado").compareTo("ok") != 0)
+            {
+                if (response.getString("clave").compareTo("sesion") == 0) {
+                    throw new noSessionFound();
+                } else {
+                    throw new errorGettingCleaners();
+                }
+            }
 
-            JSONObject cleanerResponse = response.getJSONObject("cleaner");
+            JSONObject cleanerResponse = response.getJSONObject("lavador");
             Cleaner cleaner = new Cleaner();
             cleaner.latitud = cleanerResponse.getDouble("Latitud");
             cleaner.longitud = cleanerResponse.getDouble("Longitud");
@@ -88,7 +96,6 @@ public class Cleaner {
 
     public static class errorGettingCleaners extends Exception {
     }
-
     public static class noSessionFound extends Throwable {
     }
 }

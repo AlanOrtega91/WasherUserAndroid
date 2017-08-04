@@ -11,7 +11,7 @@
     tools:context=".RestriccionesInfo">
 
     <TextView
-        android:text="@string/restricciones_info"
+        android:text="@string/precios_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

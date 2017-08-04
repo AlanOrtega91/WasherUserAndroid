@@ -52,14 +52,16 @@ public class ProfileReader {
         try {
             String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
             JSONObject response = new JSONObject(jsonResponse);
-            if (!(response.getString("Status").compareTo("OK") == 0))
+            if (response.getString("estado").compareTo("ok") != 0)
+            {
                 throw new errorReadingData();
+            }
 
-            readUser(response.getJSONObject("User Info"), context);
-            readCars(response.getJSONArray("carsList"));
-            readHistory(response.getJSONArray("History"));
-            if (!response.isNull("cards")){
-                readCard(response.getJSONObject("cards"));
+            readUser(response.getJSONObject("usuario"), context);
+            readCars(response.getJSONArray("coches"));
+            readHistory(response.getJSONArray("historial"));
+            if (!response.isNull("tarjetas")){
+                readCard(response.getJSONObject("tarjetas"));
             }
         } catch (Exception e) {
             throw new errorReadingData();
@@ -71,12 +73,7 @@ public class ProfileReader {
             SharedPreferences settings = context.getSharedPreferences(AppData.FILE, 0);
             String token = settings.getString(AppData.TOKEN, null);
             ProfileReader profile = new ProfileReader();
-            long startTime = System.nanoTime();
             profile.initialRead(token, context);
-            long endTime = System.nanoTime();
-            long duration = (endTime - startTime)/1000000;
-            Log.i("TIME","Time for request: " + duration);
-            startTime = System.nanoTime();
             DataBase db = new DataBase(context);
             db.saveUser(profile.user);
             AppData.saveData(settings,profile.user);
@@ -85,9 +82,6 @@ public class ProfileReader {
             if (profile.cards.size() > 0){
                 db.saveCard(profile.cards.get(0));
             }
-            endTime = System.nanoTime();
-            duration = (endTime - startTime)/(1000*1000);
-            Log.i("TIME","Time for database: " + duration);
         } catch (errorReadingData e){
             Log.i("READING","Error reading in profile");
             throw new errorReadingProfile();
@@ -102,14 +96,16 @@ public class ProfileReader {
         try {
             String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
             JSONObject response = new JSONObject(jsonResponse);
-            if (!(response.getString("Status").compareTo("OK") == 0))
+            if (response.getString("estado").compareTo("ok") != 0)
+            {
                 throw new errorReadingData();
+            }
 
-            readUser(response.getJSONObject("User Info"), context);
-            readCars(response.getJSONArray("carsList"));
-            readHistory(response.getJSONArray("History"));
-            if (!response.isNull("cards")) {
-                readCard(response.getJSONObject("cards"));
+            readUser(response.getJSONObject("usuario"), context);
+            readCars(response.getJSONArray("coches"));
+            readHistory(response.getJSONArray("historial"));
+            if (!response.isNull("tarjeta")) {
+                readCard(response.getJSONObject("tarjeta"));
             }
         } catch (Exception e) {
             throw new errorReadingData();
@@ -175,7 +171,6 @@ public class ProfileReader {
                 service.latitud = jsonService.getDouble("latitud");
                 service.longitud = jsonService.getDouble("longitud");
                 service.cleanerId = jsonService.getString("idLavador");
-                //DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
                 if (!jsonService.isNull("horaFinalEstimada"))
                     service.finalTime = format.parse(jsonService.getString("horaFinalEstimada"));

@@ -55,14 +55,18 @@ public class Service {
         try {
             String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
             JSONObject response = new JSONObject(jsonResponse);
-            if ((response.getString("Status").compareTo("SESSION ERROR") == 0))
-                throw new noSessionFound();
-            if ((response.getString("Status").compareTo("USER BLOCK") == 0))
-                throw new userBlock();
-            if (!(response.getString("Status").compareTo("OK") == 0))
-                throw new errorRequestingService();
+            if (response.getString("estado").compareTo("ok") != 0)
+            {
+                if (response.getString("clave").compareTo("sesion") == 0) {
+                    throw new noSessionFound();
+                } else if (response.getString("clave").compareTo("bloqueo") == 0){
+                    throw new userBlock();
+                } else {
+                    throw new errorRequestingService();
+                }
+            }
 
-            JSONObject parameters = response.getJSONObject("info");
+            JSONObject parameters = response.getJSONObject("servicio");
             Service service = new Service();
             service.id = parameters.getString("id");
             service.car = parameters.getString("coche");
@@ -93,10 +97,14 @@ public class Service {
         try {
             String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
             JSONObject response = new JSONObject(jsonResponse);
-            if ((response.getString("Status").compareTo("SESSION ERROR") == 0))
-                throw new noSessionFound();
-            if (!(response.getString("Status").compareTo("OK") == 0))
-                throw new errorCancelingRequest();
+            if (response.getString("estado").compareTo("ok") != 0)
+            {
+                if (response.getString("clave").compareTo("sesion") == 0) {
+                    throw new noSessionFound();
+                } else {
+                    throw new errorCancelingRequest();
+                }
+            }
 
         } catch (JSONException e) {
             Log.i("ERROR","JSON ERROR");
@@ -106,7 +114,7 @@ public class Service {
         }
     }
 
-    public static void sendReview(String idServicio, int rating, String token) throws errorCancelingRequest, noSessionFound {
+    public static void sendReview(String idServicio, int rating, String token) throws errorMandandoCalificacion, noSessionFound {
         String url = HttpServerConnection.buildURL(HTTP_LOCATION + "SendReview");
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("serviceId",idServicio));
@@ -115,20 +123,24 @@ public class Service {
         try {
             String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
             JSONObject response = new JSONObject(jsonResponse);
-            if ((response.getString("Status").compareTo("SESSION ERROR") == 0))
-                throw new noSessionFound();
-            if (!(response.getString("Status").compareTo("OK") == 0))
-                throw new errorCancelingRequest();
+            if (response.getString("estado").compareTo("ok") != 0)
+            {
+                if (response.getString("clave").compareTo("sesion") == 0) {
+                    throw new noSessionFound();
+                } else {
+                    throw new errorMandandoCalificacion();
+                }
+            }
 
         } catch (JSONException e) {
             Log.i("ERROR","JSON ERROR");
-            throw new errorCancelingRequest();
+            throw new errorMandandoCalificacion();
         } catch (HttpServerConnection.connectionException e){
-            throw new errorCancelingRequest();
+            throw new errorMandandoCalificacion();
         }
     }
 
-    public static Double readCleanerRating(String idLavador, String token) throws errorCancelingRequest, noSessionFound {
+    public static Double readCleanerRating(String idLavador, String token) throws errorLeyendoCalificacion, noSessionFound {
         String url = HttpServerConnection.buildURL(HTTP_LOCATION + "ReadCleanerRating");
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("idLavador",idLavador));
@@ -136,17 +148,21 @@ public class Service {
         try {
             String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
             JSONObject response = new JSONObject(jsonResponse);
-            if ((response.getString("Status").compareTo("SESSION ERROR") == 0))
-                throw new noSessionFound();
-            if (!(response.getString("Status").compareTo("OK") == 0))
-                throw new errorCancelingRequest();
+            if (response.getString("estado").compareTo("ok") != 0)
+            {
+                if (response.getString("clave").compareTo("sesion") == 0) {
+                    throw new noSessionFound();
+                } else {
+                    throw new errorLeyendoCalificacion();
+                }
+            }
 
-            return response.getDouble("Calificacion");
+            return response.getDouble("calificacion");
         } catch (JSONException e) {
             Log.i("ERROR","JSON ERROR");
-            throw new errorCancelingRequest();
+            throw new errorLeyendoCalificacion();
         } catch (HttpServerConnection.connectionException e){
-            throw new errorCancelingRequest();
+            throw new errorLeyendoCalificacion();
         }
     }
 
@@ -154,13 +170,14 @@ public class Service {
 
     public static class errorRequestingService extends Exception {
     }
-
     public static class errorCancelingRequest extends Exception {
     }
-
     public static class noSessionFound extends Throwable {
     }
-
     public static class userBlock extends Throwable {
+    }
+    public static class errorMandandoCalificacion extends Throwable {
+    }
+    public static class errorLeyendoCalificacion extends Throwable {
     }
 }

@@ -86,6 +86,12 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
         startActivity(intent);
     }
 
+    public void abrirInfoPrecios(View view) {
+        Intent intent = new Intent(getBaseContext(), RestriccionesInfo.class);
+        intent.putExtra(TEXTO_INFO,getString(R.string.precios_info));
+        startActivity(intent);
+    }
+
     public void openWeb(View view) {
         Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.washer.mx"));
         startActivity(myIntent);

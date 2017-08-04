@@ -107,7 +107,7 @@ public class SummaryActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://washer.mx/Washer/images/cleaners/" + activeService.cleanerId + "/profile_image.jpg");
+                    URL url = new URL("http://washer.mx/api/1.0.0/images/cleaners/" + activeService.cleanerId + "/profile_image.jpg");
                     InputStream is = url.openStream();
                     BufferedInputStream bis = new BufferedInputStream(is);
                     final Bitmap bm = BitmapFactory.decodeStream(bis);
@@ -152,7 +152,7 @@ public class SummaryActivity extends AppCompatActivity {
             AppData.notifyNewData(settings,true);
             AppData.deleteMessage(settings);
             finish();
-        } catch (Service.errorCancelingRequest errorCancelingRequest) {
+        } catch (Service.errorMandandoCalificacion errorMandandoCalificacion) {
             postAlert(getResources().getString(R.string.error_sending_review));
         }   catch (Service.noSessionFound e){
             if (!MainActivity.onScreen) postAlert(getString(R.string.session_error));

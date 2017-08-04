@@ -35,11 +35,16 @@ public class Car {
         try {
             String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
             JSONObject response = new JSONObject(jsonResponse);
-            if ((response.getString("Status").compareTo("SESSION ERROR") == 0))
-                throw new noSessionFound();
-            if (!(response.getString("Status").compareTo("OK") == 0))
-                throw new errorAddingCar() ;
-            return response.getString("carId");
+            if (response.getString("estado").compareTo("ok") != 0)
+            {
+                if (response.getString("clave").compareTo("sesion") == 0) {
+                    throw new noSessionFound();
+                } else {
+                    throw new errorAddingCar() ;
+                }
+            }
+
+            return response.getString("id");
         } catch (JSONException e) {
             Log.i("ERROR","JSON ERROR");
             throw new errorAddingCar();
@@ -56,10 +61,15 @@ public class Car {
         try {
             String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
             JSONObject response = new JSONObject(jsonResponse);
-            if ((response.getString("Status").compareTo("SESSION ERROR") == 0))
-                throw new noSessionFound();
-            if (!(response.getString("Status").compareTo("OK") == 0))
-                throw new errorDeletingCar() ;
+            if (response.getString("estado").compareTo("ok") != 0)
+            {
+                if (response.getString("clave").compareTo("sesion") == 0)
+                {
+                    throw new noSessionFound();
+                } else {
+                    throw new errorDeletingCar() ;
+                }
+            }
 
         } catch (JSONException e) {
             Log.i("ERROR","JSON ERROR");
@@ -81,10 +91,15 @@ public class Car {
         try {
             String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
             JSONObject response = new JSONObject(jsonResponse);
-            if ((response.getString("Status").compareTo("SESSION ERROR") == 0))
-                throw new noSessionFound();
-            if (!(response.getString("Status").compareTo("OK") == 0))
-                throw new errorEditingCar() ;
+            if (response.getString("estado").compareTo("ok") != 0)
+            {
+                if (response.getString("clave").compareTo("sesion") == 0)
+                {
+                    throw new noSessionFound();
+                } else {
+                    throw new errorEditingCar();
+                }
+            }
 
         } catch (JSONException e) {
             Log.i("ERROR","JSON ERROR");
@@ -102,10 +117,15 @@ public class Car {
         try {
             String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
             JSONObject response = new JSONObject(jsonResponse);
-            if ((response.getString("Status").compareTo("SESSION ERROR") == 0))
-                throw new noSessionFound();
-            if (!(response.getString("Status").compareTo("OK") == 0))
-                throw new errorAddingFavoriteCar();
+            if (response.getString("estado").compareTo("ok") != 0)
+            {
+                if (response.getString("clave").compareTo("sesion") == 0)
+                {
+                    throw new noSessionFound();
+                } else {
+                    throw new errorAddingFavoriteCar() ;
+                }
+            }
 
 
         } catch (JSONException e) {
@@ -118,16 +138,12 @@ public class Car {
 
     public static class errorAddingCar extends Exception {
     }
-
     public static class errorDeletingCar extends Exception {
     }
-
     public static class errorEditingCar extends Exception {
     }
-
     public static class errorAddingFavoriteCar extends Exception {
     }
-
     public static class noSessionFound extends Throwable {
     }
 }

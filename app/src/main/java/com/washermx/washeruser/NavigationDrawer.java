@@ -441,7 +441,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
 
     public void setImageDrawableForActiveService() {
         try {
-            URL url = new URL("http://washer.mx/Washer/images/cleaners/" + activeService.cleanerId + "/profile_image.jpg");
+            URL url = new URL("http://54.218.50.2/api/1.0.0/images/cleaners/" + activeService.cleanerId + "/profile_image.jpg");
             InputStream is = url.openStream();
             BufferedInputStream bis = new BufferedInputStream(is);
             Bitmap bm = BitmapFactory.decodeStream(bis);
@@ -786,7 +786,12 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         }
         if (cleaners.size() < 1) {
             postAlert(getString(R.string.no_cleaners));
-            Reportes.sendReport("Demanda", requestLocation.latitude, requestLocation.longitude);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Reportes.sendReport("Demanda", requestLocation.latitude, requestLocation.longitude);
+                }
+            }).start();
             return;
         }
         viewState = VEHICLE_SELECTED;
@@ -844,8 +849,8 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                 rightTitle += " $75";
                 break;
             case Service.VAN:
-                leftTitle += " $80";
-                rightTitle += " $90";
+                leftTitle += " $90";
+                rightTitle += " $100";
                 break;
             default:
                 break;

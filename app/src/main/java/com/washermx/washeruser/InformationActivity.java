@@ -67,7 +67,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://imanio.zone/Vashen/images/cleaners/" + service.cleanerId + "/profile_image.jpg");
+                    URL url = new URL("http://washer.mx/api/1.0.0/images/cleaners/" + service.cleanerId + "/profile_image.jpg");
                     InputStream is = url.openStream();
                     BufferedInputStream bis = new BufferedInputStream(is);
                     final Bitmap bm = BitmapFactory.decodeStream(bis);

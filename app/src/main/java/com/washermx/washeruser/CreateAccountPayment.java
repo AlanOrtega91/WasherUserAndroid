@@ -133,7 +133,7 @@ public class CreateAccountPayment extends AppCompatActivity implements View.OnCl
     }
 
     public void addPayment() {
-        Card conektaCard = new Card("Josue Camara", cardNumber.getText().toString(), cvv.getText().toString(),
+        Card conektaCard = new Card(getString(R.string.user_name,user.name,user.lastName), cardNumber.getText().toString(), cvv.getText().toString(),
                 cardExpirationMonth.getSelectedItem().toString(), cardExpirationYear.getSelectedItem().toString());
         changeActivityForResult(conektaCard);
     }

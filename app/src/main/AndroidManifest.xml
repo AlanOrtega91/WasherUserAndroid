@@ -95,7 +95,8 @@
 
         <service
             android:name=".FirebaseMessagingService"
-            android:exported="false">
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
                 <action android:name="com.washer.washercleaner.LONGRUNSERVICE" />
@@ -103,7 +104,8 @@
         </service>
         <service
             android:name=".FirebaseInstanceIDService"
-            android:exported="false">
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>

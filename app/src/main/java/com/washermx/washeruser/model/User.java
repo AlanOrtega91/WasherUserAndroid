@@ -63,11 +63,14 @@ public class User {
             }
             String jsonResponse = HttpServerConnection.sendHttpRequestPost(url, params);
             JSONObject response = new JSONObject(jsonResponse);
-            if (!(response.getString("Status").compareTo("OK") == 0))
-                if (!response.getString("Status").equals("CREATE PAYMENT ACCOUNT ERROR"))
+            if (response.getString("estado").compareTo("ok") != 0)
+            {
+                if (!response.getString("clave").equals("pago"))
+                {
                     throw new errorWithNewUser();
-
-            JSONObject parameters = response.getJSONObject("User Info");
+                }
+            }
+            JSONObject parameters = response.getJSONObject("usuario");
             user.id = parameters.getString("idCliente");
             user.token = parameters.getString("Token");
             return user;
@@ -103,10 +106,17 @@ public class User {
         try {
             String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
             JSONObject response = new JSONObject(jsonResponse);
-            if ((response.getString("Status").compareTo("SESSION ERROR") == 0))
-                throw new noSessionFound();
-            if (!(response.getString("Status").compareTo("OK") == 0))
-                throw new errorChangeData();
+            if (response.getString("estado").compareTo("error") == 0)
+            {
+                if (response.getString("clave").compareTo("sesion") == 0)
+                {
+                    throw new noSessionFound();
+                }
+                if (response.getString("Status").compareTo("ok") != 0)
+                {
+                    throw new errorChangeData();
+                }
+            }
 
         } catch (JSONException e) {
             Log.i("ERROR","JSON ERROR");
@@ -123,9 +133,10 @@ public class User {
         try {
             String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
             JSONObject response = new JSONObject(jsonResponse);
-            if (!(response.getString("Status").compareTo("OK") == 0))
+            if (response.getString("estado").compareTo("ok") != 0)
+            {
                 throw new errorWithLogOut();
-
+            }
         } catch (JSONException e) {
             Log.i("ERROR","JSON ERROR");
             throw new errorWithLogOut();
@@ -142,10 +153,14 @@ public class User {
         try {
             String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
             JSONObject response = new JSONObject(jsonResponse);
-            if ((response.getString("Status").compareTo("SESSION ERROR") == 0))
-                throw new noSessionFound();
-            if (!(response.getString("Status").compareTo("OK") == 0))
-                throw new errorSavingFireBaseToken();
+            if (response.getString("estado").compareTo("error") == 0)
+            {
+                if (response.getString("clave").compareTo("sesion") == 0) {
+                    throw new noSessionFound();
+                } else {
+                    throw new errorSavingFireBaseToken();
+                }
+            }
 
         } catch (JSONException e) {
             Log.i("ERROR","JSON ERROR");
@@ -157,7 +172,7 @@ public class User {
 
     static Bitmap getEncodedStringImageForUser(String id) {
         try {
-            URL url = new URL("http://washer.mx/Washer/images/users/" + id + "/profile_image.jpg");
+            URL url = new URL("http://54.218.50.2/api/1.0.0/images/users/" + id + "/profile_image.jpg");
             InputStream is = url.openStream();
             BufferedInputStream bis = new BufferedInputStream(is);
             Bitmap bm = BitmapFactory.decodeStream(bis);
