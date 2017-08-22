@@ -94,8 +94,36 @@ public class Cleaner {
         }
     }
 
+    public static Double readCleanerRating(String idLavador, String token) throws errorLeyendoCalificacion, noSessionFound {
+        String url = HttpServerConnection.buildURL(HTTP_LOCATION + "ReadCleanerRating");
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("idLavador",idLavador));
+        params.add(new BasicNameValuePair("token",token));
+        try {
+            String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
+            JSONObject response = new JSONObject(jsonResponse);
+            if (response.getString("estado").compareTo("ok") != 0)
+            {
+                if (response.getString("clave").compareTo("sesion") == 0) {
+                    throw new noSessionFound();
+                } else {
+                    throw new errorLeyendoCalificacion();
+                }
+            }
+
+            return response.getDouble("calificacion");
+        } catch (JSONException e) {
+            Log.i("ERROR","JSON ERROR");
+            throw new errorLeyendoCalificacion();
+        } catch (HttpServerConnection.connectionException e){
+            throw new errorLeyendoCalificacion();
+        }
+    }
+
     public static class errorGettingCleaners extends Exception {
     }
     public static class noSessionFound extends Throwable {
+    }
+    public static class errorLeyendoCalificacion extends Throwable {
     }
 }

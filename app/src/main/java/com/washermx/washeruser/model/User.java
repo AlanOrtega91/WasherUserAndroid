@@ -111,8 +111,7 @@ public class User {
                 if (response.getString("clave").compareTo("sesion") == 0)
                 {
                     throw new noSessionFound();
-                }
-                if (response.getString("Status").compareTo("ok") != 0)
+                } else
                 {
                     throw new errorChangeData();
                 }
@@ -172,6 +171,7 @@ public class User {
 
     static Bitmap getEncodedStringImageForUser(String id) {
         try {
+            //TODO: Cambiar direccion a una no dependiente de la version
             URL url = new URL("http://54.218.50.2/api/1.0.0/images/users/" + id + "/profile_image.jpg");
             InputStream is = url.openStream();
             BufferedInputStream bis = new BufferedInputStream(is);

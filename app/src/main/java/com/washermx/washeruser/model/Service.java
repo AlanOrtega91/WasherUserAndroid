@@ -28,6 +28,7 @@ public class Service {
     public String cleanerId;
     public int rating;
     public String id;
+    public String metodoDePago;
 
     public static final int OUTSIDE = 1;
     public static final int OUTSIDE_INSIDE = 2;
@@ -42,7 +43,9 @@ public class Service {
     }
 
     public static Service requestService(String direccion, String latitud, String longitud,
-                                         String idServicio, String token, String idCoche, String idCocheFavorito) throws errorRequestingService, noSessionFound, userBlock {
+                                         String idServicio, String token, String idCoche, String idCocheFavorito, String metodoDePago)
+            throws errorRequestingService, noSessionFound, userBlock
+    {
         String url = HttpServerConnection.buildURL(HTTP_LOCATION + "RequestService");
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("direccion",direccion));
@@ -52,6 +55,7 @@ public class Service {
         params.add(new BasicNameValuePair("token",token));
         params.add(new BasicNameValuePair("idCoche",idCoche));
         params.add(new BasicNameValuePair("idCocheFavorito",idCocheFavorito));
+        params.add(new BasicNameValuePair("metodoDePago",metodoDePago));
         try {
             String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
             JSONObject response = new JSONObject(jsonResponse);
@@ -140,6 +144,7 @@ public class Service {
         }
     }
 
+
     public static Double readCleanerRating(String idLavador, String token) throws errorLeyendoCalificacion, noSessionFound {
         String url = HttpServerConnection.buildURL(HTTP_LOCATION + "ReadCleanerRating");
         List<NameValuePair> params = new ArrayList<>();
@@ -166,8 +171,6 @@ public class Service {
         }
     }
 
-
-
     public static class errorRequestingService extends Exception {
     }
     public static class errorCancelingRequest extends Exception {
@@ -180,4 +183,5 @@ public class Service {
     }
     public static class errorLeyendoCalificacion extends Throwable {
     }
+
 }

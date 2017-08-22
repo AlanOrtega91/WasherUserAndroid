@@ -19,7 +19,7 @@ import java.util.Locale;
 
 public class DataBase extends SQLiteOpenHelper{
 
-    private static final String DATABASE_NAME = "Gilton.db";
+    private static final String DATABASE_NAME = "Washer.db";
     private static final int DATABASE_VERSION = 1;
     private static final String TEXT_TYPE = " TEXT";
     private static final String INTEGER_TYPE = " INTEGER";
@@ -64,6 +64,7 @@ public class DataBase extends SQLiteOpenHelper{
                     ServiceEntry.RATING + INTEGER_TYPE + COMMA_SEP +
                     ServiceEntry.CLEANER_ID + TEXT_TYPE + COMMA_SEP +
                     ServiceEntry.ACCEPTED_TIME + TEXT_TYPE + COMMA_SEP +
+                    ServiceEntry.METODO_PAGO + TEXT_TYPE + COMMA_SEP +
                     ServiceEntry.FINAL_TIME + TEXT_TYPE +
                     " )";
     private static final String SQL_CREATE_ENTRIES_FOR_CARD =
@@ -260,6 +261,7 @@ public class DataBase extends SQLiteOpenHelper{
             row.put(ServiceEntry.STATUS,service.status);
             row.put(ServiceEntry.RATING,service.rating);
             row.put(ServiceEntry.CLEANER_ID,service.cleanerId);
+            row.put(ServiceEntry.METODO_PAGO, service.metodoDePago);
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
             if (service.finalTime != null) {
                 row.put(ServiceEntry.FINAL_TIME, format.format(service.finalTime));
@@ -291,6 +293,7 @@ public class DataBase extends SQLiteOpenHelper{
                 service.longitud = cursor.getDouble(cursor.getColumnIndexOrThrow(ServiceEntry.LONGITUD));
                 service.status = cursor.getString(cursor.getColumnIndexOrThrow(ServiceEntry.STATUS));
                 service.rating = cursor.getInt(cursor.getColumnIndexOrThrow(ServiceEntry.RATING));
+                service.metodoDePago = cursor.getString(cursor.getColumnIndexOrThrow(ServiceEntry.METODO_PAGO));
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
                 //DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 try {
@@ -341,6 +344,7 @@ public class DataBase extends SQLiteOpenHelper{
                 service.status = cursor.getString(cursor.getColumnIndexOrThrow(ServiceEntry.STATUS));
                 service.cleanerId = cursor.getString(cursor.getColumnIndexOrThrow(ServiceEntry.CLEANER_ID));
                 service.rating = cursor.getInt(cursor.getColumnIndexOrThrow(ServiceEntry.RATING));
+                service.metodoDePago = cursor.getString(cursor.getColumnIndexOrThrow(ServiceEntry.METODO_PAGO));
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
                 //DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 try {
@@ -391,6 +395,7 @@ public class DataBase extends SQLiteOpenHelper{
                 service.status = cursor.getString(cursor.getColumnIndexOrThrow(ServiceEntry.STATUS));
                 service.rating = cursor.getInt(cursor.getColumnIndexOrThrow(ServiceEntry.RATING));
                 service.cleanerId = cursor.getString(cursor.getColumnIndexOrThrow(ServiceEntry.CLEANER_ID));
+                service.metodoDePago = cursor.getString(cursor.getColumnIndexOrThrow(ServiceEntry.METODO_PAGO));
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
                 //DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 try {
@@ -500,6 +505,7 @@ public class DataBase extends SQLiteOpenHelper{
         static final String CLEANER_ID = "cleanerId";
         static final String ACCEPTED_TIME = "acceptedTime";
         static final String FINAL_TIME = "finalTime";
+        static final String METODO_PAGO = "metodoPago";
     }
 
     static abstract class CardEntry implements BaseColumns{

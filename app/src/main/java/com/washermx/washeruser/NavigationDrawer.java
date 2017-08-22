@@ -145,6 +145,8 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     AlertDialog requestingAlert;
     AlertDialog alertBox;
     Boolean noSessionFound = false;
+    String metodoDePago = "t";
+    TextView metodoDePagoTexto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -509,6 +511,14 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         cancelButton = (Button) findViewById(R.id.cancelButton);
         serviceLocationText.setOnEditorActionListener(this);
         startLayout.setOnClickListener(this);
+        metodoDePagoTexto = (TextView) findViewById(R.id.metodoDePago);
+        if (new DataBase(getBaseContext()).readCard() == null) {
+            metodoDePago = "e";
+            metodoDePagoTexto.setText(getString(R.string.efectivo));
+        } else {
+            metodoDePago = "t";
+            metodoDePagoTexto.setText(getString(R.string.tarjeta));
+        }
     }
 
     private void readUserImage() {
@@ -618,7 +628,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         try {
             Car favCar = new DataBase(getBaseContext()).getFavoriteCar();
             Service serviceRequested = Service.requestService("", String.valueOf(requestLocation.latitude),
-                    String.valueOf(requestLocation.longitude), service, token, vehicleType, favCar.id);
+                    String.valueOf(requestLocation.longitude), service, token, vehicleType, favCar.id, metodoDePago);
             DataBase db = new DataBase(getBaseContext());
             List<Service> services = db.readServices();
             services.add(serviceRequested);
@@ -780,10 +790,6 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     public void vehicleClicked(View view) {
         if (viewState != STANDBY)
             return;
-        if (creditCard == null) {
-            postAlert(getString(R.string.no_credit_card));
-            return;
-        }
         if (cleaners.size() < 1) {
             postAlert(getString(R.string.no_cleaners));
             new Thread(new Runnable() {
@@ -1217,6 +1223,31 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
             }
         });
         sendCancelThread.start();
+    }
+
+    public void mostrarMetodoDePago(View view) {
+        if (creditCard != null) {
+            alertBox = new AlertDialog.Builder(this)
+                    .setTitle("¿Que metodo de pago deseas utilizar?")
+                    .setMessage("Si seleccionas efectivo deberas estar presente cuando llegue el lavador para pagar antes de iniciar el servicio")
+                    .setPositiveButton(getString(R.string.efectivo), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            metodoDePago = "e";
+                            metodoDePagoTexto.setText(getString(R.string.efectivo));
+                            dialog.cancel();
+                        }
+                    })
+                    .setNegativeButton(getString(R.string.tarjeta), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            metodoDePago = "t";
+                            metodoDePagoTexto.setText(getString(R.string.tarjeta));
+                            dialog.cancel();
+                        }
+                    })
+                    .show();
+        }
     }
 
     private class MenuAdapter extends ArrayAdapter<Pair<String,Drawable>> {

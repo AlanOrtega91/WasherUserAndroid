@@ -172,15 +172,20 @@ public class ProfileReader {
                 service.longitud = jsonService.getDouble("longitud");
                 service.cleanerId = jsonService.getString("idLavador");
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-                if (!jsonService.isNull("horaFinalEstimada"))
+                if (!jsonService.isNull("horaFinalEstimada")) {
                     service.finalTime = format.parse(jsonService.getString("horaFinalEstimada"));
-                if (!jsonService.isNull("fechaAceptado"))
+                }
+                if (!jsonService.isNull("fechaAceptado")) {
                     service.acceptedTime = format.parse(jsonService.getString("fechaAceptado"));
-                if (jsonService.isNull("Calificacion"))
+                }
+                if (jsonService.isNull("Calificacion")) {
                     service.rating = -1;
-                else
+                } else {
                     service.rating = jsonService.getInt("Calificacion");
-
+                }
+                if (!jsonService.isNull("metodoDePago")) {
+                    service.metodoDePago = jsonService.getString("metodoDePago");
+                }
                 services.add(service);
             }
         }catch (Exception e){

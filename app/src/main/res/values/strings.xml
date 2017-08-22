@@ -2,7 +2,7 @@
     <string name="app_name">Washer</string>
     <string name="app_name_display">WASHER</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBRop6_RztxsuXASY-CftdFtMwAuFbG2Q4</string>
-    <string name="conekta_key" templateMergeStrategy="preserve" translatable="false">key_DuTsL7pzRTggtK8gwzfr8Vw</string>
+    <string name="conekta_key" templateMergeStrategy="preserve" translatable="false">key_SwHV7ybQx64daTopMTQhZrw</string>
     <string name="title_activity_login">INICIAR SESIÓN</string>
     <string name="init_string">-</string>
 
@@ -352,6 +352,8 @@ México. al teléfono número 55 2905 9388. o al correo electrónico info@ideaym
         <b>Camioneta</b>\nExterior: $90     \u0009Exterior e Interior: $100\n\n</string>
     <string name="ubicaciones">Ubicaciones de Servicio</string>
     <string name="precios">Precios</string>
+    <string name="efectivo">Efectivo</string>
+    <string name="tarjeta">Tarjeta</string>
     <string-array name="vehicles_types">
         <item>Moto</item>
         <item>Auto</item>
