@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -18,6 +19,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.lang.reflect.Array;
+import java.util.Date;
 
 import com.google.gson.Gson;
 import com.washermx.washeruser.model.AppData;
@@ -66,7 +70,16 @@ public class CreateAccountPayment extends AppCompatActivity implements View.OnCl
         cardExpirationMonth.setAdapter(monthsAdapter);
         cardExpirationMonth.setOnTouchListener(this);
 
-        ArrayAdapter<CharSequence> yearsAdapter = ArrayAdapter.createFromResource(this,R.array.years,android.R.layout.simple_spinner_dropdown_item);
+        int año = Integer.parseInt(DateFormat.format("yy", new Date()).toString());
+        Integer[] fechas = new Integer[]{0,0,0,0,0,0,0,0,0,0};
+        int posicion = 0;
+        for (int c = año; c < año+10; c++)
+        {
+            fechas[posicion] = new Integer(c);
+            posicion++;
+        }
+
+        ArrayAdapter<Integer> yearsAdapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item, fechas);
         yearsAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         cardExpirationYear.setAdapter(yearsAdapter);
         cardExpirationYear.setOnTouchListener(this);
