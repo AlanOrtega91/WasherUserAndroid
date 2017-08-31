@@ -51,6 +51,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.washermx.washeruser.model.AppData;
@@ -117,6 +118,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     Marker centralMarker;
     Marker cleanerMarker;
     List<Cleaner> cleaners = new ArrayList<>();
+    List<Boolean> imagenMarker = new ArrayList<>();
     List<Marker> markers = new ArrayList<>();
     LocationManager locationManager;
     ImageView vehiclesButton;
@@ -443,7 +445,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
 
     public void setImageDrawableForActiveService() {
         try {
-            URL url = new URL("http://54.218.50.2/api/1.0.0/images/cleaners/" + activeService.cleanerId + "/profile_image.jpg");
+            URL url = new URL("http://54.218.50.2/api/imagenes/lavadores/" + activeService.cleanerId + "/profile_image.jpg");
             InputStream is = url.openStream();
             BufferedInputStream bis = new BufferedInputStream(is);
             Bitmap bm = BitmapFactory.decodeStream(bis);
@@ -748,22 +750,36 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     }
 
     private void addMarkersAndUpdate() {
-        List<Marker> aux = new ArrayList<>();
-        LatLng auxLocation = new LatLng(0.0,0.0);
-        BitmapDrawable cleanerDrawable = (BitmapDrawable) ContextCompat.getDrawable(getBaseContext(),R.drawable.washer_bike);
-        Bitmap b = cleanerDrawable.getBitmap();
-        Bitmap bitmapResized = Bitmap.createScaledBitmap(b, 60, 60, false);
-        for (int i = 0; i < cleaners.size();i++){
-            if (i < markers.size())
-                aux.add(markers.get(i));
-            else
-                aux.add(map.addMarker(new MarkerOptions()
-                        .position(auxLocation)
-                        .icon(BitmapDescriptorFactory.fromBitmap(bitmapResized))));
-            Cleaner cleaner = cleaners.get(i);
-            aux.get(i).setPosition(new LatLng(cleaner.latitud,cleaner.longitud));
+        try {
+            List<Marker> aux = new ArrayList<>();
+            LatLng auxLocation = new LatLng(0.0, 0.0);
+            BitmapDrawable drawable = (BitmapDrawable) ContextCompat.getDrawable(getBaseContext(), R.drawable.washer_bike);
+            Bitmap b = drawable.getBitmap();
+            Bitmap bitmapLavador = Bitmap.createScaledBitmap(b, 100, 100, false);
+            drawable = (BitmapDrawable) ContextCompat.getDrawable(getBaseContext(), R.drawable.washer_bike_ocupado);
+            b = drawable.getBitmap();
+            Bitmap bitmapLavadorOcupado = Bitmap.createScaledBitmap(b, 100, 100, false);
+            for (int i = 0; i < cleaners.size(); i++) {
+                if (i < markers.size()) {
+                    aux.add(markers.get(i));
+                } else {
+                    aux.add(map.addMarker(new MarkerOptions()
+                            .position(auxLocation)
+                            .icon(BitmapDescriptorFactory.fromBitmap(bitmapLavador))));
+                }
+                Cleaner cleaner = cleaners.get(i);
+                aux.get(i).setPosition(new LatLng(cleaner.latitud, cleaner.longitud));
+                if (cleaner.ocupado) {
+                    aux.get(i).setIcon(BitmapDescriptorFactory.fromBitmap(bitmapLavadorOcupado));
+                } else {
+                    if (map.getProjection().getVisibleRegion().latLngBounds.contains(aux.get(i).getPosition()) && aux.get(i).isVisible())
+                        aux.get(i).setIcon(BitmapDescriptorFactory.fromBitmap(bitmapLavador));
+                }
+            }
+            markers = aux;
+        } catch (IllegalArgumentException e) {
+            Log.i("Error","Mapa");
         }
-        markers = aux;
     }
 
     private void getGeoLocation() {
@@ -783,7 +799,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                 }
             });
         } catch (Throwable e) {
-            Log.i("LOCATION","Error gettin geo location = " + e.getMessage());
+            //Log.i("LOCATION","Error gettin geo location = " + e.getMessage());
         }
     }
 

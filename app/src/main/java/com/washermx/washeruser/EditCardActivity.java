@@ -94,7 +94,7 @@ public class EditCardActivity extends AppCompatActivity implements View.OnClickL
         yearsAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         cardExpirationYear.setAdapter(yearsAdapter);
         cardExpirationYear.setOnTouchListener(this);
-        fillCardsListView();
+        fillCardsListView(fechas);
     }
 
     private void configureActionBar() {
@@ -118,7 +118,7 @@ public class EditCardActivity extends AppCompatActivity implements View.OnClickL
         leftButton.setOnClickListener(this);
     }
 
-    private void fillCardsListView() {
+    private void fillCardsListView(Integer[] fechas) {
         if (card != null) {
             cardNumber.setText(card.cardNumber);
             String month = card.expirationMonth;
@@ -129,12 +129,15 @@ public class EditCardActivity extends AppCompatActivity implements View.OnClickL
                 }
             }
 
-            String year = card.expirationYear;
-            for (int i = 0; i < getResources().getStringArray(R.array.years).length; i++) {
-                if (year.equals(cardExpirationYear.getItemAtPosition(i).toString())) {
-                    cardExpirationYear.setSelection(i);
+            Integer year = new Integer(card.expirationYear);
+            int c = 0;
+            for (Integer año:fechas) {
+                if (año.equals(year))
+                {
+                    cardExpirationYear.setSelection(c);
                     break;
                 }
+                c++;
             }
             cvv.setText(card.cvv);
         }

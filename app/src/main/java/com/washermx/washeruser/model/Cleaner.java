@@ -20,6 +20,7 @@ public class Cleaner {
     public double latitud;
     public double longitud;
     public String id;
+    public Boolean ocupado;
 
 
 
@@ -51,6 +52,7 @@ public class Cleaner {
                 cleaner.latitud = jsonCleaner.getDouble("Latitud");
                 cleaner.longitud = jsonCleaner.getDouble("Longitud");
                 cleaner.id = jsonCleaner.getString("idLavador");
+                cleaner.ocupado = !jsonCleaner.getString("ocupado").equals("0");
                 cleaners.add(cleaner);
             }
             return cleaners;

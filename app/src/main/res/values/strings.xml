@@ -471,12 +471,4 @@ México. al teléfono número 55 2905 9388. o al correo electrónico info@ideaym
         <item>11</item>
         <item>12</item>
     </string-array>
-    <string-array name="years">
-        <item>16</item>
-        <item>17</item>
-        <item>18</item>
-        <item>19</item>
-        <item>20</item>
-        <item>21</item>
-    </string-array>
 </resources>

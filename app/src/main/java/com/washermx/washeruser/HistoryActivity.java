@@ -176,7 +176,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                 @Override
                 public void run() {
                     try {
-                        URL url = new URL("http://washer.mx/api/1.0.0/images/cleaners/" + id + "/profile_image.jpg");
+                        URL url = new URL("http://54.218.50.2/api/imagenes/lavadores/" + id + "/profile_image.jpg");
                         InputStream is = url.openStream();
                         BufferedInputStream bis = new BufferedInputStream(is);
                         final Bitmap bm = BitmapFactory.decodeStream(bis);

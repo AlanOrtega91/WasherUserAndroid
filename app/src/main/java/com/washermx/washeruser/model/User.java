@@ -171,8 +171,7 @@ public class User {
 
     static Bitmap getEncodedStringImageForUser(String id) {
         try {
-            //TODO: Cambiar direccion a una no dependiente de la version
-            URL url = new URL("http://54.218.50.2/api/1.0.0/images/users/" + id + "/profile_image.jpg");
+            URL url = new URL("http://54.218.50.2/api/imagenes/usuarios/" + id + "/profile_image.jpg");
             InputStream is = url.openStream();
             BufferedInputStream bis = new BufferedInputStream(is);
             Bitmap bm = BitmapFactory.decodeStream(bis);
@@ -184,6 +183,7 @@ public class User {
                 return bm;
             }
         } catch (Exception e) {
+            Log.i("Error",e.getLocalizedMessage());
             return null;
         }
     }
