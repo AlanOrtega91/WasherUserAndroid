@@ -20,7 +20,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -51,7 +50,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.washermx.washeruser.model.AppData;
@@ -118,7 +116,6 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     Marker centralMarker;
     Marker cleanerMarker;
     List<Cleaner> cleaners = new ArrayList<>();
-    List<Boolean> imagenMarker = new ArrayList<>();
     List<Marker> markers = new ArrayList<>();
     LocationManager locationManager;
     ImageView vehiclesButton;
@@ -149,6 +146,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     Boolean noSessionFound = false;
     String metodoDePago = "t";
     TextView metodoDePagoTexto;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -582,9 +580,8 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         nearbyCleanersTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if (activeService == null) {
                     try {
-                        getNearbyCleaners();
+                        leeYDibujaLavadores();
                     } catch (Cleaner.noSessionFound e) {
                         if (!noSessionFound) {
                             noSessionFound = true;
@@ -593,17 +590,25 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                         }
                         finish();
                     }
-                }
             }
-        }, 0, ONE_SECOND / 50);
+        }, 0, ONE_SECOND / 10);
         reloadMapTimer = new Timer();
         reloadMapTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                readCleanerLocation();
-                reloadCleanerMarkers();
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (activeService != null && !activeService.status.equals("Looking")) {
+                            centralMarker.setPosition(new LatLng(activeService.latitud, activeService.longitud));
+                        } else if (requestLocation != null){
+                            requestLocation = map.getCameraPosition().target;
+                            centralMarker.setPosition(new LatLng(requestLocation.latitude, requestLocation.longitude));
+                        }
+                    }
+                });
             }
-        }, 0, ONE_SECOND / 50);
+        }, 0, ONE_SECOND/100);
         reloadAddressTimer = new Timer();
         reloadAddressTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -687,54 +692,59 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    private void leeYDibujaLavadores() throws Cleaner.noSessionFound
+    {
+        if (activeService != null && !activeService.status.equals("Looking")) {
+            readCleanerLocation();
+            actualizaMarcadorDeLavador();
+        } else if (requestLocation != null){
+            getNearbyCleaners();
+            actualizaMarcadorDeLavadores();
+        }
+    }
+    private void readCleanerLocation() throws Cleaner.noSessionFound{
+        try{
+            cleaner = Cleaner.getCleanerLocation(activeService.cleanerId,token);
+        } catch (Cleaner.errorGettingCleaners e){
+            Log.i("ERROR","Reading cleaner location");
+        }
+    }
+
     private void getNearbyCleaners() throws Cleaner.noSessionFound {
         try {
-            if (requestLocation != null)
-                cleaners = Cleaner.getNearbyCleaners(requestLocation.latitude, requestLocation.longitude,token);
+            cleaners = Cleaner.getNearbyCleaners(requestLocation.latitude, requestLocation.longitude,token);
+            Log.i("Marcadores","UNO");
         } catch (Cleaner.errorGettingCleaners e){
             Log.i("Cleaners Error","Couldnt retrieve cleaners try again later");
         }
     }
 
-    private void readCleanerLocation(){
-        try{
-            if (activeService != null && !activeService.status.equals("Looking"))
-                cleaner = Cleaner.getCleanerLocation(activeService.cleanerId,token);
-        } catch (Cleaner.errorGettingCleaners e){
-            Log.i("ERROR","Reading cleaner location");
-        }  catch (Cleaner.noSessionFound e){
-            if (!noSessionFound) {
-                noSessionFound = true;
-                postAlert(getString(R.string.session_error));
-                changeActivity(MainActivity.class, true);
-            }
-            finish();
-        }
-    }
-
-    private void reloadCleanerMarkers() {
+    private void actualizaMarcadorDeLavador() {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                if (activeService != null) {
-                    centralMarker.setPosition(new LatLng(activeService.latitud, activeService.longitud));
-                    if (!activeService.status.equals("Looking") && cleaner != null) {
-                        cleanerMarker.setVisible(true);
-                        cleanerMarker.setPosition(new LatLng(cleaner.latitud, cleaner.longitud));
-                    }
-                } else {
-                    cleanerMarker.setVisible(false);
-                    requestLocation = map.getCameraPosition().target;
-                    centralMarker.setPosition(new LatLng(requestLocation.latitude, requestLocation.longitude));
-                    if (cleaners.size() >= markers.size()) {
-                        addMarkersAndUpdate();
-                    } else {
-                        removeMarkersAndUpdate();
-                    }
+                if (!activeService.status.equals("Looking") && cleaner != null) {
+                    cleanerMarker.setVisible(true);
+                    cleanerMarker.setPosition(new LatLng(cleaner.latitud, cleaner.longitud));
                 }
             }
         });
     }
+
+    private void actualizaMarcadorDeLavadores() {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                cleanerMarker.setVisible(false);
+                if (cleaners.size() >= markers.size()) {
+                    addMarkersAndUpdate();
+                } else {
+                    removeMarkersAndUpdate();
+                }
+            }
+        });
+    }
+
 
     private void removeMarkersAndUpdate() {
         List<Marker> aux = new ArrayList<>();
@@ -744,9 +754,11 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
             aux.get(i).setPosition(new LatLng(cleaner.latitud,cleaner.longitud));
         }
         for (int i = cleaners.size(); i < markers.size(); i++) {
+            markers.get(i).setVisible(false);
             markers.get(i).remove();
         }
         markers = aux;
+        Log.i("Marcadores","DOS");
     }
 
     private void addMarkersAndUpdate() {
@@ -769,6 +781,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                 }
                 Cleaner cleaner = cleaners.get(i);
                 aux.get(i).setPosition(new LatLng(cleaner.latitud, cleaner.longitud));
+                Log.i("Lavador","Lat=" + cleaner.latitud + " Lon=" + cleaner.longitud);
                 if (cleaner.ocupado) {
                     aux.get(i).setIcon(BitmapDescriptorFactory.fromBitmap(bitmapLavadorOcupado));
                 } else {
@@ -777,6 +790,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                 }
             }
             markers = aux;
+            Log.i("Marcadores","DOS");
         } catch (IllegalArgumentException e) {
             Log.i("Error","Mapa");
         }
@@ -957,24 +971,12 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     }
 
     private Location getBestKnownLocation () throws errorReadingLocation{
-        Location location;
         try {
-            if (( location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)) != null) {
-                long locationTime = (SystemClock.elapsedRealtimeNanos() - location.getElapsedRealtimeNanos()) * 1000 * 1000;
-                if (locationTime > 30 && locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) != null) {
-                    return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                } else {
-                    throw new errorReadingLocation();
-                }
-            } else if (( location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)) != null){
-                long locationTime = (SystemClock.elapsedRealtimeNanos() - location.getElapsedRealtimeNanos()) * 1000 * 1000;
-                if (locationTime > 30 && locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER) != null) {
-                    return locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-                } else {
-                    throw new errorReadingLocation();
-                }
-            } else {
+            Location ubicacion = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+            if (ubicacion == null) {
                 throw new errorReadingLocation();
+            } else {
+                return ubicacion;
             }
         } catch (SecurityException e) {
             throw new errorReadingLocation();
@@ -1173,7 +1175,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
             crit.setAccuracy(Criteria.ACCURACY_FINE);
             crit.setPowerRequirement(Criteria.POWER_HIGH);
             String provider = locationManager.getBestProvider(crit,true);
-            Location lastLocation = locationManager.getLastKnownLocation(provider);
+            Location lastLocation = getBestKnownLocation();
             if (addresses.size() < 1)
                 return;
             Address closestAddress = addresses.get(0);
@@ -1198,7 +1200,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                     serviceLocationText.clearFocus();
                 }
             });
-        } catch (SecurityException e){
+        } catch (errorReadingLocation e){
             handler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -1303,6 +1305,6 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     public void onProviderEnabled(String provider) { }
     @Override
     public void onProviderDisabled(String provider) { }
-    static class errorReadingLocation extends Throwable {
+    private static class errorReadingLocation extends Throwable {
     }
 }
