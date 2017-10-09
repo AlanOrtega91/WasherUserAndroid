@@ -8,15 +8,11 @@ import java.util.List;
 import cz.msebera.android.httpclient.NameValuePair;
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
-/**
- * Created by Alan on 25/05/2017.
- */
 
 public class Reportes {
 
-    private static String HTTP_LOCATION = "Reporte/";
-
     public static void sendReport(String descripcion, double latitud, double longitud) {
+        String HTTP_LOCATION = "Reporte/";
         String url = HttpServerConnection.buildURL(HTTP_LOCATION);
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("descripcion",descripcion));

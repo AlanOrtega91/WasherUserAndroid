@@ -120,6 +120,7 @@ public class ProfileReader {
             user.id = parameters.getString("idCliente");
             user.token = parameters.getString("Token");
             user.phone = parameters.getString("Telefono");
+            user.codigo = parameters.getString("codigo");
             if (!parameters.isNull("NombreFactura")) user.billingName = parameters.getString("NombreFactura");
             if (!parameters.isNull("RFC")) user.rfc = parameters.getString("RFC");
             if (!parameters.isNull("DireccionFactura")) user.billingAddress = parameters.getString("DireccionFactura");

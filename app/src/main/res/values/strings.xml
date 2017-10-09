@@ -78,6 +78,7 @@
         <item name="billing_title">FACTURACIÓN</item>
         <item name="history_title">HISTORIAL</item>
         <item name="cars_title">VEHÍCULOS</item>
+        <item name="promos_title">PROMOCIONES</item>
         <item name="help_title">AYUDA</item>
         <item name="be_part_of_team">SE PARTE DEL EQUIPO</item>
         <item name="configuration_title">CONFIGURACIÓN</item>
@@ -354,6 +355,19 @@ México. al teléfono número 55 2905 9388. o al correo electrónico info@ideaym
     <string name="precios">Precios</string>
     <string name="efectivo">Efectivo</string>
     <string name="tarjeta">Tarjeta</string>
+    <string name="copiar">Copiar</string>
+    <string name="codigoPersonal">codigo</string>
+    <string name="promocionesTitulo">Promociones</string>
+    <string name="agregar">Agregar</string>
+    <string name="codigoPromocionExplicacion">Dale a tus amigos credito por probar Washer. Tu obtendras $100 pesos de credito por cada amigo que utilice tu codigo.</string>
+    <string name="errorAgregandoCodigo">Hubo un error al agregar el codigo</string>
+    <string name="errorCodigoUsado">Este codigo ya fue utilizado</string>
+    <string name="errorCodigoExpirado">Este codigo ya expiro</string>
+    <string name="errorUbicacion">La ubicacion actual no es valida para el codigo</string>
+    <string name="errorCodigoNoExiste">No existe el codigo</string>
+    <string name="errorLeyendoPromociones">Hubo un error al leer las promociones</string>
+    <string name="pagoEfectivo">El precio a pagar es de %s</string>
+    <string name="copiado">Copiado</string>
     <string-array name="vehicles_types">
         <item>Moto</item>
         <item>Auto</item>

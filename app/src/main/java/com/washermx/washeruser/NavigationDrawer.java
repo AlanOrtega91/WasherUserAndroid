@@ -81,10 +81,11 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     private static final int BILLING = 2;
     private static final int HISTORY = 3;
     private static final int CARS = 4;
-    private static final int HELP = 5;
-    private static final int BE_PART_OF_TEAM = 6;
-    private static final int CONFIGURATION = 7;
-    private static final int ABOUT = 8;
+    private static final int PROMOS = 5;
+    private static final int HELP = 6;
+    private static final int BE_PART_OF_TEAM = 7;
+    private static final int CONFIGURATION = 8;
+    private static final int ABOUT = 9;
     Handler handler = new Handler(Looper.getMainLooper());
     private int viewState;
     private static final int STANDBY = 0;
@@ -608,7 +609,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                     }
                 });
             }
-        }, 0, ONE_SECOND/100);
+        }, 0, ONE_SECOND/50);
         reloadAddressTimer = new Timer();
         reloadAddressTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -653,6 +654,9 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                     serviceLocationText.setEnabled(true);
                     serviceInfo.setText(R.string.looking);
                     requestingAlert.cancel();
+                    if (activeService.metodoDePago.equals("e")) {
+                        createAlert(getString(R.string.pagoEfectivo,activeService.precioAPagar));
+                    }
                 }
             });
             startActiveServiceCycle();
@@ -713,7 +717,6 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     private void getNearbyCleaners() throws Cleaner.noSessionFound {
         try {
             cleaners = Cleaner.getNearbyCleaners(requestLocation.latitude, requestLocation.longitude,token);
-            Log.i("Marcadores","UNO");
         } catch (Cleaner.errorGettingCleaners e){
             Log.i("Cleaners Error","Couldnt retrieve cleaners try again later");
         }
@@ -723,7 +726,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         handler.post(new Runnable() {
             @Override
             public void run() {
-                if (!activeService.status.equals("Looking") && cleaner != null) {
+                if (activeService != null && !activeService.status.equals("Looking") && cleaner != null) {
                     cleanerMarker.setVisible(true);
                     cleanerMarker.setPosition(new LatLng(cleaner.latitud, cleaner.longitud));
                 }
@@ -758,7 +761,6 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
             markers.get(i).remove();
         }
         markers = aux;
-        Log.i("Marcadores","DOS");
     }
 
     private void addMarkersAndUpdate() {
@@ -781,7 +783,6 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                 }
                 Cleaner cleaner = cleaners.get(i);
                 aux.get(i).setPosition(new LatLng(cleaner.latitud, cleaner.longitud));
-                Log.i("Lavador","Lat=" + cleaner.latitud + " Lon=" + cleaner.longitud);
                 if (cleaner.ocupado) {
                     aux.get(i).setIcon(BitmapDescriptorFactory.fromBitmap(bitmapLavadorOcupado));
                 } else {
@@ -790,7 +791,6 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                 }
             }
             markers = aux;
-            Log.i("Marcadores","DOS");
         } catch (IllegalArgumentException e) {
             Log.i("Error","Mapa");
         }
@@ -1062,10 +1062,11 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         listItems.add(Pair.create(titles[1], ContextCompat.getDrawable(getBaseContext(),R.drawable.billing_icon)));
         listItems.add(Pair.create(titles[2], ContextCompat.getDrawable(getBaseContext(),R.drawable.history_icon)));
         listItems.add(Pair.create(titles[3], ContextCompat.getDrawable(getBaseContext(),R.drawable.vehicle_icon)));
-        listItems.add(Pair.create(titles[4], ContextCompat.getDrawable(getBaseContext(),R.drawable.help_icon)));
-        listItems.add(Pair.create(titles[5], ContextCompat.getDrawable(getBaseContext(),R.drawable.work_icon)));
-        listItems.add(Pair.create(titles[6], ContextCompat.getDrawable(getBaseContext(),R.drawable.config_icon)));
-        listItems.add(Pair.create(titles[7], ContextCompat.getDrawable(getBaseContext(),R.drawable.line_white)));
+        listItems.add(Pair.create(titles[4], ContextCompat.getDrawable(getBaseContext(),R.drawable.promo_icon)));
+        listItems.add(Pair.create(titles[5], ContextCompat.getDrawable(getBaseContext(),R.drawable.help_icon)));
+        listItems.add(Pair.create(titles[6], ContextCompat.getDrawable(getBaseContext(),R.drawable.work_icon)));
+        listItems.add(Pair.create(titles[7], ContextCompat.getDrawable(getBaseContext(),R.drawable.config_icon)));
+        listItems.add(Pair.create(titles[8], ContextCompat.getDrawable(getBaseContext(),R.drawable.line_white)));
         final MenuAdapter adapter = new MenuAdapter();
         menuList.setAdapter(adapter);
         menuList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -1086,6 +1087,9 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                 return;
             case HISTORY:
                 changeActivity(HistoryActivity.class, false);
+                return;
+            case PROMOS:
+                changeActivity(Promociones.class, false);
                 return;
             case CARS:
                 changeActivity(CarsActivity.class, false);

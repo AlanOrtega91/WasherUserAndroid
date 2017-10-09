@@ -1,6 +1,7 @@
 package com.washermx.washeruser;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -126,7 +127,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     public void onClickForgotPassword(View view) {
-        changeActivity(ForgotPassword.class,false);
+        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://54.218.50.2/recuperar"));
+        startActivity(myIntent);
     }
 
     @Override

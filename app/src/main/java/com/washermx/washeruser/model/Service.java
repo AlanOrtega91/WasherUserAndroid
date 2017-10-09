@@ -36,6 +36,7 @@ public class Service {
     public static final int CAR = 2;
     public static final int SUV = 3;
     public static final int VAN = 4;
+    public String precioAPagar;
 
 
     public static long getDifferenceTimeInMillis(Date finalTime) {
@@ -80,6 +81,8 @@ public class Service {
             service.description = parameters.getString("descripcion");
             service.latitud = parameters.getDouble("latitud");
             service.longitud = parameters.getDouble("longitud");
+            service.metodoDePago = metodoDePago;
+            service.precioAPagar = parameters.getString("precioAPagar");
             service.rating = -1;
 
             return service;
@@ -173,7 +176,7 @@ public class Service {
 
     public static class errorRequestingService extends Exception {
     }
-    public static class errorCancelingRequest extends Exception {
+    private static class errorCancelingRequest extends Exception {
     }
     public static class noSessionFound extends Throwable {
     }
@@ -181,7 +184,7 @@ public class Service {
     }
     public static class errorMandandoCalificacion extends Throwable {
     }
-    public static class errorLeyendoCalificacion extends Throwable {
+    private static class errorLeyendoCalificacion extends Throwable {
     }
 
 }

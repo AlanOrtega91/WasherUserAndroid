@@ -129,7 +129,10 @@
                     android:scheme="washer" />
             </intent-filter>
         </activity>
-        <activity android:name=".RestriccionesInfo"></activity>
+        <activity android:name=".RestriccionesInfo" />
+        <activity android:name=".Promociones" />
+        <activity android:name=".AgregarPromocion"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

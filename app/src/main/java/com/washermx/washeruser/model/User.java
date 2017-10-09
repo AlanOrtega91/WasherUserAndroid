@@ -38,7 +38,7 @@ public class User {
     public String billingName;
     public String rfc;
     public String billingAddress;
-
+    public String codigo;
 
 
     public static User sendNewUser(User user,String password) throws errorWithNewUser {
@@ -73,6 +73,7 @@ public class User {
             JSONObject parameters = response.getJSONObject("usuario");
             user.id = parameters.getString("idCliente");
             user.token = parameters.getString("Token");
+            user.codigo = parameters.getString("codigo");
             return user;
         } catch (JSONException e) {
             Log.i("ERROR","JSON ERROR");

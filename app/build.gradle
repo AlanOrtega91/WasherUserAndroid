@@ -15,8 +15,8 @@ android {
         applicationId "com.washermx.washeruser"
         minSdkVersion 19
         targetSdkVersion 24
-        versionCode 16
-        versionName "1.4.3"
+        versionCode 17
+        versionName "1.5.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -46,7 +46,10 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.android.support:support-v4:24.2.1'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 }
+
+
 
 apply plugin: 'com.google.gms.google-services'

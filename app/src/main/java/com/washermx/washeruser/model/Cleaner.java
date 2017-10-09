@@ -126,6 +126,6 @@ public class Cleaner {
     }
     public static class noSessionFound extends Throwable {
     }
-    public static class errorLeyendoCalificacion extends Throwable {
+    private static class errorLeyendoCalificacion extends Throwable {
     }
 }
