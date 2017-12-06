@@ -17,6 +17,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -56,6 +57,7 @@ import com.washermx.washeruser.model.AppData;
 import com.washermx.washeruser.model.Car;
 import com.washermx.washeruser.model.Cleaner;
 import com.washermx.washeruser.model.Database.DataBase;
+import com.washermx.washeruser.model.Precio;
 import com.washermx.washeruser.model.Reportes;
 import com.washermx.washeruser.model.Service;
 import com.washermx.washeruser.model.User;
@@ -64,6 +66,7 @@ import com.washermx.washeruser.model.UserCard;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -147,6 +150,9 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     Boolean noSessionFound = false;
     String metodoDePago = "t";
     TextView metodoDePagoTexto;
+
+    List<Precio> precios;
+    Integer idRegion;
 
 
     @Override
@@ -496,23 +502,23 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         configureActionBar();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        vehiclesButton = (ImageView) findViewById(R.id.vehiclesImage);
-        startLayout = (LinearLayout) findViewById(R.id.startLayout);
-        lowLayout = (LinearLayout) findViewById(R.id.lowLayout);
-        upLayout = (LinearLayout) findViewById(R.id.upLayout);
-        rightLayout = (LinearLayout) findViewById(R.id.rightLayout);
-        leftLayout = (LinearLayout) findViewById(R.id.leftLayout);
-        leftButton = (TextView) findViewById(R.id.leftButton);
-        leftDescription_left = (TextView) findViewById(R.id.leftDescription_left);
-        rightButton = (TextView) findViewById(R.id.rightButton);
-        cleanerInfo = (TextView) findViewById(R.id.cleanerInfo);
-        cleanerImageInfo = (ImageView) findViewById(R.id.cleanerImageInfo);
-        serviceInfo = (TextView) findViewById(R.id.serviceInfo);
-        serviceLocationText = (EditText) findViewById(R.id.serviceLocationText);
-        cancelButton = (Button) findViewById(R.id.cancelButton);
+        vehiclesButton =  findViewById(R.id.vehiclesImage);
+        startLayout =  findViewById(R.id.startLayout);
+        lowLayout =  findViewById(R.id.lowLayout);
+        upLayout =  findViewById(R.id.upLayout);
+        rightLayout =  findViewById(R.id.rightLayout);
+        leftLayout =  findViewById(R.id.leftLayout);
+        leftButton =  findViewById(R.id.leftButton);
+        leftDescription_left =  findViewById(R.id.leftDescription_left);
+        rightButton =  findViewById(R.id.rightButton);
+        cleanerInfo =  findViewById(R.id.cleanerInfo);
+        cleanerImageInfo =  findViewById(R.id.cleanerImageInfo);
+        serviceInfo =  findViewById(R.id.serviceInfo);
+        serviceLocationText =  findViewById(R.id.serviceLocationText);
+        cancelButton =  findViewById(R.id.cancelButton);
         serviceLocationText.setOnEditorActionListener(this);
         startLayout.setOnClickListener(this);
-        metodoDePagoTexto = (TextView) findViewById(R.id.metodoDePago);
+        metodoDePagoTexto =  findViewById(R.id.metodoDePago);
         if (new DataBase(getBaseContext()).readCard() == null) {
             metodoDePago = "e";
             metodoDePagoTexto.setText(getString(R.string.efectivo));
@@ -523,8 +529,8 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     }
 
     private void readUserImage() {
-        TextView headerTitle = (TextView) findViewById(R.id.menuName);
-        ImageView menuImage = (ImageView) findViewById(R.id.menuImage);
+        TextView headerTitle =  findViewById(R.id.menuName);
+        ImageView menuImage =  findViewById(R.id.menuImage);
         headerTitle.setText(getString(R.string.user_name,user.name,user.lastName));
         if (!user.imagePath.equals("")) {
             menuImage.setImageBitmap(User.readImageBitmapFromFile(user.imagePath));
@@ -586,7 +592,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                     } catch (Cleaner.noSessionFound e) {
                         if (!noSessionFound) {
                             noSessionFound = true;
-                            postAlert(getString(R.string.session_error));
+                            postAlert(getString(R.string.error_sesion));
                             changeActivity(MainActivity.class, true);
                         }
                         finish();
@@ -636,7 +642,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         try {
             Car favCar = new DataBase(getBaseContext()).getFavoriteCar();
             Service serviceRequested = Service.requestService("", String.valueOf(requestLocation.latitude),
-                    String.valueOf(requestLocation.longitude), service, token, vehicleType, favCar.id, metodoDePago);
+                    String.valueOf(requestLocation.longitude), service, token, vehicleType, favCar.id, metodoDePago, idRegion);
             DataBase db = new DataBase(getBaseContext());
             List<Service> services = db.readServices();
             services.add(serviceRequested);
@@ -674,7 +680,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         } catch (Service.noSessionFound e){
             if (!noSessionFound) {
                 noSessionFound = true;
-                postAlert(getString(R.string.session_error));
+                postAlert(getString(R.string.error_sesion));
                 changeActivity(MainActivity.class, true);
             }
             finish();
@@ -818,21 +824,9 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     }
 
     public void vehicleClicked(View view) {
-        if (viewState != STANDBY)
-            return;
-        if (cleaners.size() < 1) {
-            postAlert(getString(R.string.no_cleaners));
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Reportes.sendReport("Demanda", requestLocation.latitude, requestLocation.longitude);
-                }
-            }).start();
-            return;
-        }
-        viewState = VEHICLE_SELECTED;
-        vehicleType = new DataBase(getBaseContext()).getFavoriteCar().type;
-        configureState();
+        Double latitud = requestLocation.latitude;
+        Double longitud = requestLocation.longitude;
+        new BuscarPreciosAsync().execute(latitud, longitud);
     }
 
     private void configureState() {
@@ -870,32 +864,58 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         String leftTitle = getString(R.string.outside);
         String rightTitle = getString(R.string.outside_and_inside);
         leftDescription_left.setText(R.string.outside_description_left);
-        switch (Integer.parseInt(vehicleType)) {
-            case Service.BIKE:
-                leftTitle += " $35";
-                rightLayout.setVisibility(View.INVISIBLE);
-                leftDescription_left.setText(R.string.outside_description_bike_left);
-                break;
-            case Service.CAR:
-                leftTitle += " $55";
-                rightTitle += " $65";
-                break;
-            case Service.SUV:
-                leftTitle += " $65";
-                rightTitle += " $75";
-                break;
-            case Service.VAN:
-                leftTitle += " $90";
-                rightTitle += " $100";
-                break;
-            default:
-                break;
+        String precio;
+        try {
+            switch (Integer.parseInt(vehicleType)) {
+                case Service.BIKE:
+                    precio = buscarPrecioPorIdServicioYIdVehiculo(1, Service.BIKE);
+                    leftTitle += " $" + precio;
+                    rightLayout.setVisibility(View.INVISIBLE);
+                    leftDescription_left.setText(R.string.outside_description_bike_left);
+                    break;
+                case Service.CAR:
+                    precio = buscarPrecioPorIdServicioYIdVehiculo(1, Service.CAR);
+                    leftTitle += " $" + precio;
+                    precio = buscarPrecioPorIdServicioYIdVehiculo(2, Service.CAR);
+                    rightTitle += " $" + precio;
+                    break;
+                case Service.SUV:
+                    precio = buscarPrecioPorIdServicioYIdVehiculo(1, Service.SUV);
+                    leftTitle += " $" + precio;
+                    precio = buscarPrecioPorIdServicioYIdVehiculo(2, Service.SUV);
+                    rightTitle += " $" + precio;
+                    break;
+                case Service.VAN:
+                    precio = buscarPrecioPorIdServicioYIdVehiculo(1, Service.VAN);
+                    leftTitle += " $" + precio;
+                    precio = buscarPrecioPorIdServicioYIdVehiculo(2, Service.VAN);
+                    rightTitle += " $" + precio;
+                    break;
+                default:
+                    throw new errorBuscandoPrecio();
+            }
+            leftButton.setText(leftTitle);
+            rightButton.setText(rightTitle);
+            serviceLocationText.setEnabled(true);
+        } catch (errorBuscandoPrecio e) {
+            this.createAlert("No se encontro precio para este vehiculo");
+            viewState = STANDBY;
+            configureState();
         }
-        leftButton.setText(leftTitle);
-        rightButton.setText(rightTitle);
-        serviceLocationText.setEnabled(true);
     }
 
+    private String buscarPrecioPorIdServicioYIdVehiculo(int idServicio, int idVehiculo) throws errorBuscandoPrecio {
+        for (Precio precio : this.precios) {
+            if (precio.idServicio == idServicio && precio.idVehiculo == idVehiculo)
+            {
+                NumberFormat nf= NumberFormat.getInstance();
+                nf.setMaximumFractionDigits(2);
+                nf.setMinimumFractionDigits(2);
+                return nf.format(precio.precio);
+            }
+        }
+        throw new errorBuscandoPrecio();
+    }
 
     private void configureServiceTypeState() {
         if (serviceRequestedFlag)
@@ -1046,14 +1066,14 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
             Toolbar parent =(Toolbar) optionsTitleBar.getCustomView().getParent();
             parent.setContentInsetsAbsolute(0,0);
         }
-        TextView menuTitle = (TextView)findViewById(R.id.menuMapTitle);
+        TextView menuTitle = findViewById(R.id.menuMapTitle);
         menuTitle.setText(R.string.app_name_display);
         menuTitle.setTextColor(Color.rgb(7,96,53));
     }
 
     private void configureMenu() {
-        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        ListView menuList = (ListView)findViewById(R.id.menuList);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        ListView menuList = findViewById(R.id.menuList);
         View header = getLayoutInflater().inflate(R.layout.menu_header,menuList,false);
         menuList.addHeaderView(header);
         String [] titles = getResources().getStringArray(R.array.menu_options);
@@ -1200,7 +1220,10 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                     CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(locationLatLng,15);
                     map.animateCamera(cameraUpdate);
                     InputMethodManager imn = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imn.hideSoftInputFromWindow(serviceLocationText.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                    if (imn != null)
+                    {
+                        imn.hideSoftInputFromWindow(serviceLocationText.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                    }
                     serviceLocationText.clearFocus();
                 }
             });
@@ -1285,8 +1308,8 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
             try {
                 Pair<String,Drawable> item = listItems.get(position);
                 Drawable icon = item.second;
-                TextView itemName = (TextView)itemView.findViewById(R.id.listItemName);
-                ImageView itemImage = (ImageView)itemView.findViewById(R.id.listItemImage);
+                TextView itemName = itemView.findViewById(R.id.listItemName);
+                ImageView itemImage = itemView.findViewById(R.id.listItemImage);
                 if (position < navigationItems.size() - 1) {
                     itemImage.setImageDrawable(icon);
                 } else {
@@ -1301,6 +1324,63 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    private class BuscarPreciosAsync extends AsyncTask<Double, Void, String>
+    {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            findViewById(R.id.layoutCargando).setVisibility(View.VISIBLE);
+            findViewById(R.id.layoutCargando).bringToFront();
+        }
+
+        List<Precio> preciosLeidos;
+        @Override
+        protected String doInBackground(Double... ubicacion) {
+            try {
+                preciosLeidos = Service.leerPrecios(ubicacion[0], ubicacion[1]);
+                return "ok";
+            } catch (Service.errorLeyendoPrecios e) {
+                return "error";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String resultado) {
+            super.onPostExecute(resultado);
+            findViewById(R.id.layoutCargando).setVisibility(View.GONE);
+            switch (resultado) {
+                case "ok":
+                    if (preciosLeidos.size() < 1)
+                    {
+                        createAlert("Error al leer el precio");
+                    } else {
+                        precios = preciosLeidos;
+                        idRegion = precios.get(0).region;
+                        if (viewState != STANDBY)
+                            return;
+                        if (cleaners.size() < 1) {
+                            postAlert(getString(R.string.no_cleaners));
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Reportes.sendReport("Demanda", requestLocation.latitude, requestLocation.longitude);
+                                }
+                            }).start();
+                            return;
+                        }
+                        viewState = VEHICLE_SELECTED;
+                        vehicleType = new DataBase(getBaseContext()).getFavoriteCar().type;
+                        configureState();
+                    }
+                    break;
+                default:
+                    createAlert("Error al leer el precio");
+                    break;
+            }
+        }
+    }
+
     @Override
     public void onLocationChanged(Location location) {  }
     @Override
@@ -1309,6 +1389,6 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     public void onProviderEnabled(String provider) { }
     @Override
     public void onProviderDisabled(String provider) { }
-    private static class errorReadingLocation extends Throwable {
-    }
+    private static class errorReadingLocation extends Throwable {}
+    private static class errorBuscandoPrecio extends Throwable{}
 }

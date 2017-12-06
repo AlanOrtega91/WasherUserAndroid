@@ -73,7 +73,7 @@ public class CarsActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void initView() {
-        carList = (ListView)findViewById(R.id.carsList);
+        carList = findViewById(R.id.carsList);
         carList.setOnItemClickListener(this);
         registerForContextMenu(carList);
         populateCarsListView();
@@ -92,8 +92,8 @@ public class CarsActivity extends AppCompatActivity implements AdapterView.OnIte
             Toolbar parent =(Toolbar) optionsTitleBar.getCustomView().getParent();
             parent.setContentInsetsAbsolute(0,0);
         }
-        TextView menuButton = (TextView)findViewById(R.id.menuButton);
-        TextView menuTitle = (TextView)findViewById(R.id.menuTitle);
+        TextView menuButton = findViewById(R.id.menuButton);
+        TextView menuTitle = findViewById(R.id.menuTitle);
         menuTitle.setText(R.string.cars_title);
         menuButton.setText(R.string.menu);
         menuButton.setOnClickListener(this);
@@ -131,7 +131,7 @@ public class CarsActivity extends AppCompatActivity implements AdapterView.OnIte
         } catch (Car.errorAddingFavoriteCar errorAddingFavoriteCar) {
             postAlert(getString(R.string.error_setting_favorite_car));
         } catch (Car.noSessionFound e){
-            if (!MainActivity.onScreen) postAlert(getString(R.string.session_error));
+            if (!MainActivity.onScreen) postAlert(getString(R.string.error_sesion));
             changeActivity(MainActivity.class, true);
             finish();
         }
@@ -216,7 +216,7 @@ public class CarsActivity extends AppCompatActivity implements AdapterView.OnIte
                     postAlert(getString(R.string.error_setting_favorite_car));
                     onResume();
                 } catch (Car.noSessionFound e){
-                    if (!MainActivity.onScreen) postAlert(getString(R.string.session_error));
+                    if (!MainActivity.onScreen) postAlert(getString(R.string.error_sesion));
                     changeActivity(MainActivity.class, true);
                     finish();
                 }
@@ -258,11 +258,11 @@ public class CarsActivity extends AppCompatActivity implements AdapterView.OnIte
             }
             try {
                 Car car = cars.get(position);
-                TextView plates = (TextView)itemView.findViewById(R.id.plates);
-                TextView brand = (TextView)itemView.findViewById(R.id.brand);
+                TextView plates = itemView.findViewById(R.id.plates);
+                TextView brand = itemView.findViewById(R.id.brand);
                 plates.setText(car.plates);
                 brand.setText(car.brand);
-                RelativeLayout selectedIndicator = (RelativeLayout)itemView.findViewById(R.id.selectedIndicator);
+                RelativeLayout selectedIndicator = itemView.findViewById(R.id.selectedIndicator);
                 if (car.favorite != 1) {
                     selectedIndicator.setVisibility(View.GONE);
                 } else {

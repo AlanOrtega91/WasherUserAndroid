@@ -147,7 +147,6 @@ public class ProfileReader {
                 car.color = jsonCar.getString("Color");
                 car.plates = jsonCar.getString("Placas");
                 car.brand = jsonCar.getString("Marca");
-                //TODO:Agregar precios
                 car.favorite = jsonCar.getInt("Favorito");
                 cars.add(car);
             }

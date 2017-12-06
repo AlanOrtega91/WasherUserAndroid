@@ -31,10 +31,10 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
     }
 
     private void initView() {
-        bEmail = (EditText) findViewById(R.id.createEmail);
-        bPhone = (EditText) findViewById(R.id.createPhone);
-        bPassword = (EditText) findViewById(R.id.createPassword);
-        bPassword2 = (EditText) findViewById(R.id.createPassword2);
+        bEmail =  findViewById(R.id.createEmail);
+        bPhone =  findViewById(R.id.createPhone);
+        bPassword =  findViewById(R.id.createPassword);
+        bPassword2 =  findViewById(R.id.createPassword2);
         configureActionBar();
     }
 
@@ -50,9 +50,9 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
             parent.setContentInsetsAbsolute(0,0);
         }
 
-        TextView leftButton = (TextView) findViewById(R.id.leftButtonOptionsTitlebar);
-        TextView rightButton = (TextView)findViewById(R.id.rightButtonOptionsTitlebar);
-        TextView title = (TextView)findViewById(R.id.titleOptionsTitlebar);
+        TextView leftButton =  findViewById(R.id.leftButtonOptionsTitlebar);
+        TextView rightButton = findViewById(R.id.rightButtonOptionsTitlebar);
+        TextView title = findViewById(R.id.titleOptionsTitlebar);
         leftButton.setText(R.string.cancel);
         rightButton.setText(R.string.next);
         title.setText(R.string.create_account_title);
@@ -87,9 +87,11 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         String email = bEmail.getText().toString();
         String password = bPassword.getText().toString();
         String password2 = bPassword2.getText().toString();
+        String telefono = bPhone.getText().toString();
         try{
             reviewCredentials(email,password);
             reviewPassword(password,password2);
+            revisaDatos(telefono);
             changeActivity(CreateAccountPersonal.class);
         } catch (invalidCredentialsEmail e) {
             postAlert(getResources().getString(R.string.invalid_email));
@@ -97,6 +99,8 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
             postAlert(getResources().getString(R.string.invalid_password));
         } catch (passwordDontMatch e) {
             postAlert(getResources().getString(R.string.invalid_password_dont_march));
+        } catch (CreateAccount.telefonoInvalido telefonoInvalido) {
+            postAlert(getResources().getString(R.string.invalid_phone));
         }
     }
 
@@ -121,6 +125,13 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    private void revisaDatos(String telefono) throws telefonoInvalido {
+        if (telefono.length() < 10)
+        {
+            throw new telefonoInvalido();
+        }
+    }
+
     private void postAlert(final String message) {
         handler.post(new Runnable() {
             @Override
@@ -135,5 +146,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
     private class invalidCredentialsPassword extends Throwable {
     }
     private class passwordDontMatch extends Throwable {
+    }
+    private class telefonoInvalido extends Throwable {
     }
 }

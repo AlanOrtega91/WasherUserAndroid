@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.Date;
 
 import com.google.gson.Gson;
@@ -59,10 +58,10 @@ public class CreateAccountPayment extends AppCompatActivity implements View.OnCl
 
     private void initView() {
         configureActionBar();
-        cardNumber = (EditText)findViewById(R.id.cardNumber);
-        cvv = (EditText)findViewById(R.id.cvv);
-        cardExpirationMonth = (Spinner)findViewById(R.id.cardExpirationMonth);
-        cardExpirationYear = (Spinner)findViewById(R.id.cardExpirationYear);
+        cardNumber = findViewById(R.id.cardNumber);
+        cvv = findViewById(R.id.cvv);
+        cardExpirationMonth = findViewById(R.id.cardExpirationMonth);
+        cardExpirationYear = findViewById(R.id.cardExpirationYear);
         cardNumber.addTextChangedListener(this);
 
         ArrayAdapter<CharSequence> monthsAdapter = ArrayAdapter.createFromResource(this,R.array.months,android.R.layout.simple_spinner_dropdown_item);
@@ -75,7 +74,7 @@ public class CreateAccountPayment extends AppCompatActivity implements View.OnCl
         int posicion = 0;
         for (int c = año; c < año+10; c++)
         {
-            fechas[posicion] = new Integer(c);
+            fechas[posicion] = c;
             posicion++;
         }
 
@@ -96,9 +95,9 @@ public class CreateAccountPayment extends AppCompatActivity implements View.OnCl
             Toolbar parent =(Toolbar) optionsTitleBar.getCustomView().getParent();
             parent.setContentInsetsAbsolute(0,0);
         }
-        TextView leftButton = (TextView) findViewById(R.id.leftButtonOptionsTitlebar);
-        TextView rightButton = (TextView)findViewById(R.id.rightButtonOptionsTitlebar);
-        TextView title = (TextView)findViewById(R.id.titleOptionsTitlebar);
+        TextView leftButton =  findViewById(R.id.leftButtonOptionsTitlebar);
+        TextView rightButton = findViewById(R.id.rightButtonOptionsTitlebar);
+        TextView title = findViewById(R.id.titleOptionsTitlebar);
         leftButton.setText(R.string.cancel);
         rightButton.setText(R.string.add_later);
         title.setText(R.string.create_account_title);
@@ -107,11 +106,9 @@ public class CreateAccountPayment extends AppCompatActivity implements View.OnCl
     }
 
 
-    private void changeActivity(Class activity, Boolean clear) {
+    private void changeActivity(Class activity) {
         Intent intent = new Intent(getBaseContext(), activity);
-        if (clear) {
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
@@ -124,21 +121,21 @@ public class CreateAccountPayment extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onBackPressed() {
-        changeActivity(NavigationDrawer.class,true);
+        changeActivity(NavigationDrawer.class);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.leftButtonOptionsTitlebar:
-                changeActivity(NavigationDrawer.class,true);
+                changeActivity(NavigationDrawer.class);
                 finish();
                 break;
             case R.id.rightButtonOptionsTitlebar:
                 if (cardNumber.getText().toString().length() > 0)
                     addPayment();
                 else {
-                    changeActivity(NavigationDrawer.class, true);
+                    changeActivity(NavigationDrawer.class);
                     finish();
                 }
                 break;
@@ -155,7 +152,7 @@ public class CreateAccountPayment extends AppCompatActivity implements View.OnCl
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == LoadingActivity.NEW_CARD){
             if (resultCode == RESULT_OK){
-                changeActivity(NavigationDrawer.class,true);
+                changeActivity(NavigationDrawer.class);
             }
         }
     }
@@ -170,7 +167,7 @@ public class CreateAccountPayment extends AppCompatActivity implements View.OnCl
 
     @Override
     public void afterTextChanged(Editable editable) {
-        TextView rightButton = (TextView)findViewById(R.id.rightButtonOptionsTitlebar);
+        TextView rightButton = findViewById(R.id.rightButtonOptionsTitlebar);
         if (cardNumber.getText().toString().length() > 0)
             rightButton.setText(R.string.add_payment);
         else
@@ -180,7 +177,9 @@ public class CreateAccountPayment extends AppCompatActivity implements View.OnCl
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+        }
         return false;
     }
 }

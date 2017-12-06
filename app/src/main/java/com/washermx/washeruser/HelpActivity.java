@@ -81,11 +81,11 @@ public class HelpActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initView() {
         configureActionBar();
-        date = (TextView)findViewById(R.id.serviceDate);
-        price = (TextView)findViewById(R.id.servicePrice);
-        type = (TextView)findViewById(R.id.serviceType);
-        cleanerImage = (ImageView)findViewById(R.id.cleanerImage);
-        map = (ImageView)findViewById(R.id.imageViewMap);
+        date = findViewById(R.id.serviceDate);
+        price = findViewById(R.id.servicePrice);
+        type = findViewById(R.id.serviceType);
+        cleanerImage = findViewById(R.id.cleanerImage);
+        map = findViewById(R.id.imageViewMap);
         populateListView();
     }
 
@@ -100,8 +100,8 @@ public class HelpActivity extends AppCompatActivity implements View.OnClickListe
             Toolbar parent =(Toolbar) optionsTitleBar.getCustomView().getParent();
             parent.setContentInsetsAbsolute(0,0);
         }
-        TextView menuButton = (TextView)findViewById(R.id.menuButton);
-        TextView menuTitle = (TextView)findViewById(R.id.menuTitle);
+        TextView menuButton = findViewById(R.id.menuButton);
+        TextView menuTitle = findViewById(R.id.menuTitle);
         menuTitle.setText(R.string.help_title);
         menuButton.setText(R.string.menu);
         menuButton.setOnClickListener(this);

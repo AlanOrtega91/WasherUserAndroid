@@ -66,12 +66,12 @@ public class EditAccountActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initView() {
-        name = (EditText) findViewById(R.id.nameEdit);
-        lastName = (EditText) findViewById(R.id.lastNameEdit);
-        email = (EditText) findViewById(R.id.emailEdit);
-        cel = (EditText) findViewById(R.id.celEdit);
+        name =  findViewById(R.id.nameEdit);
+        lastName =  findViewById(R.id.lastNameEdit);
+        email =  findViewById(R.id.emailEdit);
+        cel =  findViewById(R.id.celEdit);
         fillUserTextFields();
-        editImage = (ImageView)findViewById(R.id.editImage);
+        editImage = findViewById(R.id.editImage);
         readUserImage();
         configureActionBar();
     }
@@ -87,9 +87,9 @@ public class EditAccountActivity extends AppCompatActivity implements View.OnCli
             Toolbar parent =(Toolbar) optionsTitleBar.getCustomView().getParent();
             parent.setContentInsetsAbsolute(0,0);
         }
-        TextView leftButton = (TextView)findViewById(R.id.leftButtonOptionsTitlebar);
-        TextView rightButton = (TextView)findViewById(R.id.rightButtonOptionsTitlebar);
-        TextView title = (TextView)findViewById(R.id.titleOptionsTitlebar);
+        TextView leftButton = findViewById(R.id.leftButtonOptionsTitlebar);
+        TextView rightButton = findViewById(R.id.rightButtonOptionsTitlebar);
+        TextView title = findViewById(R.id.titleOptionsTitlebar);
         leftButton.setText(R.string.cancel);
         rightButton.setText(R.string.save);
         title.setText(R.string.edit_account);

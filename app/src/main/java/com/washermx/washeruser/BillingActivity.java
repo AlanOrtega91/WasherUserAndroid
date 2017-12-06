@@ -68,8 +68,8 @@ public class BillingActivity extends AppCompatActivity implements View.OnClickLi
             Toolbar parent =(Toolbar) optionsTitleBar.getCustomView().getParent();
             parent.setContentInsetsAbsolute(0,0);
         }
-        TextView menuButton = (TextView)findViewById(R.id.menuButton);
-        TextView menuTitle = (TextView)findViewById(R.id.menuTitle);
+        TextView menuButton = findViewById(R.id.menuButton);
+        TextView menuTitle = findViewById(R.id.menuTitle);
         menuTitle.setText(R.string.billing_title);
         menuButton.setText(R.string.menu);
         menuButton.setOnClickListener(this);

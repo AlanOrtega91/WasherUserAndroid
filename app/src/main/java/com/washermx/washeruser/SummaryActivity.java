@@ -59,10 +59,10 @@ public class SummaryActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        date = (TextView) findViewById(R.id.date);
-        price = (TextView) findViewById(R.id.price);
-        location = (ImageView) findViewById(R.id.locationImage);
-        cleaner = (ImageView) findViewById(R.id.cleanerImage);
+        date =  findViewById(R.id.date);
+        price =  findViewById(R.id.price);
+        location =  findViewById(R.id.locationImage);
+        cleaner =  findViewById(R.id.cleanerImage);
         configureView();
     }
 
@@ -155,7 +155,7 @@ public class SummaryActivity extends AppCompatActivity {
         } catch (Service.errorMandandoCalificacion errorMandandoCalificacion) {
             postAlert(getResources().getString(R.string.error_sending_review));
         }   catch (Service.noSessionFound e){
-            if (!MainActivity.onScreen) postAlert(getString(R.string.session_error));
+            if (!MainActivity.onScreen) postAlert(getString(R.string.error_sesion));
             changeActivity(MainActivity.class);
             finish();
         }
@@ -180,11 +180,11 @@ public class SummaryActivity extends AppCompatActivity {
 
 
     public void onClickStar(View view) {
-        ImageView one = (ImageView)findViewById(R.id.oneStar);
-        ImageView two = (ImageView)findViewById(R.id.twoStar);
-        ImageView three = (ImageView)findViewById(R.id.threeStar);
-        ImageView four = (ImageView)findViewById(R.id.fourStar);
-        ImageView five = (ImageView)findViewById(R.id.fiveStar);
+        ImageView one = findViewById(R.id.oneStar);
+        ImageView two = findViewById(R.id.twoStar);
+        ImageView three = findViewById(R.id.threeStar);
+        ImageView four = findViewById(R.id.fourStar);
+        ImageView five = findViewById(R.id.fiveStar);
 
         switch (view.getId()){
             case R.id.oneStar:

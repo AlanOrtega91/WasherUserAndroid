@@ -47,12 +47,12 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initView() {
-        cleanerName = (TextView)findViewById(R.id.cleanerNameInformation);
-        cleanerImage = (ImageView)findViewById(R.id.cleanerImageInformation);
+        cleanerName = findViewById(R.id.cleanerNameInformation);
+        cleanerImage = findViewById(R.id.cleanerImageInformation);
         configureActionBar();
         cleanerName.setText(service.cleanerName);
         setCleanerImage();
-        ratingImage = (ImageView) findViewById(R.id.ratingImage);
+        ratingImage =  findViewById(R.id.ratingImage);
     }
 
     private void configureActionBar() {

@@ -54,10 +54,10 @@ public class NewCar extends AppCompatActivity implements View.OnClickListener, V
     }
 
     private void initView() {
-        mPlates = (EditText) findViewById(R.id.platesNew);
-        types = (Spinner) findViewById(R.id.typesSpinner);
-        colors = (Spinner) findViewById(R.id.colorSpinner);
-        brands = (Spinner) findViewById(R.id.brandSpinner);
+        mPlates =  findViewById(R.id.platesNew);
+        types =  findViewById(R.id.typesSpinner);
+        colors =  findViewById(R.id.colorSpinner);
+        brands =  findViewById(R.id.brandSpinner);
 
         ArrayAdapter<CharSequence> typesAdapter = ArrayAdapter.createFromResource(this,R.array.vehicles_types,android.R.layout.simple_spinner_dropdown_item);
         typesAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -88,9 +88,9 @@ public class NewCar extends AppCompatActivity implements View.OnClickListener, V
             Toolbar parent =(Toolbar) optionsTitleBar.getCustomView().getParent();
             parent.setContentInsetsAbsolute(0,0);
         }
-        TextView leftButton = (TextView)findViewById(R.id.leftButtonOptionsTitlebar);
-        TextView rightButton = (TextView)findViewById(R.id.rightButtonOptionsTitlebar);
-        TextView title = (TextView)findViewById(R.id.titleOptionsTitlebar);
+        TextView leftButton = findViewById(R.id.leftButtonOptionsTitlebar);
+        TextView rightButton = findViewById(R.id.rightButtonOptionsTitlebar);
+        TextView title = findViewById(R.id.titleOptionsTitlebar);
         leftButton.setText(R.string.cancel);
         rightButton.setText(R.string.save);
         title.setText(R.string.add_car);
@@ -142,7 +142,9 @@ public class NewCar extends AppCompatActivity implements View.OnClickListener, V
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+        }
         return false;
     }
 }

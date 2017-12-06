@@ -71,7 +71,10 @@ public class LoadingActivity extends AppCompatActivity {
         token = settings.getString(AppData.TOKEN,null);
         intent = getIntent();
         bundle = intent.getExtras();
-        int callingActivity = bundle.getInt(ACTIVITY_ACTION);
+        int callingActivity = 0;
+        if (bundle != null) {
+            callingActivity = bundle.getInt(ACTIVITY_ACTION);
+        }
         switch (callingActivity){
             case LOGIN:
                 configureLogin();
@@ -154,8 +157,8 @@ public class LoadingActivity extends AppCompatActivity {
                     postAlert(getString(R.string.error_editing_car));
                     returnResult(RESULT_CANCELED);
                 } catch (Car.noSessionFound e) {
-                    if (!MainActivity.onScreen) postAlert(getString(R.string.session_error));
-                    changeActivity(MainActivity.class, true);
+                    if (!MainActivity.onScreen) postAlert(getString(R.string.error_sesion));
+                    changeActivity(MainActivity.class);
                     finish();
                     returnResult(RESULT_CANCELED);
                 }
@@ -193,8 +196,8 @@ public class LoadingActivity extends AppCompatActivity {
                     postAlert(getString(R.string.error_setting_favorite_car));
                     returnResult(RESULT_CANCELED);
                 } catch (Car.noSessionFound e) {
-                    if (!MainActivity.onScreen) postAlert(getString(R.string.session_error));
-                    changeActivity(MainActivity.class, true);
+                    if (!MainActivity.onScreen) postAlert(getString(R.string.error_sesion));
+                    changeActivity(MainActivity.class);
                     returnResult(RESULT_CANCELED);
                     finish();
                 }
@@ -228,8 +231,8 @@ public class LoadingActivity extends AppCompatActivity {
                     postAlert("Error changing data");
                     returnResult(RESULT_CANCELED);
                 } catch (User.noSessionFound e){
-                    if (!MainActivity.onScreen) postAlert(getString(R.string.session_error));
-                    changeActivity(MainActivity.class, true);
+                    if (!MainActivity.onScreen) postAlert(getString(R.string.error_sesion));
+                    changeActivity(MainActivity.class);
                     returnResult(RESULT_CANCELED);
                 }
             }
@@ -288,7 +291,7 @@ public class LoadingActivity extends AppCompatActivity {
                     postAlert(getString(R.string.error_firebase));
                     returnResult(RESULT_CANCELED);
                 } catch (User.noSessionFound e){
-                    if (!MainActivity.onScreen) postAlert(getString(R.string.session_error));
+                    if (!MainActivity.onScreen) postAlert(getString(R.string.error_sesion));
                     returnResult(RESULT_CANCELED);
                 }
             }
@@ -317,7 +320,7 @@ public class LoadingActivity extends AppCompatActivity {
                     ProfileReader.delete(getBaseContext());
                     returnResult(RESULT_CANCELED);
                 } catch (User.noSessionFound e){
-                    if (!MainActivity.onScreen) postAlert(getString(R.string.session_error));
+                    if (!MainActivity.onScreen) postAlert(getString(R.string.error_sesion));
                     returnResult(RESULT_CANCELED);
                 }
             }
@@ -340,11 +343,9 @@ public class LoadingActivity extends AppCompatActivity {
         finish();
     }
 
-    private void changeActivity(Class activity, Boolean clear) {
+    private void changeActivity(Class activity) {
         Intent intent = new Intent(getBaseContext(), activity);
-        if (clear) {
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 }

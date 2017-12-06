@@ -227,7 +227,7 @@ public class User {
     public static class errorWithNewUser extends Exception {
     }
 
-    public static class noSessionFound extends Throwable {
+    public static class noSessionFound extends Exception {
     }
 
     public static class errorChangeData extends Exception {

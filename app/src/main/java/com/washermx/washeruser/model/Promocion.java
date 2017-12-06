@@ -16,7 +16,6 @@ import cz.msebera.android.httpclient.message.BasicNameValuePair;
 public class Promocion {
     private static String HTTP_LOCATION = "promocion/";
     public String codigo;
-    public String descripcion;
     public String nombre;
 
 
@@ -55,7 +54,6 @@ public class Promocion {
 
     public static List<Promocion> leerPromocion(String id) throws errorLeyendoPromociones {
         String url = HttpServerConnection.buildURL(HTTP_LOCATION + "leerPromociones");
-        List<Promocion> promociones = new ArrayList<>();
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("id",id));
         try {
@@ -66,12 +64,12 @@ public class Promocion {
             }
 
             JSONArray servicesResponse = response.getJSONArray("promociones");
+            List<Promocion> promociones = new ArrayList<>();
             for (int i=0;i < servicesResponse.length(); i++) {
                 JSONObject jsonService = servicesResponse.getJSONObject(i);
                 Promocion promocion = new Promocion();
                 promocion.codigo = jsonService.getString("codigo");
                 promocion.nombre = jsonService.getString("nombre");
-                promocion.descripcion = jsonService.getString("descripcion");
                 promociones.add(promocion);
             }
             return promociones;

@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".NavigationDrawer">
 
+
+    <LinearLayout
+        android:id="@+id/layoutCargando"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/cargando"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateTint="@android:color/holo_green_dark"/>
+    </LinearLayout>
+
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"

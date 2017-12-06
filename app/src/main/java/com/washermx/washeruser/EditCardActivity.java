@@ -71,10 +71,10 @@ public class EditCardActivity extends AppCompatActivity implements View.OnClickL
 
     private void initView() {
         configureActionBar();
-        cardNumber = (EditText)findViewById(R.id.cardNumber);
-        cvv = (EditText)findViewById(R.id.cvv);
-        cardExpirationMonth = (Spinner)findViewById(R.id.cardExpirationMonth);
-        cardExpirationYear = (Spinner)findViewById(R.id.cardExpirationYear);
+        cardNumber = findViewById(R.id.cardNumber);
+        cvv = findViewById(R.id.cvv);
+        cardExpirationMonth = findViewById(R.id.cardExpirationMonth);
+        cardExpirationYear = findViewById(R.id.cardExpirationYear);
 
         ArrayAdapter<CharSequence> monthsAdapter = ArrayAdapter.createFromResource(this,R.array.months,android.R.layout.simple_spinner_dropdown_item);
         monthsAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -86,7 +86,7 @@ public class EditCardActivity extends AppCompatActivity implements View.OnClickL
         int posicion = 0;
         for (int c = año; c < año+10; c++)
         {
-            fechas[posicion] = new Integer(c);
+            fechas[posicion] = c;
             posicion++;
         }
 
@@ -108,9 +108,9 @@ public class EditCardActivity extends AppCompatActivity implements View.OnClickL
             Toolbar parent =(Toolbar) optionsTitleBar.getCustomView().getParent();
             parent.setContentInsetsAbsolute(0,0);
         }
-        TextView leftButton = (TextView) findViewById(R.id.leftButtonOptionsTitlebar);
-        TextView rightButton = (TextView)findViewById(R.id.rightButtonOptionsTitlebar);
-        TextView title = (TextView)findViewById(R.id.titleOptionsTitlebar);
+        TextView leftButton =  findViewById(R.id.leftButtonOptionsTitlebar);
+        TextView rightButton = findViewById(R.id.rightButtonOptionsTitlebar);
+        TextView title = findViewById(R.id.titleOptionsTitlebar);
         leftButton.setText(R.string.cancel);
         rightButton.setText(R.string.save);
         title.setText(R.string.edit_card);
@@ -129,7 +129,7 @@ public class EditCardActivity extends AppCompatActivity implements View.OnClickL
                 }
             }
 
-            Integer year = new Integer(card.expirationYear);
+            Integer year = Integer.valueOf(card.expirationYear);
             int c = 0;
             for (Integer año:fechas) {
                 if (año.equals(year))
@@ -183,7 +183,9 @@ public class EditCardActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+        }
         return false;
     }
 }

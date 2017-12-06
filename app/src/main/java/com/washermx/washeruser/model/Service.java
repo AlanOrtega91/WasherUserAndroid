@@ -2,6 +2,7 @@ package com.washermx.washeruser.model;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,7 +45,8 @@ public class Service {
     }
 
     public static Service requestService(String direccion, String latitud, String longitud,
-                                         String idServicio, String token, String idCoche, String idCocheFavorito, String metodoDePago)
+                                         String idServicio, String token, String idCoche, String idCocheFavorito, String metodoDePago,
+                                         Integer idRegion)
             throws errorRequestingService, noSessionFound, userBlock
     {
         String url = HttpServerConnection.buildURL(HTTP_LOCATION + "RequestService");
@@ -57,6 +59,7 @@ public class Service {
         params.add(new BasicNameValuePair("idCoche",idCoche));
         params.add(new BasicNameValuePair("idCocheFavorito",idCocheFavorito));
         params.add(new BasicNameValuePair("metodoDePago",metodoDePago));
+        params.add(new BasicNameValuePair("idRegion", idRegion.toString()));
         try {
             String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
             JSONObject response = new JSONObject(jsonResponse);
@@ -174,6 +177,40 @@ public class Service {
         }
     }
 
+    public static List<Precio> leerPrecios(Double latitud, Double longitud) throws errorLeyendoPrecios {
+        String url = HttpServerConnection.buildURL(HTTP_LOCATION + "leerPrecios");
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("latitud", latitud.toString()));
+        params.add(new BasicNameValuePair("longitud", longitud.toString()));
+        try {
+            String jsonResponse = HttpServerConnection.sendHttpRequestPost(url,params);
+            JSONObject response = new JSONObject(jsonResponse);
+            if (response.getString("estado").compareTo("ok") != 0)
+            {
+                throw new errorLeyendoPrecios();
+            }
+            JSONArray preciosJson = response.getJSONArray("precios");
+            List<Precio> precios = new ArrayList<>();
+            for (int i = 0; i < preciosJson.length(); i++) {
+                JSONObject precioJson = preciosJson.getJSONObject(i);
+                Precio precio = new Precio();
+                precio.idVehiculo = precioJson.getInt("idVehiculo");
+                precio.nombre = precioJson.getString("Nombre");
+                precio.idServicio = precioJson.getInt("idServicio");
+                precio.servicio = precioJson.getString("Servicio");
+                precio.precio = precioJson.getDouble("Precio");
+                precio.region = precioJson.getInt("id");
+                precios.add(precio);
+            }
+            return precios;
+        } catch (JSONException e) {
+            Log.i("ERROR","JSON ERROR");
+            throw new errorLeyendoPrecios();
+        } catch (HttpServerConnection.connectionException e){
+            throw new errorLeyendoPrecios();
+        }
+    }
+
     public static class errorRequestingService extends Exception {
     }
     private static class errorCancelingRequest extends Exception {
@@ -186,5 +223,6 @@ public class Service {
     }
     private static class errorLeyendoCalificacion extends Throwable {
     }
-
+    public static class errorLeyendoPrecios extends Throwable {
+    }
 }

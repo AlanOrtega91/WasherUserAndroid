@@ -333,7 +333,7 @@ México. al teléfono número 55 2905 9388. o al correo electrónico info@ideaym
     <string name="privacy_info">Loren ipsum</string>
     <string name="software_license_info">Loren ipsum</string>
     <string name="error_deleting_car">Error borrando vehículo</string>
-    <string name="session_error">Error de sesion</string>
+    <string name="error_sesion">Error de sesion</string>
     <string name="wish_cancel">Deseas cancelar?</string>
     <string name="user_block">Usuario bloqueado por error en tarjeta</string>
     <string name="cancel_with_charge">Cancelar en este momento incluye un costo, estas seguro que deseas cancelar?</string>
@@ -368,6 +368,9 @@ México. al teléfono número 55 2905 9388. o al correo electrónico info@ideaym
     <string name="errorLeyendoPromociones">Hubo un error al leer las promociones</string>
     <string name="pagoEfectivo">El precio a pagar es de %s</string>
     <string name="copiado">Copiado</string>
+    <string name="actualizar_titulo">Existe una nueva actualizacion</string>
+    <string name="mensaje_nueva_version">Descarga la nueva version</string>
+    <string name="invalid_phone">El telefono debe de ser de 10 digitos</string>
     <string-array name="vehicles_types">
         <item>Moto</item>
         <item>Auto</item>

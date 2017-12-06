@@ -55,9 +55,9 @@ public class EditBillingActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initView() {
-        name = (EditText) findViewById(R.id.billingNameEdit);
-        rfc = (EditText) findViewById(R.id.billingRFCEdit);
-        address = (EditText) findViewById(R.id.billingAddressEdit);
+        name =  findViewById(R.id.billingNameEdit);
+        rfc =  findViewById(R.id.billingRFCEdit);
+        address =  findViewById(R.id.billingAddressEdit);
         if (user.billingName != null && !user.billingName.equals("")){
             name.setText(user.billingName);
         }
@@ -81,9 +81,9 @@ public class EditBillingActivity extends AppCompatActivity implements View.OnCli
             Toolbar parent =(Toolbar) optionsTitleBar.getCustomView().getParent();
             parent.setContentInsetsAbsolute(0,0);
         }
-        TextView leftButton = (TextView)findViewById(R.id.leftButtonOptionsTitlebar);
-        TextView rightButton = (TextView)findViewById(R.id.rightButtonOptionsTitlebar);
-        TextView title = (TextView)findViewById(R.id.titleOptionsTitlebar);
+        TextView leftButton = findViewById(R.id.leftButtonOptionsTitlebar);
+        TextView rightButton = findViewById(R.id.rightButtonOptionsTitlebar);
+        TextView title = findViewById(R.id.titleOptionsTitlebar);
         leftButton.setText(R.string.cancel);
         rightButton.setText(R.string.save);
         title.setText(R.string.change_data);

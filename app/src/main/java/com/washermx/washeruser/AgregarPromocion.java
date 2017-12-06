@@ -12,19 +12,16 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.washermx.washeruser.model.Database.DataBase;
 import com.washermx.washeruser.model.Promocion;
 import com.washermx.washeruser.model.User;
 
-import org.w3c.dom.Text;
 
 public class AgregarPromocion extends AppCompatActivity implements View.OnClickListener, LocationListener {
 
@@ -60,8 +57,8 @@ public class AgregarPromocion extends AppCompatActivity implements View.OnClickL
             Toolbar parent =(Toolbar) optionsTitleBar.getCustomView().getParent();
             parent.setContentInsetsAbsolute(0,0);
         }
-        TextView menuButton = (TextView)findViewById(R.id.menuButton);
-        TextView menuTitle = (TextView)findViewById(R.id.menuTitle);
+        TextView menuButton = findViewById(R.id.menuButton);
+        TextView menuTitle = findViewById(R.id.menuTitle);
         menuTitle.setText(R.string.promocionesTitulo);
         menuButton.setText(R.string.back);
         menuButton.setOnClickListener(this);
@@ -72,8 +69,8 @@ public class AgregarPromocion extends AppCompatActivity implements View.OnClickL
             botonAgregar = (Button) view;
         }
         botonAgregar.setEnabled(false);
-        codigo = (EditText) findViewById(R.id.codigoAgregar);
-        barraCargando = (ProgressBar) findViewById(R.id.barraCargando);
+        codigo =  findViewById(R.id.codigoAgregar);
+        barraCargando =  findViewById(R.id.barraCargando);
         barraCargando.setVisibility(View.VISIBLE);
         usuario = new DataBase(this).readUser();
         new AgregarCodigo().execute(codigo.getText().toString());
@@ -132,7 +129,7 @@ public class AgregarPromocion extends AppCompatActivity implements View.OnClickL
             super.onPostExecute(result);
             barraCargando.setVisibility(View.INVISIBLE);
             if (!result.equals("ok")) {
-                TextView error = (TextView) findViewById(R.id.resultadoAgregarPromocion);
+                TextView error =  findViewById(R.id.resultadoAgregarPromocion);
                 error.setText(result);
                 error.setTextColor(Color.RED);
                 error.setVisibility(View.VISIBLE);

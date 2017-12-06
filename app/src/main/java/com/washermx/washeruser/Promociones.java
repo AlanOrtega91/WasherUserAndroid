@@ -54,19 +54,19 @@ public class Promociones extends AppCompatActivity implements View.OnClickListen
             Toolbar parent =(Toolbar) optionsTitleBar.getCustomView().getParent();
             parent.setContentInsetsAbsolute(0,0);
         }
-        TextView menuButton = (TextView)findViewById(R.id.menuButton);
-        TextView menuTitle = (TextView)findViewById(R.id.menuTitle);
+        TextView menuButton = findViewById(R.id.menuButton);
+        TextView menuTitle = findViewById(R.id.menuTitle);
         menuTitle.setText(R.string.promocionesTitulo);
         menuButton.setText(R.string.menu);
         menuButton.setOnClickListener(this);
     }
 
     private void inicializaVista() {
-        listaPromociones = (ListView)findViewById(R.id.promociones);
-        codigoPersonal = (TextView) findViewById(R.id.codigoPersonal);
+        listaPromociones = findViewById(R.id.promociones);
+        codigoPersonal = findViewById(R.id.codigoPersonal);
         DataBase db = new DataBase(this);
         codigoPersonal.setText(db.readUser().codigo);
-        barraCargando = (ProgressBar) findViewById(R.id.barraCargando);
+        barraCargando = findViewById(R.id.barraCargando);
         barraCargando.setVisibility(View.VISIBLE);
         new LeerPromociones().execute(db.readUser().id);
     }
@@ -93,7 +93,9 @@ public class Promociones extends AppCompatActivity implements View.OnClickListen
     public void copiarAPortaPapaeles(View view) {
         ClipboardManager portaPapeles = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("Promocion", codigoPersonal.getText());
-        portaPapeles.setPrimaryClip(clip);
+        if (portaPapeles != null) {
+            portaPapeles.setPrimaryClip(clip);
+        }
         Toast.makeText(getBaseContext(), getString(R.string.copiado), Toast.LENGTH_SHORT).show();
     }
 

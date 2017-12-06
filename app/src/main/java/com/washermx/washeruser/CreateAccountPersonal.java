@@ -64,7 +64,7 @@ public class CreateAccountPersonal extends AppCompatActivity implements View.OnC
     private void initView() {
         bName = (EditText) findViewById(R.id.createName);
         bLastName = (EditText) findViewById(R.id.createLastName);
-        profileImage = (ImageView) findViewById(R.id.createImage);
+        profileImage = findViewById(R.id.createImage);
         configureActionBar();
     }
 
@@ -79,9 +79,9 @@ public class CreateAccountPersonal extends AppCompatActivity implements View.OnC
             Toolbar parent =(Toolbar) optionsTitleBar.getCustomView().getParent();
             parent.setContentInsetsAbsolute(0,0);
         }
-        TextView leftButton = (TextView) findViewById(R.id.leftButtonOptionsTitlebar);
-        TextView rightButton = (TextView)findViewById(R.id.rightButtonOptionsTitlebar);
-        TextView title = (TextView)findViewById(R.id.titleOptionsTitlebar);
+        TextView leftButton =  findViewById(R.id.leftButtonOptionsTitlebar);
+        TextView rightButton = findViewById(R.id.rightButtonOptionsTitlebar);
+        TextView title = findViewById(R.id.titleOptionsTitlebar);
         leftButton.setText(R.string.cancel);
         rightButton.setText(R.string.next);
         title.setText(R.string.create_account_title);
