@@ -87,15 +87,15 @@
                         android:baselineAligned="false"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:text="@string/tarjeta"
-                            android:textAlignment="center"
-                            android:id="@+id/metodoDePago"
-                            android:layout_marginBottom="5dp"
-                            android:textColor="@android:color/darker_gray"
-                            android:onClick="mostrarMetodoDePago"/>
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="25dp"-->
+                            <!--android:text="@string/tarjeta"-->
+                            <!--android:textAlignment="center"-->
+                            <!--android:id="@+id/metodoDePago"-->
+                            <!--android:layout_marginBottom="5dp"-->
+                            <!--android:textColor="@android:color/darker_gray"-->
+                            <!--android:onClick="mostrarMetodoDePago"/>-->
 
                         <LinearLayout
                             android:layout_width="match_parent"

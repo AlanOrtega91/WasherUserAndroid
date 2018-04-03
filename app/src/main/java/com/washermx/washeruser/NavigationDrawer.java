@@ -518,13 +518,13 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         cancelButton =  findViewById(R.id.cancelButton);
         serviceLocationText.setOnEditorActionListener(this);
         startLayout.setOnClickListener(this);
-        metodoDePagoTexto =  findViewById(R.id.metodoDePago);
+        //metodoDePagoTexto =  findViewById(R.id.metodoDePago);
         if (new DataBase(getBaseContext()).readCard() == null) {
-            metodoDePago = "e";
-            metodoDePagoTexto.setText(getString(R.string.efectivo));
+            //metodoDePago = "e";
+            //metodoDePagoTexto.setText(getString(R.string.efectivo));
         } else {
             metodoDePago = "t";
-            metodoDePagoTexto.setText(getString(R.string.tarjeta));
+            //metodoDePagoTexto.setText(getString(R.string.tarjeta));
         }
     }
 
